@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using MVC5DemoProject_1.Models;
+using BW.WebsiteApp.Models;
 
 namespace BW.WebsiteApp.Controllers
 {

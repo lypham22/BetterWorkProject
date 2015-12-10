@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 
-namespace MVC5DemoProject_1.Models
+namespace BW.WebsiteApp.Models
 {
     public class User
     {
