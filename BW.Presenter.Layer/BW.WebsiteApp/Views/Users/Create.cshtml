@@ -19,12 +19,12 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10" ng-init="checkValid=true">
-                <span><input type="checkbox" ng-model="checkValid" /> Is validate email?</span><br />
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @required = "required", @ng_model = "Email", @type = "email" } })
-                <span style="color:red" ng-cloak ng-show="myForm.Email.$dirty && myForm.Email.$invalid">
+            <div class="col-md-10" ng-controller="validEmailCtrl">
+                <span><input type="checkbox" ng-model="checkValidEmail" /> Is validate email?</span><br />
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @ng_required = "checkValidEmail", @ng_model = "Email", @ng_pattern = "regexp" } })
+                <span style="color:red" ng-cloak ng-show="(myForm.Email.$dirty && myForm.Email.$invalid)"> @*&& checkValidEmail*@
                     <span ng-show="myForm.Email.$error.required">Email is required.</span>
-                    <span ng-show="myForm.Email.$error.email">Invalid email address.</span>
+                    <span ng-show="myForm.Email.$error.pattern">Invalid email address.</span>
                 </span>
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
             </div>
@@ -81,7 +81,6 @@
                 @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" ng-disabled="!myForm.$valid" />

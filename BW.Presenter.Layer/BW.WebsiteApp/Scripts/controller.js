@@ -13,4 +13,32 @@ angular.module('matchPassword', []).directive('pwCheck', [function () {
               });
           }
       }
-  }]);
+}]);
+
+app.controller('validEmailCtrl', function ($scope) {
+    $scope.checkValidEmail = true;
+    $scope.regexp = '';// /[a-zA-Z0-9]+[\\.a-zA-Z0-9]*@[a-zA-Z0-9+\\.]/
+    
+    $scope.$watch("checkValidEmail", function (newValue, oldValue) {
+            if (newValue) {
+
+                $scope.regexp = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
+            }
+            else {
+                $scope.regexp = "";
+            }
+        }
+    );
+
+    //this.abc = function () {
+    //    console.log("123");
+    //    if (this.checkValidEmail) {
+    //        return regexp = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
+    //    }
+    //    else {
+    //        return regexp = "";
+    //    }
+    //    console.log("456");
+    //}
+
+});
