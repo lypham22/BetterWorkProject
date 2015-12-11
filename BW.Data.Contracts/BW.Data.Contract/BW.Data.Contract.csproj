@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTOs View\User\UserViewModels.cs" />
+    <Compile Include="DTOs\User\User.cs" />
     <Compile Include="DTOs\User\UserDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

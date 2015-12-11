@@ -139,6 +139,16 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\BW.Data.Contracts\BW.Data.Contract\BW.Data.Contract.csproj">
+      <Project>{275de784-85a0-4be6-bd71-534d3b8153de}</Project>
+      <Name>BW.Data.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BW.Website.Common\BW.Website.Common.csproj">
+      <Project>{13ecdaab-9f2c-4537-82ca-29e66596f372}</Project>
+      <Name>BW.Website.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
