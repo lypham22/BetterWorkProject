@@ -13,7 +13,7 @@ namespace BW.Services.Api.Controllers
         public List<UserDTO> GetAllUser()
         {
             List<UserDTO> ListUser = new List<UserDTO>();
-            ListUser.Add(new UserDTO { UserId = 1, UserName = "user1" });
+            ListUser.Add(new UserDTO { UserId = 1, UserName = "user11" });
             ListUser.Add(new UserDTO { UserId = 2, UserName = "user2" });
 
             return ListUser;
