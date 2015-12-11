@@ -12,27 +12,36 @@ namespace BW.WebsiteApp.Controllers
 {
     public class UsersController : Controller
     {
-        private UsersDBContext db = new UsersDBContext();
+        //private UsersDBContext db = new UsersDBContext();
 
         // GET: Users
         public ActionResult Index()
         {
-            return View(db.Users.ToList());
+            List<User> lUser = new List<User>();
+            User u = new User();
+            u.Email = "abc@gmail.com";
+            u.Password = "123456";
+            u.Name = "Tam";
+            u.Role = "Admin";
+            lUser.Add(u);
+            return View(lUser);
+            //return View(db.Users.ToList());
         }
 
         // GET: Users/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            //User user = db.Users.Find(id);
+            //if (user == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            //return View(user);
+            return View();
         }
 
         // GET: Users/Create
@@ -48,29 +57,31 @@ namespace BW.WebsiteApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Email,Password,Name,Role")] User user)
         {
-            if (ModelState.IsValid)
-            {
-                db.Users.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            //if (ModelState.IsValid)
+            //{
+            //    db.Users.Add(user);
+            //    db.SaveChanges();
+            //    return RedirectToAction("Index");
+            //}
 
-            return View(user);
+            //return View(user);
+            return View();
         }
 
         // GET: Users/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            //User user = db.Users.Find(id);
+            //if (user == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            //return View(user);
+            return View();
         }
 
         // POST: Users/Edit/5
@@ -80,28 +91,30 @@ namespace BW.WebsiteApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Email,Password,Name,Role")] User user)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(user);
+            //if (ModelState.IsValid)
+            //{
+            //    db.Entry(user).State = EntityState.Modified;
+            //    db.SaveChanges();
+            //    return RedirectToAction("Index");
+            //}
+            //return View(user);
+            return View();
         }
 
         // GET: Users/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            //User user = db.Users.Find(id);
+            //if (user == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            //return View(user);
+            return View();
         }
 
         // POST: Users/Delete/5
@@ -109,18 +122,19 @@ namespace BW.WebsiteApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            User user = db.Users.Find(id);
-            db.Users.Remove(user);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            //User user = db.Users.Find(id);
+            //db.Users.Remove(user);
+            //db.SaveChanges();
+            //return RedirectToAction("Index");
+            return View();
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
+            //if (disposing)
+            //{
+            //    db.Dispose();
+            //}
             base.Dispose(disposing);
         }
     }
