@@ -9,10 +9,10 @@ using System.Net.Http.Headers;
 
 namespace BW.Website.Common.Helpers
 {
-    class HelpClient
+    public class HelpClient
     {
 
-        public HttpClient ConnectClient()
+        public static HttpClient ConnectClient()
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:4693/");
@@ -20,7 +20,7 @@ namespace BW.Website.Common.Helpers
             return client;
         }
 
-        public HttpResponseMessage GetReponse(string path)
+        public static HttpResponseMessage GetReponse(string path)
         {
             HttpClient client = ConnectClient();
             HttpResponseMessage reponse = client.GetAsync(path).Result;

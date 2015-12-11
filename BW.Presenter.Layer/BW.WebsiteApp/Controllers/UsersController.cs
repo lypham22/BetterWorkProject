@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BW.WebsiteApp.Models;
+using BW.Website.Common.Helpers;
 
 namespace BW.WebsiteApp.Controllers
 {
@@ -17,6 +18,7 @@ namespace BW.WebsiteApp.Controllers
         // GET: Users
         public ActionResult Index()
         {
+            var getAllUser = ProductHelper.GetAllUser();
             List<User> lUser = new List<User>();
             User u = new User();
             u.Email = "abc@gmail.com";

@@ -7,17 +7,16 @@ using System.Net.Http;
 
 namespace BW.Website.Common.Helpers
 {
-    class ProductHelper 
+    public class ProductHelper 
     {
-        HelpClient Hc = new HelpClient();
-        public List<UserInfo> GetAllUser()
+        public static List<UserInfo> GetAllUser()
         {
             // Call service
            // Convert data model to view model
            // Encrypt ID
             List<UserInfo> UserInfoList = new List<UserInfo>();
 
-            HttpResponseMessage reponse = Hc.GetReponse("api/user");
+            HttpResponseMessage reponse = HelpClient.GetReponse("api/user");
             if (reponse.IsSuccessStatusCode)
             {
 
@@ -35,10 +34,10 @@ namespace BW.Website.Common.Helpers
             return UserInfoList;
         }
 
-        public UserViewModels GetUser()
+        public static UserViewModels GetUser()
         {
             UserViewModels UVD = new UserViewModels();
-            HttpResponseMessage reponse = Hc.GetReponse("api/user");
+            HttpResponseMessage reponse = HelpClient.GetReponse("api/user");
             if (reponse.IsSuccessStatusCode)
             {
 
