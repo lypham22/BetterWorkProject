@@ -16,15 +16,15 @@ namespace BW.Website.Common.Helpers
            // Encrypt ID
             List<UserInfo> UserInfoList = new List<UserInfo>();
 
-            HttpResponseMessage reponse = HelpClient.GetReponse("api/user");
+            HttpResponseMessage reponse = HelpClient.GetReponse("api/user/getalluser");
             if (reponse.IsSuccessStatusCode)
             {
 
-                List<UserDTO> Usertlist = new List<UserDTO>();
-                Usertlist = reponse.Content.ReadAsAsync<List<UserDTO>>().Result;
-                foreach (UserDTO s in Usertlist)
+                //List<User> Usertlist = new List<User>();
+                var Usertlist = reponse.Content.ReadAsAsync<List<User>>().Result;
+                foreach (var s in Usertlist)
                 {
-                    UserInfoList.Add(new UserInfo { UserName = s.UserName, Email = "Email test" });
+                    UserInfoList.Add(new UserInfo { Name = s.Name, Email = "Email test" });
                 }
             }
             else

@@ -15,7 +15,7 @@ namespace BW.Website.Common.Helpers
         public static HttpClient ConnectClient()
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:4693/");
+            client.BaseAddress = new Uri("http://localhost:8793/");
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             return client;
         }

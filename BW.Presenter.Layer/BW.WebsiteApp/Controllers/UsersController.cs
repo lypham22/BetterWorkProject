@@ -13,21 +13,11 @@ namespace BW.WebsiteApp.Controllers
 {
     public class UsersController : Controller
     {
-        //private UsersDBContext db = new UsersDBContext();
-
         // GET: Users
         public ActionResult Index()
         {
             var getAllUser = ProductHelper.GetAllUser();
-            List<User> lUser = new List<User>();
-            User u = new User();
-            u.Email = "abc@gmail.com";
-            u.Password = "123456";
-            u.Name = "Tam";
-            u.Role = "Admin";
-            lUser.Add(u);
-            return View(lUser);
-            //return View(db.Users.ToList());
+            return View(getAllUser);
         }
 
         // GET: Users/Details/5

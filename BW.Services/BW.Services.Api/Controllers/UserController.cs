@@ -1,24 +1,28 @@
 ﻿using BW.Data.Contract.DTOs;
-using System;
+using BW.Repository.Data.Repositories;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace BW.Services.Api.Controllers
 {
     public class UserController : ApiController
     {
-        public List<UserDTO> GetAllUser()
+        private readonly IUserRepository userRepository;
+        public UserController(IUserRepository userRepository)
         {
-            List<UserDTO> ListUser = new List<UserDTO>();
-            ListUser.Add(new UserDTO { UserId = 1, UserName = "user1111" });
-            ListUser.Add(new UserDTO { UserId = 2, UserName = "user2" });
-
-            return ListUser;
+            this.userRepository = userRepository;
         }
-        [HttpGet]
+
+        public List<User> GetAllUser()
+        {
+            var data = userRepository.GetAllUser();
+            //List<UserDTO> ListUser = new List<UserDTO>();
+            //ListUser.Add(new UserDTO { UserId = 1, UserName = "user1111" });
+            //ListUser.Add(new UserDTO { UserId = 2, UserName = "user2" });
+
+            return data;
+        }
+        //[HttpGet]
         public UserDTO SearchUser(int id)
         {
             UserDTO user = new UserDTO { UserId = 3, UserName = "user3" };
@@ -26,7 +30,7 @@ namespace BW.Services.Api.Controllers
             return user;
         }
 
-        [HttpGet]
+        //[HttpGet]
         public UserDTO AddUser(UserDTO newuser)
         {
             UserDTO user = new UserDTO { UserId = 3, UserName = "user4" };
