@@ -56,8 +56,15 @@ namespace BW.Website.Common.Helpers
                 user.Password = userView.Password;
                 user.CreatedDate = DateTime.Now;
                 // Post data
-                ApiServiceUtilities.PostJson("api/UserApi/UpdateUser/", user);
-                return true;
+                HttpResponseMessage reponse = ApiServiceUtilities.PostJson("api/UserApi/UpdateUser/", user);
+                if (reponse.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
@@ -80,7 +87,7 @@ namespace BW.Website.Common.Helpers
             {
                 return false;
             }
-   
+
         }
     }
 }
