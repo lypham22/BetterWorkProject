@@ -44,7 +44,7 @@ namespace BW.Repository.Data.Repositories
                 userData.Email = user.Email;
                 userData.UserName = user.UserName;
                 this.Update(userData);
-                this.DataContext.Commit();
+                this.DataContext.SaveChanges();
                 return true;
             }
             else
@@ -59,7 +59,7 @@ namespace BW.Repository.Data.Repositories
             if (userData != null)
             {
                 this.Delete(userData);
-                this.DataContext.Commit();
+                this.DataContext.SaveChanges();
                 return true;
             }
             else

@@ -7,10 +7,10 @@ namespace BW.Repository.Data.Infrastructure
 {
 public class DatabaseFactory : Disposable, IDatabaseFactory
 {
-    private BWDataContext dataContext;
-    public BWDataContext Get()
+    private BetterWorkEntities dataContext;
+    public BetterWorkEntities Get()
     {
-        return dataContext ?? (dataContext = new BWDataContext("DefaultConnection"));
+        return new BetterWorkEntities();
     }
     protected override void DisposeCore()
     {

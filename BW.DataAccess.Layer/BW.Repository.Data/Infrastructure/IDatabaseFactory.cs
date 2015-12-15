@@ -7,6 +7,6 @@ namespace BW.Repository.Data.Infrastructure
 {
     public interface IDatabaseFactory : IDisposable
     {
-        BWDataContext Get();
+        BetterWorkEntities Get();
     }
 }

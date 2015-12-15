@@ -14,6 +14,7 @@ namespace BW.Repository.Data.Infrastructure
         private readonly IDbSet<T> dbset;
         protected RepositoryBase(IDatabaseFactory databaseFactory)
         {
+           // dataContext = new BetterWorkEntities();
             DatabaseFactory = databaseFactory;
             dbset = DataContext.Set<T>();
         }
@@ -25,13 +26,17 @@ namespace BW.Repository.Data.Infrastructure
             get;
             private set;
         }
-        /// <summary>
-        /// Data Context
-        /// </summary>
-        protected BWDataContext DataContext
+        protected BetterWorkEntities DataContext
         {
             get { return dataContext ?? (dataContext = new BetterWorkEntities()); }
         }
+        /// <summary>
+        /// Data Context
+        /// </summary>
+        //protected BWDataContext DataContext
+        //{
+        //    get { return dataContext ?? (dataContext = new BetterWorkEntities()); }
+        //}
         /// <summary>
         /// Add
         /// </summary>
