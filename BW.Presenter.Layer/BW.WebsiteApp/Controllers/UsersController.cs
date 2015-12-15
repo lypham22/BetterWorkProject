@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using BW.WebsiteApp.Models;
 using BW.Website.Common.Helpers;
+using BW.Data.Contract.DTOs_View;
 
 namespace BW.WebsiteApp.Controllers
 {
@@ -18,6 +19,13 @@ namespace BW.WebsiteApp.Controllers
         {
             var getAllUser = ProductHelper.GetAllUser();
             return View(getAllUser);
+        }
+
+        
+        public ActionResult SearchUser(int userid)
+       {
+           var SearchUser = ProductHelper.GetUser(userid);
+            return View(SearchUser);
         }
 
         // GET: Users/Details/5
@@ -47,7 +55,7 @@ namespace BW.WebsiteApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Email,Password,Name,Role")] User user)
+        public ActionResult Create(UserInfo user)
         {
             //if (ModelState.IsValid)
             //{
@@ -55,7 +63,10 @@ namespace BW.WebsiteApp.Controllers
             //    db.SaveChanges();
             //    return RedirectToAction("Index");
             //}
+            user.Name = "lypham test";
 
+
+            var SearchUser = ProductHelper.CreateUser(user);
             //return View(user);
             return View();
         }

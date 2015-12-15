@@ -86,6 +86,11 @@ public abstract class RepositoryBase<T> where T : class
     {
         return dbset.Find(id);
     }
+
+    public virtual T GetById(int id)
+    {
+        return dbset.Find(id);
+    }
     /// <summary>
     /// Get All
     /// </summary>

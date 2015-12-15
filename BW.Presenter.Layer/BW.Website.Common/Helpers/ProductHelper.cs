@@ -34,18 +34,18 @@ namespace BW.Website.Common.Helpers
             return UserInfoList;
         }
 
-        public static UserViewModels GetUser()
+        public static UserViewModels GetUser(int? userid)
         {
             UserViewModels UVD = new UserViewModels();
-            HttpResponseMessage reponse = HelpClient.GetReponse("api/user");
+            HttpResponseMessage reponse = HelpClient.GetReponse("api/user/SearchUser/"+ userid);
             if (reponse.IsSuccessStatusCode)
             {
 
-                UserDTO User = new UserDTO();
-                User = reponse.Content.ReadAsAsync<UserDTO>().Result;
+                User User = new User();
+                User = reponse.Content.ReadAsAsync<User>().Result;
 
-                UVD.UserName = User.UserName;
-                UVD.Id = User.UserId;
+                UVD.UserName = User.Name;
+                UVD.Id = User.Id;
                 UVD.UserAddress = "test address" ;
                 
             }
@@ -54,6 +54,18 @@ namespace BW.Website.Common.Helpers
 
             }
             return UVD;
+        }
+
+        public static bool CreateUser(UserInfo user)
+        {
+            // Convert UserInfo to User.
+            User u = new User();
+            u.Name = user.Name;
+            u.Id = user.Id;
+            // Post data
+           HelpClient.PostUserInfo("api/user/AddUser/", u);
+
+            return true;
         }
     }
 }

@@ -22,20 +22,19 @@ namespace BW.Services.Api.Controllers
 
             return data;
         }
-        //[HttpGet]
-        public UserDTO SearchUser(int id)
+        [HttpGet]
+        public User SearchUser(int id)
         {
-            UserDTO user = new UserDTO { UserId = 3, UserName = "user3" };
-
+            User user = userRepository.GetById(id);          
             return user;
         }
 
         //[HttpGet]
-        public UserDTO AddUser(UserDTO newuser)
+        public User AddUser(User newuser)
         {
-            UserDTO user = new UserDTO { UserId = 3, UserName = "user4" };
-
-            return user;
+           // UserDTO user = new UserDTO { UserId = 3, UserName = "user4" };
+            userRepository.CreateUser(newuser);
+            return newuser;
         }
     }
 }

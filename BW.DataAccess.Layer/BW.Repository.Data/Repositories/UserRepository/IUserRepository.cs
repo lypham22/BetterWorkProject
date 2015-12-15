@@ -15,6 +15,7 @@ namespace BW.Repository.Data.Repositories
         bool UpdateUser(User user);
         bool DeleteUser(User user);
         List<User> SPGetAllUser();
+        User GetById(int id);
     }   
 
 }
