@@ -21,10 +21,10 @@
         protected override void Seed(BW.Repository.Data.BWDataContext context)
         {
             #region Any run code first
-           /* base.Seed(context);
-            // Create Store Procedure "seq_nextval_userno"
+            /* base.Seed(context);
+            // Create Store Procedure "get-user"
             context.Database.ExecuteSqlCommand(
-                    @"Create PROCEDURE [dbo].[seq_nextval_userno]
+                    @"Create PROCEDURE [dbo].[get-user]
                     @ID int OUTPUT
                     AS
                     BEGIN
@@ -34,39 +34,12 @@
                     BEGIN TRANSACTION;
 
                     BEGIN
-                      INSERT INTO M_訪問先利用者採番(nouse) VALUES (1)
-                      IF SCOPE_IDENTITY() > 9999999
-                        BEGIN
-                          TRUNCATE TABLE [M_訪問先利用者採番];
-                          INSERT INTO M_訪問先利用者採番(nouse) VALUES (1)
-                        END
-                      SELECT @ID = SCOPE_IDENTITY()
+                      SELECT *
+                      FROM User
                     END  
                     COMMIT TRANSACTION;
                     END");
 
-            // Create Store Procedure "seq_nextval_userno"
-            context.Database.ExecuteSqlCommand(
-                        @"Create PROCEDURE [dbo].[seq_nextval_visitno]
-                        @ID int OUTPUT
-                        AS
-                        BEGIN
-                        SET NOCOUNT ON
-
-                        SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
-                        BEGIN TRANSACTION;
-
-                        BEGIN
-                          INSERT INTO M_訪問記録採番(nouse) VALUES (1)
-                          IF SCOPE_IDENTITY() > 9999999
-                            BEGIN
-                              TRUNCATE TABLE [M_訪問記録採番];
-                              INSERT INTO M_訪問記録採番(nouse) VALUES (1)
-                            END
-                          SELECT @ID = SCOPE_IDENTITY()
-                        END  
-                        COMMIT TRANSACTION;
-                        END");
             * */
             #endregion
         }

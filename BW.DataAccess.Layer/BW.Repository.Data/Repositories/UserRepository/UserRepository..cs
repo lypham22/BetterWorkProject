@@ -22,8 +22,9 @@ namespace BW.Repository.Data.Repositories
             var result = this.GetAll()
                           .Select(u => new User
                           {
-                              Id = u.Id,
-                              Name = u.Name
+                              UserId = u.UserId,
+                              UserName = u.UserName,
+                              Email = u.Email
                           }).ToList();
             return result;
         }
@@ -36,10 +37,11 @@ namespace BW.Repository.Data.Repositories
 
         public bool UpdateUser(User user)
         {
-            var userData = this.GetById(user.Id);
+            var userData = this.GetById(user.UserId);
             if (userData != null)
             {
-                userData.Name = user.Name;
+                userData.Email = user.Email;
+                userData.UserName = user.UserName;
                 this.Update(userData);
                 this.DataContext.Commit();
                 return true;
@@ -52,7 +54,7 @@ namespace BW.Repository.Data.Repositories
 
         public bool DeleteUser(User user)
         {
-            var userData = this.GetById(user.Id);
+            var userData = this.GetById(user.UserId);
             if (userData != null)
             {
                 this.Delete(userData);
@@ -76,8 +78,8 @@ namespace BW.Repository.Data.Repositories
                 Direction = ParameterDirection.Output
             };
 
-            var result = DataContext.Database.SqlQuery<User>("store-pro-name @ID OUT", id).ToList<User>();
-            return result;
+           // var result = DataContext.Database.SqlQuery<User>("store-pro-name @ID OUT", id).ToList<User>();
+            return new List<User>();
         }
     }
 }

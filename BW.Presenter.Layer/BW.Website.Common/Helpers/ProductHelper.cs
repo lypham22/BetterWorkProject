@@ -24,7 +24,7 @@ namespace BW.Website.Common.Helpers
                 var Usertlist = reponse.Content.ReadAsAsync<List<User>>().Result;
                 foreach (var s in Usertlist)
                 {
-                    UserInfoList.Add(new UserInfo { Name = s.Name, Email = "Email test" });
+                    UserInfoList.Add(new UserInfo { Name = s.UserName, Email = s.Email });
                 }
             }
             else
@@ -44,8 +44,8 @@ namespace BW.Website.Common.Helpers
                 User User = new User();
                 User = reponse.Content.ReadAsAsync<User>().Result;
 
-                UVD.UserName = User.Name;
-                UVD.Id = User.Id;
+                UVD.UserName = User.UserName;
+                UVD.Id = User.UserId;
                 UVD.UserAddress = "test address" ;
                 
             }
@@ -60,8 +60,8 @@ namespace BW.Website.Common.Helpers
         {
             // Convert UserInfo to User.
             User u = new User();
-            u.Name = user.Name;
-            u.Id = user.Id;
+            u.UserName = user.Name;
+            u.UserId = user.Id;
             // Post data
            HelpClient.PostUserInfo("api/user/AddUser/", u);
 

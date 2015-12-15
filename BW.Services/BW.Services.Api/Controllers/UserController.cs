@@ -1,4 +1,4 @@
-﻿using BW.Data.Contract.DTOs;
+﻿using BW.Repository.Data;
 using BW.Repository.Data.Repositories;
 using System.Collections.Generic;
 using System.Web.Http;
