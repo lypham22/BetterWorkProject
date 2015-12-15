@@ -117,22 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="validComaprePass" xml:space="preserve">
+    <value>Do not match with Password</value>
+  </data>
+  <data name="validConfirmPassRequire" xml:space="preserve">
+    <value>Confirn Password is required.</value>
+  </data>
   <data name="validEmailRegex" xml:space="preserve">
     <value>Invalid email address.</value>
   </data>
   <data name="validEmailRequire" xml:space="preserve">
     <value>Email is required.</value>
   </data>
-  <data name="validNameMinLenght" xml:space="preserve">
-    <value>Name must have least 6 word.</value>
-  </data>
-  <data name="validNameRequire" xml:space="preserve">
-    <value>Name is required.</value>
-  </data>
   <data name="validPassMinLenght" xml:space="preserve">
     <value>Password must have least 6 word.</value>
   </data>
   <data name="validPassRequire" xml:space="preserve">
     <value>Password is required.</value>
+  </data>
+  <data name="validUsernameLenght" xml:space="preserve">
+    <value>Username must from 6 to 12 word.</value>
+  </data>
+  <data name="validUsernameRegex" xml:space="preserve">
+    <value>Username must not contain special character.</value>
+  </data>
+  <data name="validUsernameRequire" xml:space="preserve">
+    <value>Username is required.</value>
   </data>
 </root>

@@ -56,8 +56,8 @@ namespace BW.Website.Common.Helpers
                 user.Password = userView.Password;
                 user.CreatedDate = DateTime.Now;
                 // Post data
-                ApiServiceUtilities.PostJson("api/UserApi/UpdateUser/", user);
-                return true;
+                var response = ApiServiceUtilities.PostJson("api/UserApi/UpdateUser/", user);
+                return response.IsSuccessStatusCode;
             }
             else
             {
@@ -65,22 +65,22 @@ namespace BW.Website.Common.Helpers
             }
         }
 
-        public static bool DeleteUser(UserView userView)
+        public static bool DeleteUser(int userId)
         {
-            if (userView != null)
+            if (userId != null)
             {
                 // Convert UserInfo to User.
                 User user = new User();
-                user.UserId = userView.UserId;
+                user.UserId = userId;
                 // Post data
-                ApiServiceUtilities.PostJson("api/UserApi/DeleteUser/", user);
+                ApiServiceUtilities.PostJson("api/UserApi/RemoveUser/", user);
                 return true;
             }
             else
             {
                 return false;
             }
-   
+
         }
     }
 }

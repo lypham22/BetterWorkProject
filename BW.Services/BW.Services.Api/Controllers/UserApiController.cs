@@ -40,9 +40,9 @@ namespace BW.Services.Api.Controllers
             return result;
         }
 
-        public bool DeleteUser(int userId)
+        public bool RemoveUser(User user)
         {
-            return userRepository.DeleteUser(userId);
+            return userRepository.DeleteUser(user.UserId);
         }
     }
 }
