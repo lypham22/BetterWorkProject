@@ -13,7 +13,7 @@ namespace BW.Website.Common.Helpers
         {
             List<UserInfo> userInfo = new List<UserInfo>();
 
-            HttpResponseMessage reponse = HelpClient.GetReponse("api/UserApi/getalluser");
+            HttpResponseMessage reponse = ApiServiceUtilities.GetReponse("api/UserApi/getalluser");
             if (reponse.IsSuccessStatusCode)
             {
                 var users = reponse.Content.ReadAsAsync<List<User>>().Result;
@@ -31,7 +31,7 @@ namespace BW.Website.Common.Helpers
             if (!string.IsNullOrEmpty(userIdEnc))
             {
                 int userId = int.Parse(userIdEnc);
-                HttpResponseMessage reponse = HelpClient.GetReponse("api/UserApi/GetUserById/" + userId);
+                HttpResponseMessage reponse = ApiServiceUtilities.GetReponse("api/UserApi/GetUserById/" + userId);
                 if (reponse.IsSuccessStatusCode)
                 {
                     User user = reponse.Content.ReadAsAsync<User>().Result;
@@ -56,7 +56,7 @@ namespace BW.Website.Common.Helpers
                 user.Password = userView.Password;
                 user.CreatedDate = DateTime.Now;
                 // Post data
-                HelpClient.PostUserInfo("api/UserApi/UpdateUser/", user);
+                ApiServiceUtilities.PostJson("api/UserApi/UpdateUser/", user);
                 return true;
             }
             else
@@ -73,7 +73,7 @@ namespace BW.Website.Common.Helpers
                 User user = new User();
                 user.UserId = userView.UserId;
                 // Post data
-                HelpClient.PostUserInfo("api/UserApi/DeleteUser/", user);
+                ApiServiceUtilities.PostJson("api/UserApi/DeleteUser/", user);
                 return true;
             }
             else
