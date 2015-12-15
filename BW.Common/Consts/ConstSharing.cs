@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace BW.Common.Consts
 {
-    public static class ConstSharing
+    public class ConstSharing
     {
         //TODO: declare constants of system.
+        #region
+        public const string USER_API = "api/UserApi/";
+        #endregion
     }
 }
