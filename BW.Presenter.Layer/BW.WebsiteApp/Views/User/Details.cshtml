@@ -1,11 +1,9 @@
-﻿@model BW.WebsiteApp.Models.User
-
+﻿@model BW.Data.Contract.DTOViews.UserInfo
 @{
     ViewBag.Title = "Details";
 }
 
 <h2>Details</h2>
-
 <div>
     <h4>User</h4>
     <hr />
@@ -27,24 +25,24 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.UserName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.UserName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Role)
+            @Html.DisplayNameFor(model => model.UserId)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Role)
+            @Html.DisplayFor(model => model.UserId)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.UserId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

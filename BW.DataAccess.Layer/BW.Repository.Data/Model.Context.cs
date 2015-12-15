@@ -12,7 +12,7 @@ namespace BW.Repository.Data
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-
+    
     public partial class BetterWorkEntities : BWDataContext
     {
         public BetterWorkEntities()
@@ -22,7 +22,7 @@ namespace BW.Repository.Data
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-           // throw new UnintentionalCodeFirstException();
+            //throw new UnintentionalCodeFirstException();
         }
     
         public virtual DbSet<Role> Roles { get; set; }

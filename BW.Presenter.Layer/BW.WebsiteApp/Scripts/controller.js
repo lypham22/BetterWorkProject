@@ -29,16 +29,10 @@ app.controller('validEmailCtrl', function ($scope) {
             }
         }
     );
-
-    //this.abc = function () {
-    //    console.log("123");
-    //    if (this.checkValidEmail) {
-    //        return regexp = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
-    //    }
-    //    else {
-    //        return regexp = "";
-    //    }
-    //    console.log("456");
-    //}
-
 });
+
+//app.controller('getAllCtrl', function ($scope, $http) {
+//    $http.get("http://localhost:8793/api/User/getalluser").success(function (response) {
+//        $scope.names = response;
+//    });
+//});

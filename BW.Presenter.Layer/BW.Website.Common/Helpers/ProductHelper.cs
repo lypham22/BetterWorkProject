@@ -1,5 +1,5 @@
 ﻿using BW.Data.Contract.DTOs;
-using BW.Data.Contract.DTOs_View;
+using BW.Data.Contract.DTOViews;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -7,83 +7,63 @@ using System.Net.Http;
 
 namespace BW.Website.Common.Helpers
 {
-    public class ProductHelper 
+    public class ProductHelper
     {
         public static List<UserInfo> GetAllUser()
         {
-            // Call service
-           // Convert data model to view model
-           // Encrypt ID
-            List<UserInfo> UserInfoList = new List<UserInfo>();
+            List<UserInfo> userInfo = new List<UserInfo>();
 
             HttpResponseMessage reponse = HelpClient.GetReponse("api/user/getalluser");
             if (reponse.IsSuccessStatusCode)
             {
-
-                //List<User> Usertlist = new List<User>();
-                var Usertlist = reponse.Content.ReadAsAsync<List<User>>().Result;
-                foreach (var s in Usertlist)
+                var users = reponse.Content.ReadAsAsync<List<User>>().Result;
+                foreach (var s in users)
                 {
-                    UserInfoList.Add(new UserInfo { Name = s.UserName, Email = s.Email });
+                    userInfo.Add(new UserInfo { UserId = s.UserId, UserName = s.UserName, Email = s.Email });
                 }
             }
+            return userInfo;
+        }
+
+        public static UserView GetUserById(string userIdEnc)
+        {
+            UserView userView = new UserView();
+            if (!string.IsNullOrEmpty(userIdEnc))
+            {
+                int userId = int.Parse(userIdEnc);
+                HttpResponseMessage reponse = HelpClient.GetReponse("api/user/SearchUser/" + userId);
+                if (reponse.IsSuccessStatusCode)
+                {
+                    User user = reponse.Content.ReadAsAsync<User>().Result;
+                    userView.UserId = user.UserId;
+                    userView.UserName = user.UserName;
+                    userView.Email = user.Email;
+                    userView.Password = user.Password;
+                }
+            }
+            return userView;
+        }
+
+        public static bool UpdateUser(UserView userView)
+        {
+            if (userView != null)
+            {
+                // Convert UserInfo to User.
+                User user = new User();
+                user.UserId = userView.UserId;
+                user.UserName = userView.UserName;
+                user.Email = userView.Email;
+                user.Password = userView.Password;
+                user.CreatedDate = DateTime.Now;
+                // Post data
+                HelpClient.PostUserInfo("api/user/UpdateUser/", user);
+                return true;
+            }
             else
             {
-               
+                return false;
             }
-            return UserInfoList;
-        }
 
-        public static UserViewModels GetUser(int? userid)
-        {
-            UserViewModels UVD = new UserViewModels();
-            HttpResponseMessage reponse = HelpClient.GetReponse("api/user/SearchUser/"+ userid);
-            if (reponse.IsSuccessStatusCode)
-            {
-
-                User User = new User();
-                User = reponse.Content.ReadAsAsync<User>().Result;
-
-                UVD.UserName = User.UserName;
-                UVD.Id = User.UserId;
-                UVD.UserAddress = "test address" ;
-                
-            }
-            else
-            {
-
-            }
-            return UVD;
-        }
-
-        public static bool CreateUser(UserInfo user)
-        {
-            // Convert UserInfo to User.
-            User u = new User();
-            u.UserName = user.Name;
-            u.UserId = user.Id;
-            // Post data
-            return HelpClient.PostUserInfo("api/user/AddUser/", u);
-        }
-
-        public static bool EditUser(UserInfo user)
-        {
-            // Convert UserInfo to User.
-            User u = new User();
-            u.UserName = user.Name;
-            u.UserId = user.Id;
-            // Post data
-            return HelpClient.PostUserInfo("api/user/EditUser/", u);
-        }
-
-        public static bool DeleteEditUser(UserInfo user)
-        {
-            // Convert UserInfo to User.
-            User u = new User();
-            u.UserName = user.Name;
-            u.UserId = user.Id;
-            // Post data
-            return HelpClient.PostUserInfo("api/user/DeleteUser/", u);
         }
     }
 }

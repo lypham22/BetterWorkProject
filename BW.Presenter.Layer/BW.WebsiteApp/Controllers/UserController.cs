@@ -8,11 +8,11 @@ using System.Web;
 using System.Web.Mvc;
 using BW.WebsiteApp.Models;
 using BW.Website.Common.Helpers;
-using BW.Data.Contract.DTOs_View;
+using BW.Data.Contract.DTOViews;
 
 namespace BW.WebsiteApp.Controllers
 {
-    public class UsersController : Controller
+    public class UserController : Controller
     {
         // GET: Users
         public ActionResult Index()
@@ -21,27 +21,11 @@ namespace BW.WebsiteApp.Controllers
             return View(getAllUser);
         }
 
-        
-        public ActionResult SearchUser(int userid)
-       {
-           var SearchUser = ProductHelper.GetUser(userid);
-            return View(SearchUser);
-        }
-
         // GET: Users/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(string userId)
         {
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
-            //User user = db.Users.Find(id);
-            //if (user == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            //return View(user);
-            return View();
+            var result = ProductHelper.GetUserById(userId);
+            return View(result);
         }
 
         // GET: Users/Create
@@ -55,36 +39,32 @@ namespace BW.WebsiteApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(UserInfo user)
+        public ActionResult Create(UserView userView)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    db.Users.Add(user);
-            //    db.SaveChanges();
-            //    return RedirectToAction("Index");
-            //}
-            user.Name = "lypham test";
+            if (ModelState.IsValid)
+            {
+                var result = ProductHelper.UpdateUser(userView);
+                if (result) 
+                { 
+                    return RedirectToAction("Index");
+                }
+            }
 
-
-            var SearchUser = ProductHelper.CreateUser(user);
-            //return View(user);
-            return View();
+            return View(userView);
         }
 
         // GET: Users/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(string userId)
         {
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
-            //User user = db.Users.Find(id);
-            //if (user == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            //return View(user);
-            return View();
+            if (string.IsNullOrEmpty(userId))
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                var result = ProductHelper.GetUserById(userId);
+                return View(result);
+            }
         }
 
         // POST: Users/Edit/5
@@ -92,16 +72,18 @@ namespace BW.WebsiteApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Email,Password,Name,Role")] User user)
+        public ActionResult Edit(UserView userView)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    db.Entry(user).State = EntityState.Modified;
-            //    db.SaveChanges();
-            //    return RedirectToAction("Index");
-            //}
-            //return View(user);
-            return View();
+            if (ModelState.IsValid)
+            {
+                var result = ProductHelper.UpdateUser(userView);
+                if (result)
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+
+            return View(userView);
         }
 
         // GET: Users/Delete/5
@@ -130,15 +112,6 @@ namespace BW.WebsiteApp.Controllers
             //db.SaveChanges();
             //return RedirectToAction("Index");
             return View();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            //if (disposing)
-            //{
-            //    db.Dispose();
-            //}
-            base.Dispose(disposing);
         }
     }
 }

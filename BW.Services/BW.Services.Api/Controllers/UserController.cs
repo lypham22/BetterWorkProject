@@ -16,37 +16,25 @@ namespace BW.Services.Api.Controllers
         public List<User> GetAllUser()
         {
             var data = userRepository.GetAllUser();
-            //List<UserDTO> ListUser = new List<UserDTO>();
-            //ListUser.Add(new UserDTO { UserId = 1, UserName = "user1111" });
-            //ListUser.Add(new UserDTO { UserId = 2, UserName = "user2" });
-
             return data;
         }
-        [HttpGet]
-        public User SearchUser(int id)
-        {
-            User user = userRepository.GetById(id);          
-            return user;
-        }
 
-        //[HttpGet]
-        public User AddUser(User newuser)
+        public bool UpdateUser(User user)
         {
-           // UserDTO user = new UserDTO { UserId = 3, UserName = "user4" };
-            userRepository.CreateUser(newuser);
-            return newuser;
-        }
+            if (user.UserId == 0)
+            {
+                userRepository.CreateUser(user);
+            }
+            else
+            {
+                userRepository.Update(user);
+            }
 
-        public void EditUser(User edituser)
-        {
-            // UserDTO user = new UserDTO { UserId = 3, UserName = "user4" };
-            userRepository.UpdateUser(edituser);
-
+            return true;
         }
 
         public void DeleteUser(User user)
         {
-            // UserDTO user = new UserDTO { UserId = 3, UserName = "user4" };
             userRepository.DeleteUser(user);
 
         }

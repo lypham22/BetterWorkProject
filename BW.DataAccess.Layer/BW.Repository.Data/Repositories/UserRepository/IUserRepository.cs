@@ -11,7 +11,7 @@ namespace BW.Repository.Data.Repositories
     public interface IUserRepository : IRepository<User>
     {
         List<User> GetAllUser();
-        void CreateUser(User user);
+        bool CreateUser(User user);
         bool UpdateUser(User user);
         bool DeleteUser(User user);
         List<User> SPGetAllUser();

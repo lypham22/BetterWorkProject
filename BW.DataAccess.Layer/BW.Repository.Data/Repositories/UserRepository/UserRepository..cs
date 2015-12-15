@@ -29,10 +29,11 @@ namespace BW.Repository.Data.Repositories
             return result;
         }
 
-        public void CreateUser(User user)
+        public bool CreateUser(User user)
         {
             this.Add(user);
-            this.DataContext.Commit();
+            this.DataContext.SaveChanges();
+            return true;
         }
 
         public bool UpdateUser(User user)
@@ -78,7 +79,7 @@ namespace BW.Repository.Data.Repositories
                 Direction = ParameterDirection.Output
             };
 
-           // var result = DataContext.Database.SqlQuery<User>("store-pro-name @ID OUT", id).ToList<User>();
+            var result = DataContext.Database.SqlQuery<User>("store-pro-name @ID OUT", id).ToList<User>();
             return new List<User>();
         }
     }
