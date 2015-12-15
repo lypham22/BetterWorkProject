@@ -60,7 +60,6 @@ namespace BW.WebsiteApp.Controllers
             if (string.IsNullOrEmpty(userId))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                //return RedirectToAction("Index");
             }
             var result = UserHelper.GetUserById(userId);
             if (result == null)
@@ -77,14 +76,15 @@ namespace BW.WebsiteApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(UserView userView)
         {
-            if (ModelState.IsValid)
-            {
+            //var errors = ModelState.Values.SelectMany(v => v.Errors);
+            //if (ModelState.IsValid)
+            //{
                 var result = UserHelper.UpdateUser(userView);
                 if (result)
                 {
                     return RedirectToAction("Index");
                 }
-            }
+            //}
 
             return View(userView);
         }
@@ -95,7 +95,6 @@ namespace BW.WebsiteApp.Controllers
             if (string.IsNullOrEmpty(userId))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                //return RedirectToAction("Index");
             }
             var result = UserHelper.GetUserById(userId);
             if (result == null)
