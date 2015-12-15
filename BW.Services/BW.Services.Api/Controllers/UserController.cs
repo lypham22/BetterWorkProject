@@ -36,5 +36,19 @@ namespace BW.Services.Api.Controllers
             userRepository.CreateUser(newuser);
             return newuser;
         }
+
+        public void EditUser(User edituser)
+        {
+            // UserDTO user = new UserDTO { UserId = 3, UserName = "user4" };
+            userRepository.UpdateUser(edituser);
+
+        }
+
+        public void DeleteUser(User user)
+        {
+            // UserDTO user = new UserDTO { UserId = 3, UserName = "user4" };
+            userRepository.DeleteUser(user);
+
+        }
     }
 }

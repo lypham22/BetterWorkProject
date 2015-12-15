@@ -63,9 +63,27 @@ namespace BW.Website.Common.Helpers
             u.UserName = user.Name;
             u.UserId = user.Id;
             // Post data
-           HelpClient.PostUserInfo("api/user/AddUser/", u);
+            return HelpClient.PostUserInfo("api/user/AddUser/", u);
+        }
 
-            return true;
+        public static bool EditUser(UserInfo user)
+        {
+            // Convert UserInfo to User.
+            User u = new User();
+            u.UserName = user.Name;
+            u.UserId = user.Id;
+            // Post data
+            return HelpClient.PostUserInfo("api/user/EditUser/", u);
+        }
+
+        public static bool DeleteEditUser(UserInfo user)
+        {
+            // Convert UserInfo to User.
+            User u = new User();
+            u.UserName = user.Name;
+            u.UserId = user.Id;
+            // Post data
+            return HelpClient.PostUserInfo("api/user/DeleteUser/", u);
         }
     }
 }

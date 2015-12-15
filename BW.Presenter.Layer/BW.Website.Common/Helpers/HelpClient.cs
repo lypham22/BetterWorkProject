@@ -28,17 +28,18 @@ namespace BW.Website.Common.Helpers
             return reponse;
         }
 
-        public static void PostUserInfo(string path,User user)
+        public static bool PostUserInfo(string path,User user)
         {
             HttpClient client = ConnectClient();
             
             try
             {
                 client.PostAsJsonAsync(path, user).ContinueWith((postTask) => postTask.Result.EnsureSuccessStatusCode());
+                return true;
             }
             catch (AggregateException e)
             {
-
+                return false;
             }
         }
     }
