@@ -20,14 +20,18 @@ namespace BW.Services.Api.Resolver
 
         public object GetService(Type serviceType)
         {
-            try
+            if ((this.container.IsRegistered(serviceType)) || (serviceType.IsClass))
             {
-                return container.Resolve(serviceType);
+                try
+                {
+                    return container.Resolve(serviceType);
+                }
+                catch (ResolutionFailedException)
+                {
+                    return null;
+                }
             }
-            catch (ResolutionFailedException)
-            {
-                return null;
-            }
+            return null;
         }
 
         public IEnumerable<object> GetServices(Type serviceType)

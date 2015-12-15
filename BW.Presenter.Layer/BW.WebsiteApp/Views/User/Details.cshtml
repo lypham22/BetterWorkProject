@@ -1,4 +1,4 @@
-﻿@model BW.Data.Contract.DTOViews.UserInfo
+﻿@model BW.Data.Contract.DTOViews.UserView
 @{
     ViewBag.Title = "Details";
 }
@@ -43,6 +43,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.UserId }) |
+    @Html.ActionLink("Edit", "Edit", new { UserId = Model.UserId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

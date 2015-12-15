@@ -53,9 +53,9 @@ namespace BW.Repository.Data.Repositories
             }
         }
 
-        public bool DeleteUser(User user)
+        public bool DeleteUser(int userId)
         {
-            var userData = this.GetById(user.UserId);
+            var userData = this.GetById(userId);
             if (userData != null)
             {
                 this.Delete(userData);

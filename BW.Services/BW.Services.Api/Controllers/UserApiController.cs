@@ -5,10 +5,10 @@ using System.Web.Http;
 
 namespace BW.Services.Api.Controllers
 {
-    public class UserController : ApiController
+    public class UserApiController : ApiController
     {
         private readonly IUserRepository userRepository;
-        public UserController(IUserRepository userRepository)
+        public UserApiController(IUserRepository userRepository)
         {
             this.userRepository = userRepository;
         }
@@ -19,24 +19,30 @@ namespace BW.Services.Api.Controllers
             return data;
         }
 
+        public User GetUserById(int id)
+        {
+            var data = userRepository.GetById(id);
+            return data;
+        }
+
         public bool UpdateUser(User user)
         {
+            var result = false;
             if (user.UserId == 0)
             {
-                userRepository.CreateUser(user);
+                result = userRepository.CreateUser(user);
             }
             else
             {
-                userRepository.Update(user);
+                result = userRepository.UpdateUser(user);
             }
 
-            return true;
+            return result;
         }
 
-        public void DeleteUser(User user)
+        public bool DeleteUser(int userId)
         {
-            userRepository.DeleteUser(user);
-
+            return userRepository.DeleteUser(userId);
         }
     }
 }

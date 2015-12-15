@@ -13,7 +13,7 @@ namespace BW.Repository.Data.Repositories
         List<User> GetAllUser();
         bool CreateUser(User user);
         bool UpdateUser(User user);
-        bool DeleteUser(User user);
+        bool DeleteUser(int userId);
         List<User> SPGetAllUser();
         User GetById(int id);
     }   

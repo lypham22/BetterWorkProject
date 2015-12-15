@@ -16,8 +16,8 @@ namespace BW.Services.Api
         {
             // Web API routes
             config.MapHttpAttributeRoutes();
-            config.Formatters.Remove(config.Formatters.XmlFormatter);
-            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new System.Net.Http.Headers.MediaTypeHeaderValue("application/json"));
+            //config.Formatters.Remove(config.Formatters.XmlFormatter);
+            //config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new System.Net.Http.Headers.MediaTypeHeaderValue("application/json"));
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
@@ -27,16 +27,9 @@ namespace BW.Services.Api
 
             // Web API configuration and services
             var container = new UnityContainer();
-            //container.RegisterType<IUnitOfWork, UnitOfWork>(new HierarchicalLifetimeManager());
             container.RegisterType<IDatabaseFactory, DatabaseFactory>(new HierarchicalLifetimeManager());
             container.RegisterType<IUserRepository, UserRepository>(new HierarchicalLifetimeManager());
             config.DependencyResolver = new UnityResolver(container);
-
-            //Ioc.Instance.<IDatabaseFactory>(new DatabaseFactory());
-            //Ioc.Instance.RegisterType<IDatabaseSessionFactory, DBSessionFactoryEager>();
-            //Ioc.Instance.RegisterType<IDatabaseFactory, DatabaseFactory>();
-            //Ioc.Instance.RegisterType<IUnitOfWork, UnitOfWork>();
-            //Ioc.Instance.RegisterType<IUserRepository, UserRepository>();
         }
     }
 }

@@ -17,14 +17,14 @@ namespace BW.WebsiteApp.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            var getAllUser = ProductHelper.GetAllUser();
+            var getAllUser = UserHelper.GetAllUser();
             return View(getAllUser);
         }
 
         // GET: Users/Details/5
         public ActionResult Details(string userId)
         {
-            var result = ProductHelper.GetUserById(userId);
+            var result = UserHelper.GetUserById(userId);
             return View(result);
         }
 
@@ -43,7 +43,7 @@ namespace BW.WebsiteApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = ProductHelper.UpdateUser(userView);
+                var result = UserHelper.UpdateUser(userView);
                 if (result) 
                 { 
                     return RedirectToAction("Index");
@@ -58,13 +58,15 @@ namespace BW.WebsiteApp.Controllers
         {
             if (string.IsNullOrEmpty(userId))
             {
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //return RedirectToAction("Index");
             }
-            else
+            var result = UserHelper.GetUserById(userId);
+            if (result == null)
             {
-                var result = ProductHelper.GetUserById(userId);
-                return View(result);
+                return HttpNotFound();
             }
+            return View(result);
         }
 
         // POST: Users/Edit/5
@@ -76,7 +78,7 @@ namespace BW.WebsiteApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = ProductHelper.UpdateUser(userView);
+                var result = UserHelper.UpdateUser(userView);
                 if (result)
                 {
                     return RedirectToAction("Index");

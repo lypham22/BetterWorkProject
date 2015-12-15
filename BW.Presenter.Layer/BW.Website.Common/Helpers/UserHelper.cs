@@ -7,13 +7,13 @@ using System.Net.Http;
 
 namespace BW.Website.Common.Helpers
 {
-    public class ProductHelper
+    public class UserHelper
     {
         public static List<UserInfo> GetAllUser()
         {
             List<UserInfo> userInfo = new List<UserInfo>();
 
-            HttpResponseMessage reponse = HelpClient.GetReponse("api/user/getalluser");
+            HttpResponseMessage reponse = HelpClient.GetReponse("api/UserApi/getalluser");
             if (reponse.IsSuccessStatusCode)
             {
                 var users = reponse.Content.ReadAsAsync<List<User>>().Result;
@@ -31,7 +31,7 @@ namespace BW.Website.Common.Helpers
             if (!string.IsNullOrEmpty(userIdEnc))
             {
                 int userId = int.Parse(userIdEnc);
-                HttpResponseMessage reponse = HelpClient.GetReponse("api/user/SearchUser/" + userId);
+                HttpResponseMessage reponse = HelpClient.GetReponse("api/UserApi/GetUserById/" + userId);
                 if (reponse.IsSuccessStatusCode)
                 {
                     User user = reponse.Content.ReadAsAsync<User>().Result;
@@ -56,14 +56,31 @@ namespace BW.Website.Common.Helpers
                 user.Password = userView.Password;
                 user.CreatedDate = DateTime.Now;
                 // Post data
-                HelpClient.PostUserInfo("api/user/UpdateUser/", user);
+                HelpClient.PostUserInfo("api/UserApi/UpdateUser/", user);
                 return true;
             }
             else
             {
                 return false;
             }
+        }
 
+        public static bool DeleteUser(UserView userView)
+        {
+            if (userView != null)
+            {
+                // Convert UserInfo to User.
+                User user = new User();
+                user.UserId = userView.UserId;
+                // Post data
+                HelpClient.PostUserInfo("api/UserApi/DeleteUser/", user);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+   
         }
     }
 }
