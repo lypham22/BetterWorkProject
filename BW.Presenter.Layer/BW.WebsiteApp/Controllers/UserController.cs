@@ -8,7 +8,6 @@ using System.Web;
 using System.Web.Mvc;
 using BW.Website.Common.Helpers;
 using BW.Data.Contract.DTOs;
-using BW.Website.Resource;
 
 namespace BW.WebsiteApp.Controllers
 {
@@ -17,7 +16,6 @@ namespace BW.WebsiteApp.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            GlobalResource.validEmailRequire.ToString();
             var getAllUser = UserHelper.GetAllUser();
             return View(getAllUser);
         }
