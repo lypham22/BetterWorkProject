@@ -61,6 +61,24 @@ namespace BW.Website.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do not match with Password.
+        /// </summary>
+        public static string validComaprePass {
+            get {
+                return ResourceManager.GetString("validComaprePass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirn Password is required..
+        /// </summary>
+        public static string validConfirmPassRequire {
+            get {
+                return ResourceManager.GetString("validConfirmPassRequire", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid email address..
         /// </summary>
         public static string validEmailRegex {
@@ -79,24 +97,6 @@ namespace BW.Website.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name must have least 6 word..
-        /// </summary>
-        public static string validNameMinLenght {
-            get {
-                return ResourceManager.GetString("validNameMinLenght", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name is required..
-        /// </summary>
-        public static string validNameRequire {
-            get {
-                return ResourceManager.GetString("validNameRequire", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Password must have least 6 word..
         /// </summary>
         public static string validPassMinLenght {
@@ -111,6 +111,33 @@ namespace BW.Website.Resource {
         public static string validPassRequire {
             get {
                 return ResourceManager.GetString("validPassRequire", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username must from 6 to 12 word..
+        /// </summary>
+        public static string validUsernameLenght {
+            get {
+                return ResourceManager.GetString("validUsernameLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username must not contain special character..
+        /// </summary>
+        public static string validUsernameRegex {
+            get {
+                return ResourceManager.GetString("validUsernameRegex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username is required..
+        /// </summary>
+        public static string validUsernameRequire {
+            get {
+                return ResourceManager.GetString("validUsernameRequire", resourceCulture);
             }
         }
     }

@@ -29,6 +29,24 @@ namespace BW.Repository.Data.Repositories
             return result;
         }
 
+        /// <summary>
+        /// TODO: Delete: Using for demo
+        /// </summary>
+        /// <returns></returns>
+        public List<User> GetAllUserAndRole()
+        {
+            RoleRepository roleRepository = new RoleRepository(this.DatabaseFactory);
+            var list = this.GetAll()
+                .Join(roleRepository.GetAll(), left => left.UserId, right => right.RoleID,
+                    (left, right) => new User
+                    {
+                        UserId = left.UserId,
+                        UserName = right.RoleName
+                    })
+                    .OrderBy(p => p.UserName).ToList();
+            return list;
+        }
+
         public bool CreateUser(User user)
         {
             this.Add(user);
@@ -70,6 +88,10 @@ namespace BW.Repository.Data.Repositories
         }
 
         // Execute store procedure
+        /// <summary>
+        /// TODO: Delete: Using for demo
+        /// </summary>
+        /// <returns></returns>
         public List<User> SPGetAllUser()
         {
             var id = new SqlParameter
@@ -79,7 +101,7 @@ namespace BW.Repository.Data.Repositories
                 Direction = ParameterDirection.Output
             };
 
-            var result = DataContext.Database.SqlQuery<User>("store-pro-name @ID OUT", id).ToList<User>();
+            var result = DataContext.Database.SqlQuery<Role>("getalluser").ToList<Role>();
             return new List<User>();
         }
     }

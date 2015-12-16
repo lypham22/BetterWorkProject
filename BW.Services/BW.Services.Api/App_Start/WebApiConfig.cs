@@ -16,8 +16,8 @@ namespace BW.Services.Api
         {
             // Web API routes
             config.MapHttpAttributeRoutes();
-            //config.Formatters.Remove(config.Formatters.XmlFormatter);
-            //config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new System.Net.Http.Headers.MediaTypeHeaderValue("application/json"));
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new System.Net.Http.Headers.MediaTypeHeaderValue("application/json"));
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
@@ -29,6 +29,7 @@ namespace BW.Services.Api
             var container = new UnityContainer();
             container.RegisterType<IDatabaseFactory, DatabaseFactory>(new HierarchicalLifetimeManager());
             container.RegisterType<IUserRepository, UserRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<IRoleRepository, RoleRepository>(new HierarchicalLifetimeManager());
             config.DependencyResolver = new UnityResolver(container);
         }
     }

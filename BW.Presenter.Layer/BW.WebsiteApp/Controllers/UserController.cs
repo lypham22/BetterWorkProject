@@ -6,9 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using BW.WebsiteApp.Models;
 using BW.Website.Common.Helpers;
 using BW.Data.Contract.DTOViews;
+using BW.Website.Resource;
 
 namespace BW.WebsiteApp.Controllers
 {
@@ -17,6 +17,7 @@ namespace BW.WebsiteApp.Controllers
         // GET: Users
         public ActionResult Index()
         {
+            GlobalResource.validEmailRequire.ToString();
             var getAllUser = UserHelper.GetAllUser();
             return View(getAllUser);
         }
@@ -59,7 +60,6 @@ namespace BW.WebsiteApp.Controllers
             if (string.IsNullOrEmpty(userId))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                //return RedirectToAction("Index");
             }
             var result = UserHelper.GetUserById(userId);
             if (result == null)
@@ -76,44 +76,41 @@ namespace BW.WebsiteApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(UserView userView)
         {
-            if (ModelState.IsValid)
-            {
+            //var errors = ModelState.Values.SelectMany(v => v.Errors);
+            //if (ModelState.IsValid)
+            //{
                 var result = UserHelper.UpdateUser(userView);
                 if (result)
                 {
                     return RedirectToAction("Index");
                 }
-            }
+            //}
 
             return View(userView);
         }
 
         // GET: Users/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(string userId)
         {
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
-            //User user = db.Users.Find(id);
-            //if (user == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            //return View(user);
-            return View();
+            if (string.IsNullOrEmpty(userId))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var result = UserHelper.GetUserById(userId);
+            if (result == null)
+            {
+                return HttpNotFound();
+            }
+            return View(result);
         }
 
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int userId)
         {
-            //User user = db.Users.Find(id);
-            //db.Users.Remove(user);
-            //db.SaveChanges();
-            //return RedirectToAction("Index");
-            return View();
+            UserHelper.DeleteUser(userId);
+            return RedirectToAction("Index");
         }
     }
 }

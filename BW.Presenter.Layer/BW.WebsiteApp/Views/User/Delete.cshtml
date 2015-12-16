@@ -1,4 +1,4 @@
-﻿@model BW.WebsiteApp.Models.User
+﻿@model BW.Data.Contract.DTOViews.UserView
 
 @{
     ViewBag.Title = "Delete";
@@ -28,19 +28,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.UserName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Role)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Role)
+            @Html.DisplayFor(model => model.UserName)
         </dd>
 
     </dl>

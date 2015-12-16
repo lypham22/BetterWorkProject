@@ -16,8 +16,8 @@ namespace BW.Repository.Data
     {
         public int RoleID { get; set; }
         public string RoleName { get; set; }
-        public bool IsActive { get; set; }
-        public System.DateTime CreatedDate { get; set; }
-        public System.DateTime UpdatedDate { get; set; }
+        public Nullable<bool> IsActive { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<System.DateTime> UpdatedDate { get; set; }
     }
 }

@@ -52,6 +52,12 @@
     <Compile Include="DTOs\User\UserDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\BW.Website.Resource\BW.Website.Resource.csproj">
+      <Project>{5d3aace6-a9d9-4d0f-9218-b99fb8875ec6}</Project>
+      <Name>BW.Website.Resource</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

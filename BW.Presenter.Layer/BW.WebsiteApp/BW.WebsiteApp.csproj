@@ -116,6 +116,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Views\User\Delete.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
@@ -125,7 +128,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +153,10 @@
     <ProjectReference Include="..\..\BW.Data.Contracts\BW.Data.Contract\BW.Data.Contract.csproj">
       <Project>{275de784-85a0-4be6-bd71-534d3b8153de}</Project>
       <Name>BW.Data.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BW.Website.Resource\BW.Website.Resource.csproj">
+      <Project>{5d3aace6-a9d9-4d0f-9218-b99fb8875ec6}</Project>
+      <Name>BW.Website.Resource</Name>
     </ProjectReference>
     <ProjectReference Include="..\BW.Website.Common\BW.Website.Common.csproj">
       <Project>{13ecdaab-9f2c-4537-82ca-29e66596f372}</Project>

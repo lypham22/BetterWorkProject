@@ -3,11 +3,11 @@
 @{
     ViewBag.Title = "Create";
 }
-<style>
-    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-        display: none !important;
-    }
-</style>
+@*<style>
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+    </style>*@
 <h2>Create</h2>
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { @name = "myForm", @ng_app = "createUser" }))
@@ -18,14 +18,28 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
+            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10" ng-controller="validUsernameCtrl">
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @required = "required", @ng_model = "Name", @ng_minlength = "6", @ng_pattern = "regexp" } })
+                @*<span style="color:red" ng-cloak ng-show="myForm.UserName.$dirty && myForm.UserName.$invalid">
+                        <span ng-show="myForm.UserName.$error.required">Name is required.</span>
+                        <span ng-show="myForm.UserName.$error.minlength">Username must from 6 to 12 word.</span>
+                        <span ng-show="myForm.UserName.$error.pattern">Username must not contain special character.</span>
+                    </span>*@
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10" ng-controller="validEmailCtrl">
-                <span><input type="checkbox" ng-model="checkValidEmail" /> Is validate email?</span><br />
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @ng_required = "checkValidEmail", @ng_model = "Email", @ng_pattern = "regexp" } })
-                <span style="color:red" ng-cloak ng-show="(myForm.Email.$dirty && myForm.Email.$invalid)"> @*&& checkValidEmail*@
-                    <span ng-show="myForm.Email.$error.required">Email is required.</span>
-                    <span ng-show="myForm.Email.$error.pattern">Invalid email address.</span>
-                </span>
+                @*<span><input type="checkbox" ng-model="checkValidEmail" /> Is validate email?</span><br />*@
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @ng_required = "true", @ng_model = "Email", @ng_pattern = "regexp" } })
+                @*<span style="color:red" ng-cloak ng-show="(myForm.Email.$dirty && myForm.Email.$invalid)">
+                        <span ng-show="myForm.Email.$error.required">Email is required.</span>
+                        <span ng-show="myForm.Email.$error.pattern">Invalid email address.</span>
+                    </span>*@
+                @*&& checkValidEmail*@
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -38,41 +52,47 @@
                htmlAttributes = new
                {
                    @class = "form-control",
-                   @required = "required",
+                   @required = "true",
                    @ng_model = "Password",
-                   @type = "password",
                    @ng_minlength = "6"
                }
            })
-                <span style="color:red" ng-cloak ng-show="myForm.Password.$dirty && myForm.Password.$invalid">
-                    <span ng-show="myForm.Password.$error.required">Password is required.</span>
-                    <span ng-show="myForm.Password.$error.minlength">Password must have least 6 word.</span>
-                </span>
+                @*<span style="color:red" ng-cloak ng-show="myForm.Password.$dirty && myForm.Password.$invalid">
+                        <span ng-show="myForm.Password.$error.required">Password is required.</span>
+                        <span ng-show="myForm.Password.$error.minlength">Password must have least 6 word.</span>
+                    </span>*@
                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
-            <label class="control-label col-md-2">Re-Password</label>
+            @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="password" class="form-control" id="RePassword" name="RePassword" ng-model="RePassword" required pw-check="Password" />
-                <span style="color:red" ng-cloak ng-show="myForm.RePassword.$dirty && myForm.RePassword.$invalid">
-                    <span ng-show="myForm.RePassword.$error.pwmatch || myForm.RePassword.$error.required">Passwords don't match.</span>
-                </span>
+                @Html.EditorFor(model => model.ConfirmPassword, new
+           {
+               htmlAttributes = new
+               {
+                   @class = "form-control",
+                   @required = "true",
+                   @ng_model = "ConfirmPassword",
+                   @pw_check = "Password"
+               }
+           })
+                @*<span style="color:red" ng-cloak ng-show="myForm.ConfirmPassword.$dirty && myForm.ConfirmPassword.$invalid">
+                        <span ng-show="myForm.ConfirmPassword.$error.required">Password is required.</span>
+                        <span ng-show="myForm.ConfirmPassword.$error.pwmatch || myForm.ConfirmPassword.$error.required">Do not match with Password</span>
+                    </span>*@
+                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @required = "required", @ng_model = "Name", @ng_minlength = "6" } })
-                <span style="color:red" ng-cloak ng-show="myForm.Name.$dirty && myForm.Name.$invalid">
-                    <span ng-show="myForm.Name.$error.required">Name is required.</span>
-                    <span ng-show="myForm.Name.$error.minlength">Name must have least 6 word.</span>
-                </span>
-                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        @*<div class="form-group">
+                <label class="control-label col-md-2">Re-Password</label>
+                <div class="col-md-10">
+                    <input type="password" class="form-control" id="RePassword" name="RePassword" ng-model="RePassword" required pw-check="Password" />
+                    <span style="color:red" ng-cloak ng-show="myForm.RePassword.$dirty && myForm.RePassword.$invalid">
+                        <span ng-show="myForm.RePassword.$error.pwmatch || myForm.RePassword.$error.required">Passwords don't match.</span>
+                    </span>
+                </div>
+            </div>*@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" ng-disabled="!myForm.$valid" />
@@ -81,10 +101,10 @@
     </div>
 
     @*<div ng-controller="getAllCtrl">
-        <ul ng-repeat="user in names">
-            <li>{{user.Id}} + ", " + {{user.Name}} }</li>
-        </ul>
-    </div>*@
+            <ul ng-repeat="user in names">
+                <li>{{user.Id}} + ", " + {{user.Name}} }</li>
+            </ul>
+        </div>*@
 }
 
 <div>
@@ -94,5 +114,5 @@
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-@*<script src="~/Scripts/angular.min.js"></script>
-<script src="~/Scripts/controller.js"></script>*@
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/controller.js"></script>
