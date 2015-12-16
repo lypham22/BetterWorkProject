@@ -44,7 +44,7 @@ namespace BW.WebsiteApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = UserHelper.UpdateUser(userView);
+                var result = UserHelper.InsertUser(userView);
                 if (result) 
                 { 
                     return RedirectToAction("Index");
@@ -74,17 +74,17 @@ namespace BW.WebsiteApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(UserView userView)
+        public ActionResult Edit(UserEditView userView)
         {
             //var errors = ModelState.Values.SelectMany(v => v.Errors);
-            //if (ModelState.IsValid)
-            //{
+            if (ModelState.IsValid)
+            {
                 var result = UserHelper.UpdateUser(userView);
                 if (result)
                 {
                     return RedirectToAction("Index");
                 }
-            //}
+            }
 
             return View(userView);
         }

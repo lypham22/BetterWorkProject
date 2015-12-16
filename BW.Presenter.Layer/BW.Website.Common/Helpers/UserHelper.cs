@@ -44,7 +44,27 @@ namespace BW.Website.Common.Helpers
             return userView;
         }
 
-        public static bool UpdateUser(UserView userView)
+        public static bool UpdateUser(UserEditView userView)
+        {
+            if (userView != null)
+            {
+                // Convert UserInfo to User.
+                User user = new User();
+                user.UserId = userView.UserId;
+                user.UserName = userView.UserName;
+                user.Email = userView.Email;
+                user.UpdatedDate = DateTime.Now;
+                // Post data
+                var response = ApiServiceUtilities.PostJson("api/UserApi/UpdateUser/", user);
+                return response.IsSuccessStatusCode;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static bool InsertUser(UserView userView)
         {
             if (userView != null)
             {
@@ -56,7 +76,7 @@ namespace BW.Website.Common.Helpers
                 user.Password = userView.Password;
                 user.CreatedDate = DateTime.Now;
                 // Post data
-                var response = ApiServiceUtilities.PostJson("api/UserApi/UpdateUser/", user);
+                var response = ApiServiceUtilities.PostJson("api/UserApi/InsertUser/", user);
                 return response.IsSuccessStatusCode;
             }
             else

@@ -24,20 +24,13 @@ namespace BW.Services.Api.Controllers
             var data = userRepository.GetById(id);
             return data;
         }
-
+        public bool InsertUser(User user)
+        {
+            return userRepository.CreateUser(user);
+        }
         public bool UpdateUser(User user)
         {
-            var result = false;
-            if (user.UserId == 0)
-            {
-                result = userRepository.CreateUser(user);
-            }
-            else
-            {
-                result = userRepository.UpdateUser(user);
-            }
-
-            return result;
+            return userRepository.UpdateUser(user);
         }
 
         public bool RemoveUser(User user)

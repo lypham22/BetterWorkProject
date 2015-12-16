@@ -61,6 +61,7 @@ namespace BW.Repository.Data.Repositories
             {
                 userData.Email = user.Email;
                 userData.UserName = user.UserName;
+                userData.UpdatedDate = user.UpdatedDate;
                 this.Update(userData);
                 this.DataContext.SaveChanges();
                 return true;

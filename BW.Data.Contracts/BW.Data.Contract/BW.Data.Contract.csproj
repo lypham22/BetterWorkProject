@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOViews\User\UserEditView.cs" />
     <Compile Include="DTOViews\User\UserView.cs" />
     <Compile Include="DTOViews\User\UserInfo.cs" />
     <Compile Include="DTOs\User\Role.cs" />
