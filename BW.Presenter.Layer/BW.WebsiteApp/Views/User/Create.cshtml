@@ -1,4 +1,4 @@
-﻿@model BW.Data.Contract.DTOViews.UserView
+﻿@model BW.Data.Contract.DTOs.UserView
 
 @{
     ViewBag.Title = "Create";
@@ -100,11 +100,11 @@
         </div>
     </div>
 
-    @*<div ng-controller="getAllCtrl">
-            <ul ng-repeat="user in names">
-                <li>{{user.Id}} + ", " + {{user.Name}} }</li>
-            </ul>
-        </div>*@
+    <div ng-controller="getAllCtrl">
+        <ul ng-repeat="user in names">
+            <li>{{user.UserId}} - {{user.UserName}} - {{user.Email}} }</li>
+        </ul>
+    </div>
 }
 
 <div>

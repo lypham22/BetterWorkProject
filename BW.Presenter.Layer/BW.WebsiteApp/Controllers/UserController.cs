@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BW.Website.Common.Helpers;
-using BW.Data.Contract.DTOViews;
+using BW.Data.Contract.DTOs;
 using BW.Website.Resource;
 
 namespace BW.WebsiteApp.Controllers

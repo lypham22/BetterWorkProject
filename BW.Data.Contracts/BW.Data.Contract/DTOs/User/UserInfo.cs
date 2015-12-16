@@ -1,5 +1,5 @@
 ﻿
-namespace BW.Data.Contract.DTOViews
+namespace BW.Data.Contract.DTOs
 {
     public class UserInfo
     {

@@ -45,12 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTOViews\User\UserEditView.cs" />
-    <Compile Include="DTOViews\User\UserView.cs" />
-    <Compile Include="DTOViews\User\UserInfo.cs" />
+    <Compile Include="DTOs\User\UserEditView.cs" />
+    <Compile Include="DTOs\User\UserView.cs" />
+    <Compile Include="DTOs\User\UserInfo.cs" />
     <Compile Include="DTOs\User\Role.cs" />
     <Compile Include="DTOs\User\User.cs" />
-    <Compile Include="DTOs\User\UserDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,4 @@
 ﻿using BW.Data.Contract.DTOs;
-using BW.Data.Contract.DTOViews;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;

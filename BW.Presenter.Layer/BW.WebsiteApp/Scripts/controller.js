@@ -36,8 +36,8 @@ app.controller('validUsernameCtrl', function ($scope) {
     $scope.regexp = /^[a-z0-9A-Z\s.\[\]_\-\*\p{L}]*$/;
 });
 
-//app.controller('getAllCtrl', function ($scope, $http) {
-//    $http.get("http://localhost:8793/api/User/getalluser").success(function (response) {
-//        $scope.names = response;
-//    });
-//});
+app.controller('getAllCtrl', function ($scope, $http) {
+    $http.get("http://localhost:8793/api/UserApi/getalluser").success(function (response) {
+        $scope.names = response;
+    });
+});

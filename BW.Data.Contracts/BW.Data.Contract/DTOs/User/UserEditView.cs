@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using BW.Website.Resource;
 
-namespace BW.Data.Contract.DTOViews
+namespace BW.Data.Contract.DTOs
 {
     public class UserEditView
     {
