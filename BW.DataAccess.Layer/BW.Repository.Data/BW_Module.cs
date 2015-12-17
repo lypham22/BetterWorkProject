@@ -12,13 +12,19 @@ namespace BW.Repository.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class BW_Module
     {
-        public int UserId { get; set; }
-        public string UserName { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public BW_Module()
+        {
+            this.BW_RoleInPermission = new HashSet<BW_RoleInPermission>();
+        }
+    
+        public int ModuleId { get; set; }
+        public string ModuleName { get; set; }
+        public string ModuleDescription { get; set; }
+        public bool IsActive { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
+    
+        public virtual ICollection<BW_RoleInPermission> BW_RoleInPermission { get; set; }
     }
 }

@@ -8,14 +8,15 @@ using System.Threading.Tasks;
 
 namespace BW.Repository.Data.Repositories
 {
-    public interface IUserRepository : IRepository<User>
+    public interface IUserRepository : IRepository<BW_User>
     {
-        List<User> GetAllUser();
-        bool CreateUser(User user);
-        bool UpdateUser(User user);
+        List<UserDTO> GetAllUser();
+        //UserDetailsDTO GetUserById(int userId);
+        bool CreateUser(UserCreateDTO user);
+        bool UpdateUser(BW_User user);
         bool DeleteUser(int userId);
-        List<User> SPGetAllUser();
-        List<User> GetAllUserAndRole();
+        List<BW_User> SPGetAllUser();
+        List<BW_UserInRole> GetAllUserAndRole();
     }   
 
 }

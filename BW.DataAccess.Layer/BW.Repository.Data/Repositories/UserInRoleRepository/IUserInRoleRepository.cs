@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace BW.Repository.Data.Repositories
 {
-    public interface IRoleRepository : IRepository<BW_Role>
+    public interface IUserInRoleRepository : IRepository<BW_UserInRole>
     {
-        List<BW_Role> GetAllRole();
     }   
 
 }

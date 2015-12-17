@@ -3,6 +3,7 @@ using BW.Repository.Data.Repositories;
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Linq;
+using BW.Data.Contract.DTOs;
 
 namespace BW.Services.Api.Controllers
 {
@@ -14,29 +15,29 @@ namespace BW.Services.Api.Controllers
             this.userRepository = userRepository;
         }
 
-        public List<User> GetAllUser()
+        public List<UserDTO> GetAllUser()
         {
             var data = userRepository.GetAllUser();
             return data;
         }
 
-        public User GetUserById(int id)
-        {
-            var data = userRepository.GetById(id);
-            return data;
-        }
-        public bool InsertUser(User user)
+        //public UserInRole GetUserById(int id)
+        //{
+        //    var data = userRepository.GetUserById(id);
+        //    return data;
+        //}
+        public bool InsertUser(UserCreateDTO user)
         {
             return userRepository.CreateUser(user);
         }
-        public bool UpdateUser(User user)
-        {
-            return userRepository.UpdateUser(user);
-        }
+        //public bool UpdateUser(UserCreateView user)
+        //{
+        //    return userRepository.UpdateUser(user);
+        //}
 
-        public bool RemoveUser(User user)
-        {
-            return userRepository.DeleteUser(user.UserId);
-        }
+        //public bool RemoveUser(User user)
+        //{
+        //    return userRepository.DeleteUser(user.UserId);
+        //}
     }
 }

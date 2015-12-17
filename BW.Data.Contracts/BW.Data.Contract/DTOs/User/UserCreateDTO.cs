@@ -1,8 +1,9 @@
-﻿
-using System;
+﻿using System;
+using System.Collections.Generic;
+
 namespace BW.Data.Contract.DTOs
 {
-    public class UserDTO
+    public class UserCreateDTO
     {
         public int UserId { get; set; }
         public string FirstName { get; set; }
@@ -11,6 +12,6 @@ namespace BW.Data.Contract.DTOs
         public string Password { get; set; }
         public DateTime? CreatedDate { get; set; }
         public bool IsActive { get; set; }
-        public string RoleName { get; set; }
+        public List<int> RoleId { get; set; }
     }
 }

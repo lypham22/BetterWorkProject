@@ -10,20 +10,20 @@ using System.Data;
 
 namespace BW.Repository.Data.Repositories
 {
-    public class RoleRepository : RepositoryBase<Role>, IRoleRepository
+    public class RoleRepository : RepositoryBase<BW_Role>, IRoleRepository
     {
         public RoleRepository(IDatabaseFactory databaseFactory)
             : base(databaseFactory)
         {
         }
 
-        public List<Role> GetAllRole()
+        public List<BW_Role> GetAllRole()
         {
             var result = this.GetAll()
-                          .Select(u => new Role
+                          .Select(u => new BW_Role
                           {
-                              RoleID = u.RoleID,
-                              RoleName = u.RoleName,
+                              RoleId = u.RoleId,
+                              RoleName = u.RoleName
                           }).ToList();
             return result;
         }

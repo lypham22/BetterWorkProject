@@ -5,86 +5,337 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="BetterWorkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Role">
+        <EntityType Name="BW_Module">
           <Key>
-            <PropertyRef Name="RoleID" />
+            <PropertyRef Name="ModuleId" />
           </Key>
-          <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RoleName" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="IsActive" Type="bit" />
+          <Property Name="ModuleId" Type="int" Nullable="false" />
+          <Property Name="ModuleName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="ModuleDescription" Type="nvarchar" MaxLength="255" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="BW_Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="RoleDescription" Type="nvarchar" MaxLength="1000" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
-        <EntityType Name="User">
+        <EntityType Name="BW_RoleInPermission">
+          <Key>
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="ModuleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="ModuleId" Type="int" Nullable="false" />
+          <Property Name="PView" Type="bit" Nullable="false" />
+          <Property Name="PAdd" Type="bit" Nullable="false" />
+          <Property Name="PEdit" Type="bit" Nullable="false" />
+          <Property Name="PDelete" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="BW_User">
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="Password" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="255" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="255" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="BW_UserInRole">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_BW_RoleInPermission_BW_Module">
+          <End Role="BW_Module" Type="Self.BW_Module" Multiplicity="1" />
+          <End Role="BW_RoleInPermission" Type="Self.BW_RoleInPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BW_Module">
+              <PropertyRef Name="ModuleId" />
+            </Principal>
+            <Dependent Role="BW_RoleInPermission">
+              <PropertyRef Name="ModuleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BW_RoleInPermission_BW_Role">
+          <End Role="BW_Role" Type="Self.BW_Role" Multiplicity="1" />
+          <End Role="BW_RoleInPermission" Type="Self.BW_RoleInPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BW_Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="BW_RoleInPermission">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BW_UserInRole_BW_Role">
+          <End Role="BW_Role" Type="Self.BW_Role" Multiplicity="1" />
+          <End Role="BW_UserInRole" Type="Self.BW_UserInRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BW_Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="BW_UserInRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BW_UserInRole_BW_User">
+          <End Role="BW_User" Type="Self.BW_User" Multiplicity="1" />
+          <End Role="BW_UserInRole" Type="Self.BW_UserInRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BW_User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BW_UserInRole">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="BetterWorkModelStoreContainer">
-          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BW_Module" EntityType="Self.BW_Module" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BW_Role" EntityType="Self.BW_Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BW_RoleInPermission" EntityType="Self.BW_RoleInPermission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BW_User" EntityType="Self.BW_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BW_UserInRole" EntityType="Self.BW_UserInRole" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BW_RoleInPermission_BW_Module" Association="Self.FK_BW_RoleInPermission_BW_Module">
+            <End Role="BW_Module" EntitySet="BW_Module" />
+            <End Role="BW_RoleInPermission" EntitySet="BW_RoleInPermission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BW_RoleInPermission_BW_Role" Association="Self.FK_BW_RoleInPermission_BW_Role">
+            <End Role="BW_Role" EntitySet="BW_Role" />
+            <End Role="BW_RoleInPermission" EntitySet="BW_RoleInPermission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BW_UserInRole_BW_Role" Association="Self.FK_BW_UserInRole_BW_Role">
+            <End Role="BW_Role" EntitySet="BW_Role" />
+            <End Role="BW_UserInRole" EntitySet="BW_UserInRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BW_UserInRole_BW_User" Association="Self.FK_BW_UserInRole_BW_User">
+            <End Role="BW_User" EntitySet="BW_User" />
+            <End Role="BW_UserInRole" EntitySet="BW_UserInRole" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BetterWorkModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="BetterWorkEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Users" EntityType="BetterWorkModel.User" />
-          <EntitySet Name="Roles" EntityType="BetterWorkModel.Role" />
+          <EntitySet Name="BW_Module" EntityType="BetterWorkModel.BW_Module" />
+          <EntitySet Name="BW_Role" EntityType="BetterWorkModel.BW_Role" />
+          <EntitySet Name="BW_RoleInPermission" EntityType="BetterWorkModel.BW_RoleInPermission" />
+          <EntitySet Name="BW_User" EntityType="BetterWorkModel.BW_User" />
+          <EntitySet Name="BW_UserInRole" EntityType="BetterWorkModel.BW_UserInRole" />
+          <AssociationSet Name="FK_BW_RoleInPermission_BW_Module" Association="BetterWorkModel.FK_BW_RoleInPermission_BW_Module">
+            <End Role="BW_Module" EntitySet="BW_Module" />
+            <End Role="BW_RoleInPermission" EntitySet="BW_RoleInPermission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BW_RoleInPermission_BW_Role" Association="BetterWorkModel.FK_BW_RoleInPermission_BW_Role">
+            <End Role="BW_Role" EntitySet="BW_Role" />
+            <End Role="BW_RoleInPermission" EntitySet="BW_RoleInPermission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BW_UserInRole_BW_Role" Association="BetterWorkModel.FK_BW_UserInRole_BW_Role">
+            <End Role="BW_Role" EntitySet="BW_Role" />
+            <End Role="BW_UserInRole" EntitySet="BW_UserInRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BW_UserInRole_BW_User" Association="BetterWorkModel.FK_BW_UserInRole_BW_User">
+            <End Role="BW_User" EntitySet="BW_User" />
+            <End Role="BW_UserInRole" EntitySet="BW_UserInRole" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="User">
+        <EntityType Name="BW_Module">
+          <Key>
+            <PropertyRef Name="ModuleId" />
+          </Key>
+          <Property Name="ModuleId" Type="Int32" Nullable="false" />
+          <Property Name="ModuleName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ModuleDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="BW_RoleInPermission" Relationship="BetterWorkModel.FK_BW_RoleInPermission_BW_Module" FromRole="BW_Module" ToRole="BW_RoleInPermission" />
+        </EntityType>
+        <EntityType Name="BW_Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="RoleDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="BW_RoleInPermission" Relationship="BetterWorkModel.FK_BW_RoleInPermission_BW_Role" FromRole="BW_Role" ToRole="BW_RoleInPermission" />
+          <NavigationProperty Name="BW_UserInRole" Relationship="BetterWorkModel.FK_BW_UserInRole_BW_Role" FromRole="BW_Role" ToRole="BW_UserInRole" />
+        </EntityType>
+        <EntityType Name="BW_RoleInPermission">
+          <Key>
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="ModuleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="ModuleId" Type="Int32" Nullable="false" />
+          <Property Name="PView" Type="Boolean" Nullable="false" />
+          <Property Name="PAdd" Type="Boolean" Nullable="false" />
+          <Property Name="PEdit" Type="Boolean" Nullable="false" />
+          <Property Name="PDelete" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="BW_Module" Relationship="BetterWorkModel.FK_BW_RoleInPermission_BW_Module" FromRole="BW_RoleInPermission" ToRole="BW_Module" />
+          <NavigationProperty Name="BW_Role" Relationship="BetterWorkModel.FK_BW_RoleInPermission_BW_Role" FromRole="BW_RoleInPermission" ToRole="BW_Role" />
+        </EntityType>
+        <EntityType Name="BW_User">
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="BW_UserInRole" Relationship="BetterWorkModel.FK_BW_UserInRole_BW_User" FromRole="BW_User" ToRole="BW_UserInRole" />
         </EntityType>
-        <EntityType Name="Role">
+        <EntityType Name="BW_UserInRole">
           <Key>
-            <PropertyRef Name="RoleID" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
           </Key>
-          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="BW_Role" Relationship="BetterWorkModel.FK_BW_UserInRole_BW_Role" FromRole="BW_UserInRole" ToRole="BW_Role" />
+          <NavigationProperty Name="BW_User" Relationship="BetterWorkModel.FK_BW_UserInRole_BW_User" FromRole="BW_UserInRole" ToRole="BW_User" />
         </EntityType>
-      </Schema>
+        <Association Name="FK_BW_RoleInPermission_BW_Module">
+          <End Type="BetterWorkModel.BW_Module" Role="BW_Module" Multiplicity="1" />
+          <End Type="BetterWorkModel.BW_RoleInPermission" Role="BW_RoleInPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BW_Module">
+              <PropertyRef Name="ModuleId" />
+            </Principal>
+            <Dependent Role="BW_RoleInPermission">
+              <PropertyRef Name="ModuleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BW_RoleInPermission_BW_Role">
+          <End Type="BetterWorkModel.BW_Role" Role="BW_Role" Multiplicity="1" />
+          <End Type="BetterWorkModel.BW_RoleInPermission" Role="BW_RoleInPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BW_Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="BW_RoleInPermission">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BW_UserInRole_BW_Role">
+          <End Type="BetterWorkModel.BW_Role" Role="BW_Role" Multiplicity="1" />
+          <End Type="BetterWorkModel.BW_UserInRole" Role="BW_UserInRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BW_Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="BW_UserInRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BW_UserInRole_BW_User">
+          <End Type="BetterWorkModel.BW_User" Role="BW_User" Multiplicity="1" />
+          <End Type="BetterWorkModel.BW_UserInRole" Role="BW_UserInRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BW_User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BW_UserInRole">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="BetterWorkModelStoreContainer" CdmEntityContainer="BetterWorkEntities">
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="BetterWorkModel.User">
-              <MappingFragment StoreEntitySet="User">
+          <EntitySetMapping Name="BW_Module">
+            <EntityTypeMapping TypeName="BetterWorkModel.BW_Module">
+              <MappingFragment StoreEntitySet="BW_Module">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ModuleDescription" ColumnName="ModuleDescription" />
+                <ScalarProperty Name="ModuleName" ColumnName="ModuleName" />
+                <ScalarProperty Name="ModuleId" ColumnName="ModuleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BW_Role">
+            <EntityTypeMapping TypeName="BetterWorkModel.BW_Role">
+              <MappingFragment StoreEntitySet="BW_Role">
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="RoleDescription" ColumnName="RoleDescription" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BW_RoleInPermission">
+            <EntityTypeMapping TypeName="BetterWorkModel.BW_RoleInPermission">
+              <MappingFragment StoreEntitySet="BW_RoleInPermission">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="PDelete" ColumnName="PDelete" />
+                <ScalarProperty Name="PEdit" ColumnName="PEdit" />
+                <ScalarProperty Name="PAdd" ColumnName="PAdd" />
+                <ScalarProperty Name="PView" ColumnName="PView" />
+                <ScalarProperty Name="ModuleId" ColumnName="ModuleId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BW_User">
+            <EntityTypeMapping TypeName="BetterWorkModel.BW_User">
+              <MappingFragment StoreEntitySet="BW_User">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="BetterWorkModel.Role">
-              <MappingFragment StoreEntitySet="Role">
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+          <EntitySetMapping Name="BW_UserInRole">
+            <EntityTypeMapping TypeName="BetterWorkModel.BW_UserInRole">
+              <MappingFragment StoreEntitySet="BW_UserInRole">
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

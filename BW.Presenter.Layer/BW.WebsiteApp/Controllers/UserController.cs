@@ -21,11 +21,11 @@ namespace BW.WebsiteApp.Controllers
         }
 
         // GET: Users/Details/5
-        public ActionResult Details(string userId)
-        {
-            var result = UserHelper.GetUserById(userId);
-            return View(result);
-        }
+        //public ActionResult Details(string userId)
+        //{
+        //    var result = UserHelper.GetUserById(userId);
+        //    return View(result);
+        //}
 
         // GET: Users/Create
         public ActionResult Create()
@@ -38,77 +38,77 @@ namespace BW.WebsiteApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(UserView userView)
+        public ActionResult Create(UserCreateView userCreateView)
         {
             if (ModelState.IsValid)
             {
-                var result = UserHelper.InsertUser(userView);
-                if (result) 
-                { 
-                    return RedirectToAction("Index");
-                }
-            }
-
-            return View(userView);
-        }
-
-        // GET: Users/Edit/5
-        public ActionResult Edit(string userId)
-        {
-            if (string.IsNullOrEmpty(userId))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var result = UserHelper.GetUserById(userId);
-            if (result == null)
-            {
-                return HttpNotFound();
-            }
-            return View(result);
-        }
-
-        // POST: Users/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(UserEditView userView)
-        {
-            //var errors = ModelState.Values.SelectMany(v => v.Errors);
-            if (ModelState.IsValid)
-            {
-                var result = UserHelper.UpdateUser(userView);
+                var result = UserHelper.InsertUser(userCreateView);
                 if (result)
                 {
                     return RedirectToAction("Index");
                 }
             }
 
-            return View(userView);
+            return View(userCreateView);
         }
+
+        // GET: Users/Edit/5
+        //public ActionResult Edit(string userId)
+        //{
+        //    if (string.IsNullOrEmpty(userId))
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    var result = UserHelper.GetUserById(userId);
+        //    if (result == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(result);
+        //}
+
+        // POST: Users/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit(UserEditView userView)
+        //{
+        //    //var errors = ModelState.Values.SelectMany(v => v.Errors);
+        //    if (ModelState.IsValid)
+        //    {
+        //        var result = UserHelper.UpdateUser(userView);
+        //        if (result)
+        //        {
+        //            return RedirectToAction("Index");
+        //        }
+        //    }
+
+        //    return View(userView);
+        //}
 
         // GET: Users/Delete/5
-        public ActionResult Delete(string userId)
-        {
-            if (string.IsNullOrEmpty(userId))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var result = UserHelper.GetUserById(userId);
-            if (result == null)
-            {
-                return HttpNotFound();
-            }
-            return View(result);
-        }
+        //public ActionResult Delete(string userId)
+        //{
+        //    if (string.IsNullOrEmpty(userId))
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    var result = UserHelper.GetUserById(userId);
+        //    if (result == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(result);
+        //}
 
         // POST: Users/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int userId)
-        {
-            UserHelper.DeleteUser(userId);
-            return RedirectToAction("Index");
-        }
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(int userId)
+        //{
+        //    UserHelper.DeleteUser(userId);
+        //    return RedirectToAction("Index");
+        //}
     }
 }

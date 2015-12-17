@@ -12,12 +12,13 @@ namespace BW.Repository.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class BW_UserInRole
     {
-        public int RoleID { get; set; }
-        public string RoleName { get; set; }
-        public Nullable<bool> IsActive { get; set; }
+        public int UserId { get; set; }
+        public int RoleId { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
+    
+        public virtual BW_Role BW_Role { get; set; }
+        public virtual BW_User BW_User { get; set; }
     }
 }
