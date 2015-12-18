@@ -10,7 +10,7 @@ namespace BW.Repository.Data.Repositories
 {
     public interface IRoleRepository : IRepository<BW_Role>
     {
-        List<BW_Role> GetAllRole();
+        List<RoleDTO> GetAllRole();
     }   
 
 }

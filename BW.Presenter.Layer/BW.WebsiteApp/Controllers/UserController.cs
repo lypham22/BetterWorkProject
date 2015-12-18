@@ -30,7 +30,9 @@ namespace BW.WebsiteApp.Controllers
         // GET: Users/Create
         public ActionResult Create()
         {
-            return View();
+            UserCreateView dto = new UserCreateView();
+            dto.roles = RoleHelper.GetAllRole();
+            return View(dto);
         }
 
         // POST: Users/Create
@@ -38,11 +40,11 @@ namespace BW.WebsiteApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(UserCreateView userCreateView)
+        public ActionResult Create(UserCreateView userCreateView, string[] groupRole)
         {
             if (ModelState.IsValid)
             {
-                var result = UserHelper.InsertUser(userCreateView);
+                var result = UserHelper.InsertUser(userCreateView, groupRole);
                 if (result)
                 {
                     return RedirectToAction("Index");

@@ -5,6 +5,10 @@ namespace BW.Data.Contract.DTOs
 {
     public class UserCreateDTO
     {
+        public UserCreateDTO()
+        {
+            roles = new List<string>();
+        }
         public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -12,6 +16,7 @@ namespace BW.Data.Contract.DTOs
         public string Password { get; set; }
         public DateTime? CreatedDate { get; set; }
         public bool IsActive { get; set; }
-        public string RoleId { get; set; }
+
+        public List<string> roles { get; set; }
     }
 }

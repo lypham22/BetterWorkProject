@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 namespace BW.Data.Contract.DTOs
 {
     public class UserDTO
@@ -11,6 +12,7 @@ namespace BW.Data.Contract.DTOs
         public string Password { get; set; }
         public DateTime? CreatedDate { get; set; }
         public bool IsActive { get; set; }
+
         public string RoleName { get; set; }
     }
 }

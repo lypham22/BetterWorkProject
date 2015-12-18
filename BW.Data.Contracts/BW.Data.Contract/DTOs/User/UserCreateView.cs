@@ -14,5 +14,7 @@ namespace BW.Data.Contract.DTOs
         public DateTime? CreatedDate { get; set; }
         public bool IsActive { get; set; }
         public string RoleId { get; set; }
+
+        public List<RoleListView> roles { get; set; }
     }
 }

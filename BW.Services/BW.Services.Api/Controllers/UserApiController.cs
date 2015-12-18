@@ -14,18 +14,17 @@ namespace BW.Services.Api.Controllers
         {
             this.userRepository = userRepository;
         }
-
         public List<UserDTO> GetAllUser()
         {
             var data = userRepository.GetAllUser();
             return data;
         }
 
-        //public UserInRole GetUserById(int id)
-        //{
-        //    var data = userRepository.GetUserById(id);
-        //    return data;
-        //}
+        public BW_User GetUserById(int id)
+        {
+            var data = userRepository.GetById(id);
+            return data;
+        }
         public bool InsertUser(UserCreateDTO user)
         {
             return userRepository.CreateUser(user);

@@ -18,6 +18,7 @@ namespace BW.Repository.Data.Repositories
         }
 
         private UserInRoleRepository userInRole;
+        private RoleRepository roleRepository;
 
         /// <summary>
         /// Get all user
@@ -40,7 +41,8 @@ namespace BW.Repository.Data.Repositories
             List<RoleDTO> roles;
             foreach (var item in result)
             {
-                roles = userInRole.GetMany(r => r.UserId == item.UserId && r.BW_Role.IsActive == true).Select(u => new RoleDTO { 
+                roles = userInRole.GetMany(r => r.UserId == item.UserId && r.BW_Role.IsActive == true).Select(u => new RoleDTO
+                {
                     RoleName = u.BW_Role.RoleName
                 }).ToList();
                 StringBuilder builder = new StringBuilder();
@@ -55,40 +57,60 @@ namespace BW.Repository.Data.Repositories
             return result;
         }
 
-        //public UserDetailsDTO GetUserById(int userId)
-        //{
-        //    userInRole = new UserInRoleRepository(this.DatabaseFactory);
-        //    UserDetailsDTO result = new UserDetailsDTO();
+        public UserDTO GetUserById(int userId)
+        {
+            //var result = this.GetById(userId);
+            //userInRole = new UserInRoleRepository(this.DatabaseFactory);
+            //List<RoleDTO> roles = userInRole.GetMany(r => r.UserId == userId && r.BW_Role.IsActive == true).Select(u => new RoleDTO
+            //{
+            //    RoleName = u.BW_Role.RoleName
+            //}).ToList();
+            //StringBuilder builder = new StringBuilder();
+            //foreach (var r in roles)
+            //{
+            //    builder.Append(r.RoleName).Append(", ");
+            //}
+            return null;   
 
-        //    var roles = userInRole.GetMany(u => u.UserId == userId).Select(u => new RoleDTO
-        //    {
-        //        RoleID = u.RoleId,
-        //        RoleName = u.BW_Role.RoleName
-        //    }).ToList();
-            
-        //    var user = this.GetMany(u => u.UserId == userId).Select(u => new UserDTO
-        //    {
-        //        UserId = u.UserId,
-        //        FirstName = u.FirstName,
-        //        LastName = u.LastName,
-        //        Email = u.Email,
-        //        CreatedDate = u.CreatedDate,
-        //        IsActive = u.IsActive,
-        //        RoleName = string.Join(",", roles)
-        //    }).FirstOrDefault();
+            //item.RoleName = !string.IsNullOrEmpty(builder.ToString()) ? builder.Remove(builder.Length - 2, 1).ToString() : string.Empty;
 
-        //    result.user = user;
-        //    //result.roles = roles;
-        //    return result;
-        //}
+            //var result = this.GetAll()
+            //              .Select(u => new UserDTO
+            //              {
+            //                  UserId = u.UserId,
+            //                  FirstName = u.FirstName,
+            //                  LastName = u.LastName,
+            //                  Email = u.Email,
+            //                  CreatedDate = u.CreatedDate,
+            //                  IsActive = u.IsActive,
+            //              }).ToList();
 
+            //userInRole = new UserInRoleRepository(this.DatabaseFactory);
+            //List<RoleDTO> roles;
+            //foreach (var item in result)
+            //{
+            //    roles = userInRole.GetMany(r => r.UserId == item.UserId && r.BW_Role.IsActive == true).Select(u => new RoleDTO
+            //    {
+            //        RoleName = u.BW_Role.RoleName
+            //    }).ToList();
+            //    StringBuilder builder = new StringBuilder();
+            //    foreach (var r in roles)
+            //    {
+            //        builder.Append(r.RoleName).Append(", ");
+            //    }
+
+            //    item.RoleName = !string.IsNullOrEmpty(builder.ToString()) ? builder.Remove(builder.Length - 2, 1).ToString() : string.Empty;
+            //}
+
+            //return result;
+        }
         /// <summary>
         /// TODO: Delete: Using for demo
         /// </summary>
         /// <returns></returns>
         public List<BW_UserInRole> GetAllUserAndRole()
         {
-            RoleRepository roleRepository = new RoleRepository(this.DatabaseFactory);
+            roleRepository = new RoleRepository(this.DatabaseFactory);
             var list = this.GetAll()
                 .Join(roleRepository.GetAll(), left => left.UserId, right => right.RoleId,
                     (left, right) => new BW_UserInRole
@@ -101,16 +123,6 @@ namespace BW.Repository.Data.Repositories
             return list;
         }
 
-        public List<BW_Role> GetAllRole()
-        {
-
-            var result = userInRole.GetAll()
-                .Select(r => new BW_Role { 
-                    RoleId = r.BW_Role.RoleId,
-                    RoleName = r.BW_Role.RoleName
-                }).ToList();
-            return result;
-        }
         public bool CreateUser(UserCreateDTO user)
         {
             BW_User u = new BW_User();
@@ -121,24 +133,24 @@ namespace BW.Repository.Data.Repositories
             u.CreatedDate = DateTime.Now;
             u.IsActive = true;
             this.Add(u);
-
+            this.DataContext.SaveChanges();
+           
+            var result = DataContext.Database.SqlQuery<BW_Role>("SELECT * FROM BW_ROLE").ToList<BW_Role>();
             BW_UserInRole uir = new BW_UserInRole();
             userInRole = new UserInRoleRepository(this.DatabaseFactory);
-            //int lenghtR = user.RoleId.Count;
-            //for (int i = 0; i < lenghtR; i++)
-            //{
-            //    uir.UserId = user.UserId;
-            //    uir.RoleId = user.RoleId[i];
-            //    uir.CreatedDate = DateTime.Now;
-            //    userInRole.Add(uir);
-            //}
-            
-            //this.Add(user);
-
-            //int userId = user.UserId;
-            //List<int> roleId = user.;
-            //userInRole = new UserInRoleRepository(DatabaseFactory);
-            this.DataContext.SaveChanges();
+            RoleRepository roleRepository = new RoleRepository(this.DatabaseFactory);
+            foreach (var item in user.roles)
+            {
+                string insert = "INSERT INTO BW_UserInRole(UserId, RoleId, CreatedDate) VALUES(" +u.UserId+ ","+ int.Parse(item.ToString()) + ", '" +  DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss") + "')";
+                DataContext.Database.ExecuteSqlCommand(insert);
+                //var roleId = int.Parse(item.ToString());
+                //uir.BW_Role = roleRepository.GetMany(r => r.RoleId == roleId).FirstOrDefault();
+                //uir.BW_User = this.GetMany(us => us.UserId == u.UserId).FirstOrDefault();
+                //uir.UserId = u.UserId;
+                //uir.RoleId = roleId;
+                //uir.CreatedDate = DateTime.Now;
+                //userInRole.AddUserInRole(uir);
+            }
             return true;
         }
 

@@ -72,7 +72,7 @@ namespace BW.Website.Common.Helpers
         //    }
         //}
 
-        public static bool InsertUser(UserCreateView userCreateView)
+        public static bool InsertUser(UserCreateView userCreateView, string[] groupRole)
         {
             if (userCreateView != null)
             {
@@ -83,7 +83,17 @@ namespace BW.Website.Common.Helpers
                 user.LastName = userCreateView.LastName;
                 user.Email = userCreateView.Email;
                 user.Password = userCreateView.Password;
-                user.RoleId = userCreateView.RoleId;
+                if (groupRole.Length > 0)
+                {
+                    foreach (var item in groupRole)
+                    {
+                        user.roles.Add(item);
+                    }
+                    //for (int i = 0; i < groupRole.Length; i++)
+                    //{
+                    //    user.roles.Add(groupRole[i]);
+                    //}
+                }
                 // Post data
                 var response = ApiServiceUtilities.PostJson("api/UserApi/InsertUser/", user);
                 return response.IsSuccessStatusCode;

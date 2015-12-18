@@ -92,7 +92,7 @@
     <Compile Include="Repositories\UserInRoleRepository\IUserInRoleRepository.cs" />
     <Compile Include="Repositories\UserInRoleRepository\UserInRoleRepository.cs" />
     <Compile Include="Repositories\RoleRepository\IRoleRepository.cs" />
-    <Compile Include="Repositories\RoleRepository\RoleRepository..cs" />
+    <Compile Include="Repositories\RoleRepository\RoleRepository.cs" />
     <Compile Include="Repositories\UserRepository\IUserRepository.cs" />
     <Compile Include="Repositories\UserRepository\UserRepository..cs" />
   </ItemGroup>
