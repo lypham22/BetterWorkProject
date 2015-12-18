@@ -47,12 +47,12 @@
   <ItemGroup>
     <Compile Include="DTOs\User\UserCreateView.cs" />
     <Compile Include="DTOs\User\UserCreateDTO.cs" />
+    <Compile Include="DTOs\User\UserDetailsDTO.cs" />
     <Compile Include="DTOs\User\UserDTO.cs" />
     <Compile Include="DTOs\User\UserEditView.cs" />
     <Compile Include="DTOs\User\UserView.cs" />
     <Compile Include="DTOs\User\UserInfo.cs" />
     <Compile Include="DTOs\Role\RoleDTO.cs" />
-    <Compile Include="DTOs\User\UserDetailsDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
