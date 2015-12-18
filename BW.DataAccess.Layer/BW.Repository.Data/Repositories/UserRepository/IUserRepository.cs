@@ -11,6 +11,7 @@ namespace BW.Repository.Data.Repositories
     public interface IUserRepository : IRepository<BW_User>
     {
         List<UserDTO> GetAllUser();
+        List<BW_Role> GetAllRole();
         //UserDetailsDTO GetUserById(int userId);
         bool CreateUser(UserCreateDTO user);
         bool UpdateUser(BW_User user);

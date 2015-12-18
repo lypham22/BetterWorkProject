@@ -101,6 +101,16 @@ namespace BW.Repository.Data.Repositories
             return list;
         }
 
+        public List<BW_Role> GetAllRole()
+        {
+
+            var result = userInRole.GetAll()
+                .Select(r => new BW_Role { 
+                    RoleId = r.BW_Role.RoleId,
+                    RoleName = r.BW_Role.RoleName
+                }).ToList();
+            return result;
+        }
         public bool CreateUser(UserCreateDTO user)
         {
             BW_User u = new BW_User();
@@ -114,14 +124,14 @@ namespace BW.Repository.Data.Repositories
 
             BW_UserInRole uir = new BW_UserInRole();
             userInRole = new UserInRoleRepository(this.DatabaseFactory);
-            int lenghtR = user.RoleId.Count;
-            for (int i = 0; i < lenghtR; i++)
-            {
-                uir.UserId = user.UserId;
-                uir.RoleId = user.RoleId[i];
-                uir.CreatedDate = DateTime.Now;
-                userInRole.Add(uir);
-            }
+            //int lenghtR = user.RoleId.Count;
+            //for (int i = 0; i < lenghtR; i++)
+            //{
+            //    uir.UserId = user.UserId;
+            //    uir.RoleId = user.RoleId[i];
+            //    uir.CreatedDate = DateTime.Now;
+            //    userInRole.Add(uir);
+            //}
             
             //this.Add(user);
 
