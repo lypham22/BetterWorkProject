@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\Home\AuthenticationInfoDTO.cs" />
+    <Compile Include="DTOs\Home\ModuleDTO.cs" />
     <Compile Include="DTOs\Role\RoleListView.cs" />
     <Compile Include="DTOs\User\UserCreateView.cs" />
     <Compile Include="DTOs\User\UserCreateDTO.cs" />
@@ -56,8 +58,13 @@
     <Compile Include="DTOs\User\UserInfo.cs" />
     <Compile Include="DTOs\Role\RoleDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResponeMessageBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BW.Common\BW.Common.csproj">
+      <Project>{c90b9ce2-687d-428c-9b2b-78d8efdf07ee}</Project>
+      <Name>BW.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BW.Presenter.Layer\BW.Website.Resource\BW.Website.Resource.csproj">
       <Project>{370718b3-1c6c-48c1-aafa-3ab3c449eb80}</Project>
       <Name>BW.Website.Resource</Name>

@@ -7,6 +7,8 @@ using BW.Data.Contract.DTOs;
 using BW.Repository.Data.Infrastructure;
 using System.Data.SqlClient;
 using System.Data;
+using BW.Data.Contract;
+using BW.Common.Enums;
 
 namespace BW.Repository.Data.Repositories
 {
@@ -24,8 +26,9 @@ namespace BW.Repository.Data.Repositories
         /// Get all user
         /// </summary>
         /// <returns></returns>
-        public List<UserDTO> GetAllUser()
+        public ResponeMessage<List<UserDTO>> GetAllUser()
         {
+            var response = new ResponeMessage<List<UserDTO>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<UserDTO>() };
             var result = this.GetAll()
                           .Select(u => new UserDTO
                           {
@@ -39,13 +42,14 @@ namespace BW.Repository.Data.Repositories
 
             userInRole = new UserInRoleRepository(this.DatabaseFactory);
             List<RoleDTO> roles;
+            StringBuilder builder;
             foreach (var item in result)
             {
                 roles = userInRole.GetMany(r => r.UserId == item.UserId && r.BW_Role.IsActive == true).Select(u => new RoleDTO
                 {
                     RoleName = u.BW_Role.RoleName
                 }).ToList();
-                StringBuilder builder = new StringBuilder();
+                builder = new StringBuilder();
                 foreach (var r in roles)
                 {
                     builder.Append(r.RoleName).Append(", ");
@@ -53,11 +57,11 @@ namespace BW.Repository.Data.Repositories
 
                 item.RoleName = !string.IsNullOrEmpty(builder.ToString()) ? builder.Remove(builder.Length - 2, 1).ToString() : string.Empty;
             }
-
-            return result;
+            response.Data = result;
+            response.Message = "GetAllUser Success";
+            return response;
         }
-
-        public UserDTO GetUserById(int userId)
+        public ResponeMessage<UserDTO> GetUserById(int userId)
         {
             //var result = this.GetById(userId);
             //userInRole = new UserInRoleRepository(this.DatabaseFactory);
@@ -104,27 +108,9 @@ namespace BW.Repository.Data.Repositories
 
             //return result;
         }
-        /// <summary>
-        /// TODO: Delete: Using for demo
-        /// </summary>
-        /// <returns></returns>
-        public List<BW_UserInRole> GetAllUserAndRole()
+        public ResponeMessageBaseType<bool> CreateUser(UserCreateDTO user)
         {
-            roleRepository = new RoleRepository(this.DatabaseFactory);
-            var list = this.GetAll()
-                .Join(roleRepository.GetAll(), left => left.UserId, right => right.RoleId,
-                    (left, right) => new BW_UserInRole
-                    {
-                        RoleId = right.RoleId,
-                        //RoleName = right.RoleName,
-                        UserId = left.UserId
-                    })
-                    .OrderBy(p => p.UserId).ToList();
-            return list;
-        }
-
-        public bool CreateUser(UserCreateDTO user)
-        {
+            var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = false };
             BW_User u = new BW_User();
             u.FirstName = user.FirstName;
             u.LastName = user.LastName;
@@ -135,27 +121,17 @@ namespace BW.Repository.Data.Repositories
             this.Add(u);
             this.DataContext.SaveChanges();
            
-            var result = DataContext.Database.SqlQuery<BW_Role>("SELECT * FROM BW_ROLE").ToList<BW_Role>();
-            BW_UserInRole uir = new BW_UserInRole();
-            userInRole = new UserInRoleRepository(this.DatabaseFactory);
-            RoleRepository roleRepository = new RoleRepository(this.DatabaseFactory);
             foreach (var item in user.roles)
             {
-                string insert = "INSERT INTO BW_UserInRole(UserId, RoleId, CreatedDate) VALUES(" +u.UserId+ ","+ int.Parse(item.ToString()) + ", '" +  DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss") + "')";
-                DataContext.Database.ExecuteSqlCommand(insert);
-                //var roleId = int.Parse(item.ToString());
-                //uir.BW_Role = roleRepository.GetMany(r => r.RoleId == roleId).FirstOrDefault();
-                //uir.BW_User = this.GetMany(us => us.UserId == u.UserId).FirstOrDefault();
-                //uir.UserId = u.UserId;
-                //uir.RoleId = roleId;
-                //uir.CreatedDate = DateTime.Now;
-                //userInRole.AddUserInRole(uir);
+                string sql = @"INSERT INTO BW_UserInRole(UserId, RoleId, CreatedDate) VALUES({0}, {1}, {2})";
+                DataContext.Database.ExecuteSqlCommand(sql, u.UserId, int.Parse(item.ToString()), DateTime.Now);
             }
-            return true;
+            response.Data = true;
+            return response;
         }
-
-        public bool UpdateUser(BW_User user)
+        public ResponeMessageBaseType<bool> UpdateUser(BW_User user)
         {
+            var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = false };
             var userData = this.GetById(user.UserId);
             if (userData != null)
             {
@@ -163,46 +139,79 @@ namespace BW.Repository.Data.Repositories
                 //userData.UpdatedDate = user.UpdatedDate;
                 this.Update(userData);
                 this.DataContext.SaveChanges();
-                return true;
+                response.Data = true;
             }
             else
             {
-                return false;
+                response.Data = false;
             }
+            return response;
         }
-
-        public bool DeleteUser(int userId)
+        public ResponeMessageBaseType<bool> DeleteUser(int userId)
         {
+            var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = false };
             var userData = this.GetById(userId);
             if (userData != null)
             {
                 this.Delete(userData);
                 this.DataContext.SaveChanges();
-                return true;
+                response.Data = true;
             }
             else
             {
-                return false;
+                response.Data = false;
             }
 
+            return response;
         }
-
-        // Execute store procedure
         /// <summary>
-        /// TODO: Delete: Using for demo
+        /// 
         /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
         /// <returns></returns>
-        public List<BW_User> SPGetAllUser()
+        public ResponeMessage<AuthenticationInfoDTO> Login(string email, string password)
         {
-            var id = new SqlParameter
-            {
-                ParameterName = "ID",
-                Value = 0,
-                Direction = ParameterDirection.Output
-            };
-
-            var result = DataContext.Database.SqlQuery<BW_Role>("getalluser").ToList<BW_Role>();
-            return new List<BW_User>();
+            var response = new ResponeMessage<AuthenticationInfoDTO> { Code = ErrorCodeEnum.SUCCESS, Data = new AuthenticationInfoDTO() };
+            var authen = this.GetMany(u => u.Email == email && u.Password == password).Select(u => new AuthenticationInfoDTO { 
+                UserId = u.UserId,
+                Email = u.Email,
+                Password = u.Password,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                IsActive = u.IsActive,
+                CreatedDate = u.CreatedDate
+            }).FirstOrDefault();
+            if (authen != null) {
+                var userId = new SqlParameter
+                {
+                    ParameterName = "UserId",
+                    Value = authen.UserId
+                };
+                var result = DataContext.Database.SqlQuery<ModuleDTO>("spa_BW_GetPermissionListByUserId  @UserId", userId).ToList<ModuleDTO>();
+                List<ModuleDTO> permission = new List<ModuleDTO>();
+                ModuleDTO data = null;
+                string permissionName = string.Empty;
+                foreach (var item in result)
+                {
+                    if (string.IsNullOrEmpty(item.Permission)) continue;
+                    var str = item.Permission.Remove(item.Permission.Length - 1, 1).Split(',');
+                    foreach (var per in str)
+                    {
+                        if (!string.IsNullOrEmpty(item.Permission))
+                        { 
+                            data = new ModuleDTO();
+                            data.ModuleId = item.ModuleId;
+                            data.ModuleName = item.ModuleName;
+                            permissionName = data.ModuleName + per;
+                            data.Permission = permissionName;
+                            if (permission.Find(x => x.Permission.Contains(permissionName)) != null) continue;
+                            permission.Add(data);
+                        }
+                    }
+                }
+            }
+            return response;
         }
     }
 }

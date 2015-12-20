@@ -128,6 +128,10 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BW.Common\BW.Common.csproj">
+      <Project>{c90b9ce2-687d-428c-9b2b-78d8efdf07ee}</Project>
+      <Name>BW.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BW.Data.Contracts\BW.Data.Contract\BW.Data.Contract.csproj">
       <Project>{275de784-85a0-4be6-bd71-534d3b8153de}</Project>
       <Name>BW.Data.Contract</Name>
