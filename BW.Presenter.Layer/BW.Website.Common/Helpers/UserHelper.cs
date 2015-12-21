@@ -11,10 +11,10 @@ namespace BW.Website.Common.Helpers
 {
     public class UserHelper
     {
-        public static ResponeMessage<List<UserDTO>> GetAllUser()
+        public static ResponeMessage<List<UserView>> GetAllUser()
         {
-            List<UserDTO> userDTO = new List<UserDTO>();
-            var response = new ResponeMessage<List<UserDTO>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<UserDTO>() };
+            List<UserView> userDTO = new List<UserView>();
+            var response = new ResponeMessage<List<UserView>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<UserView>() };
             string path = "api/UserApi/getalluser/ApiKey" + ApiServiceUtilities.ComputeHash("Pa$$w0rd", "username") + "ApiKey" + DateTime.Now.Ticks;
             HttpResponseMessage reponse = ApiServiceUtilities.GetReponse(path);
             if (reponse.IsSuccessStatusCode)
@@ -22,7 +22,7 @@ namespace BW.Website.Common.Helpers
                 var users = reponse.Content.ReadAsAsync <ResponeMessage<List<UserDTO>>>().Result;
                 foreach (var s in users.Data)
                 {
-                    userDTO.Add(new UserDTO
+                    userDTO.Add(new UserView
                     {
                         UserId = s.UserId,
                         FirstName = s.FirstName,
@@ -39,10 +39,10 @@ namespace BW.Website.Common.Helpers
             return response;
         }
 
-        public static ResponeMessage<UserDTO> GetUserById(string userIdEnc)
+        public static ResponeMessage<UserView> GetUserById(string userIdEnc)
         {
-            var response = new ResponeMessage<UserDTO> { Code = ErrorCodeEnum.SUCCESS, Data = new UserDTO() };
-            UserDTO userView = new UserDTO();
+            var response = new ResponeMessage<UserView> { Code = ErrorCodeEnum.SUCCESS, Data = new UserView() };
+            UserView userView = new UserView();
             if (!string.IsNullOrEmpty(userIdEnc))
             {
                 int userId = int.Parse(userIdEnc);

@@ -33,17 +33,17 @@ namespace BW.Website.Common.Helpers
             return response;
         }
 
-        public static ResponeMessage<List<RoleDTO>> GetAllRoleMoreInfo()
+        public static ResponeMessage<List<RoleView>> GetAllRoleMoreInfo()
         {
-            var response = new ResponeMessage<List<RoleDTO>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<RoleDTO>() };
-            List<RoleDTO> roleDTO = new List<RoleDTO>();
+            var response = new ResponeMessage<List<RoleView>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<RoleView>() };
+            List<RoleView> roleDTO = new List<RoleView>();
             HttpResponseMessage reponse = ApiServiceUtilities.GetReponse("api/RoleApi/GetAllRole");
             if (reponse.IsSuccessStatusCode)
             {
                 var roles = reponse.Content.ReadAsAsync<ResponeMessage<List<RoleDTO>>>().Result;
                 foreach (var s in roles.Data)
                 {
-                    roleDTO.Add(new RoleDTO
+                    roleDTO.Add(new RoleView
                     {
                         RoleId = s.RoleId,
                         RoleName = s.RoleName,
@@ -58,10 +58,10 @@ namespace BW.Website.Common.Helpers
             return response;
         }
 
-        public static ResponeMessage<RoleDTO> GetRoleById(string roleIdEnc)
+        public static ResponeMessage<RoleView> GetRoleById(string roleIdEnc)
         {
-            var response = new ResponeMessage<RoleDTO> { Code = ErrorCodeEnum.SUCCESS, Data = new RoleDTO() };
-            RoleDTO roleView = new RoleDTO();
+            var response = new ResponeMessage<RoleView> { Code = ErrorCodeEnum.SUCCESS, Data = new RoleView() };
+            RoleView roleView = new RoleView();
             if (!string.IsNullOrEmpty(roleIdEnc))
             {
                 int roleId = int.Parse(roleIdEnc);
