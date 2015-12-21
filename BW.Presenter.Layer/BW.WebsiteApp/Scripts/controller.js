@@ -1,4 +1,4 @@
-﻿var app = angular.module('createUser', ['matchPassword']);
+﻿var app = angular.module('validateUser', ['matchPassword']);
 
 angular.module('matchPassword', []).directive('pwCheck', [function () {
       return {
@@ -17,7 +17,7 @@ angular.module('matchPassword', []).directive('pwCheck', [function () {
 
 app.controller('validEmailCtrl', function ($scope) {
     //$scope.checkValidEmail = true;
-    $scope.regexp = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{1,5}$/;
+    $scope.regexp = /^[a-z0-9._!\-\#\$\%\^\&\*\+\=\p{L}\|\'\~\`]+@[a-z]+\.[a-z.]{1,5}$/;
     //$scope.regexp = ''; /[a-zA-Z0-9]+[\\.a-zA-Z0-9]*@[a-zA-Z0-9+\\.]/
     
     //$scope.$watch("checkValidEmail", function (newValue, oldValue) {
@@ -37,7 +37,7 @@ app.controller('validUsernameCtrl', function ($scope) {
 });
 
 //app.controller('getAllCtrl', function ($scope, $http) {
-//    $http.get("http://localhost:8793/api/User/getalluser").success(function (response) {
+//    $http.get("http://localhost:8793/api/UserApi/getalluser").success(function (response) {
 //        $scope.names = response;
 //    });
 //});

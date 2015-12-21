@@ -25,7 +25,10 @@ namespace BW.Repository.Data
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<BW_Module> BW_Module { get; set; }
+        public virtual DbSet<BW_Role> BW_Role { get; set; }
+        public virtual DbSet<BW_RoleInPermission> BW_RoleInPermission { get; set; }
+        public virtual DbSet<BW_User> BW_User { get; set; }
+        public virtual DbSet<BW_UserInRole> BW_UserInRole { get; set; }
     }
 }

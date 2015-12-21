@@ -1,0 +1,34 @@
+﻿@model BW.Data.Contract.DTOs.LoginInfoDTO
+@using BW.Website.Resource;
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @name = "myForm", @ng_app = "validateUser" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email, @GlobalResource.lblEmail, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control"})
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, @GlobalResource.lblPassword, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="@GlobalResource.btnLogin" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+

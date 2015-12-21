@@ -1,4 +1,5 @@
-﻿using BW.Data.Contract.DTOs;
+﻿using BW.Data.Contract;
+using BW.Data.Contract.DTOs;
 using BW.Repository.Data.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -8,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace BW.Repository.Data.Repositories
 {
-    public interface IUserRepository : IRepository<User>
+    public interface IUserRepository : IRepository<BW_User>
     {
-        List<User> GetAllUser();
-        bool CreateUser(User user);
-        bool UpdateUser(User user);
-        bool DeleteUser(int userId);
-        List<User> SPGetAllUser();
-        List<User> GetAllUserAndRole();
+        ResponeMessage<List<UserDTO>> GetAllUser();
+        ResponeMessage<UserDTO> GetUserById(int userId);
+        ResponeMessageBaseType<bool> CreateUser(UserCreateDTO user);
+        ResponeMessageBaseType<bool> UpdateUser(UserCreateDTO user);
+        ResponeMessageBaseType<bool> DeleteUser(int userId);
+        ResponeMessage<AuthenticationInfoDTO> Login(string email, string password);
     }   
 
 }

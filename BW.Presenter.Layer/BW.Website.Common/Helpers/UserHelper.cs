@@ -1,5 +1,7 @@
-﻿using BW.Data.Contract.DTOs;
-using BW.Data.Contract.DTOViews;
+﻿using BW.Common.Enums;
+using BW.Data.Contract;
+using BW.Data.Contract.DTOs;
+using BW.Website.Common.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -9,24 +11,37 @@ namespace BW.Website.Common.Helpers
 {
     public class UserHelper
     {
-        public static List<UserInfo> GetAllUser()
+        public static ResponeMessage<List<UserView>> GetAllUser()
         {
-            List<UserInfo> userInfo = new List<UserInfo>();
-
-            HttpResponseMessage reponse = ApiServiceUtilities.GetReponse("api/UserApi/getalluser");
+            List<UserView> userDTO = new List<UserView>();
+            var response = new ResponeMessage<List<UserView>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<UserView>() };
+            string path = "api/UserApi/getalluser/ApiKey" + ApiServiceUtilities.ComputeHash("Pa$$w0rd", "username") + "ApiKey" + DateTime.Now.Ticks;
+            HttpResponseMessage reponse = ApiServiceUtilities.GetReponse(path);
             if (reponse.IsSuccessStatusCode)
             {
-                var users = reponse.Content.ReadAsAsync<List<User>>().Result;
-                foreach (var s in users)
+                var users = reponse.Content.ReadAsAsync <ResponeMessage<List<UserDTO>>>().Result;
+                foreach (var s in users.Data)
                 {
-                    userInfo.Add(new UserInfo { UserId = s.UserId, UserName = s.UserName, Email = s.Email });
+                    userDTO.Add(new UserView
+                    {
+                        UserId = s.UserId,
+                        FirstName = s.FirstName,
+                        LastName = s.LastName,
+                        Email = s.Email,
+                        CreatedDate = s.CreatedDate,
+                        RoleName = s.RoleName,
+                        IsActive = s.IsActive,
+                    });
                 }
+                response.Code = users.Code;
+                response.Data = userDTO;
             }
-            return userInfo;
+            return response;
         }
 
-        public static UserView GetUserById(string userIdEnc)
+        public static ResponeMessage<UserView> GetUserById(string userIdEnc)
         {
+            var response = new ResponeMessage<UserView> { Code = ErrorCodeEnum.SUCCESS, Data = new UserView() };
             UserView userView = new UserView();
             if (!string.IsNullOrEmpty(userIdEnc))
             {
@@ -34,53 +49,90 @@ namespace BW.Website.Common.Helpers
                 HttpResponseMessage reponse = ApiServiceUtilities.GetReponse("api/UserApi/GetUserById/" + userId);
                 if (reponse.IsSuccessStatusCode)
                 {
-                    User user = reponse.Content.ReadAsAsync<User>().Result;
-                    userView.UserId = user.UserId;
-                    userView.UserName = user.UserName;
-                    userView.Email = user.Email;
-                    userView.Password = user.Password;
+                    var user = reponse.Content.ReadAsAsync<ResponeMessage<UserDTO>>().Result;
+                    userView.UserId = user.Data.UserId;
+                    userView.FirstName = user.Data.FirstName;
+                    userView.LastName = user.Data.LastName;
+                    userView.Email = user.Data.Email;
+                    userView.CreatedDate = user.Data.CreatedDate;
+                    userView.IsActive = user.Data.IsActive;
+                    userView.RoleName = user.Data.RoleName;
+                    userView.RoleDTOs = user.Data.RoleDTOs;
+                    response.Code = user.Code;
+                    response.Data = userView;
                 }
             }
-            return userView;
+            return response;
         }
 
-        public static bool UpdateUser(UserView userView)
+        public static ResponeMessageBaseType<bool> UpdateUser(UserCreateView userView, string[] groupRole)
         {
+            var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = true };
             if (userView != null)
             {
                 // Convert UserInfo to User.
-                User user = new User();
+                UserCreateDTO user = new UserCreateDTO();
                 user.UserId = userView.UserId;
-                user.UserName = userView.UserName;
-                user.Email = userView.Email;
                 user.Password = userView.Password;
-                user.CreatedDate = DateTime.Now;
-                // Post data
-                var response = ApiServiceUtilities.PostJson("api/UserApi/UpdateUser/", user);
-                return response.IsSuccessStatusCode;
+                user.FirstName = userView.FirstName;
+                user.LastName = userView.LastName;
+                user.Email = userView.Email;
+                user.CreatedDate = userView.CreatedDate;
+                user.IsActive = userView.IsActive;
+                if (groupRole != null)
+                {
+                    foreach (var item in groupRole)
+                    {
+                        user.roles.Add(item);
+                    }
+                }
+                // Update data
+                var result = ApiServiceUtilities.PostJson("api/UserApi/UpdateUser/", user);
+                return response;
             }
             else
             {
-                return false;
+                return response;
             }
         }
 
-        public static bool DeleteUser(int userId)
+        public static ResponeMessageBaseType<bool> InsertUser(UserCreateView userCreateView, string[] groupRole)
         {
-            if (userId != null)
+            var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = true };
+            if (userCreateView != null)
             {
                 // Convert UserInfo to User.
-                User user = new User();
-                user.UserId = userId;
-                // Post data
-                ApiServiceUtilities.PostJson("api/UserApi/RemoveUser/", user);
-                return true;
+                UserCreateDTO user = new UserCreateDTO();
+                user.UserId = userCreateView.UserId;
+                user.FirstName = userCreateView.FirstName;
+                user.LastName = userCreateView.LastName;
+                user.Email = userCreateView.Email;
+                user.Password = userCreateView.Password;
+                if (groupRole != null)
+                {
+                    foreach (var item in groupRole)
+                    {
+                        user.roles.Add(item);
+                    }
+                }
+                // Update data
+                ApiServiceUtilities.PostJson("api/UserApi/InsertUser/", user);
+                return response;
             }
             else
             {
-                return false;
+                return response;
             }
+        }
 
+        public static ResponeMessageBaseType<bool> DeleteUser(int userId)
+        {
+            var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = true };
+            UserDTO user = new UserDTO();
+            user.UserId = userId;
+            // Delete data
+            ApiServiceUtilities.PostJson("api/UserApi/RemoveUser/", user);
+            return response;
         }
     }
 }

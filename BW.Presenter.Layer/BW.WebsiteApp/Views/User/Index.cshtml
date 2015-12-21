@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BW.Data.Contract.DTOViews.UserInfo>
+﻿@model IEnumerable<BW.Data.Contract.DTOs.UserView>
 @{
     ViewBag.Title = "Index";
 }
@@ -8,36 +8,45 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
-    <tr>
+    <tr> 
         <th>
-            @Html.DisplayNameFor(model => model.UserId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserName)
+            @Html.Label("Full Name")
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Email)
         </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.Password)
-        </th>*@
-        <th></th>
+        <th>
+            @Html.Label("Created Date")
+        </th>
+        <th>
+            @Html.Label("Is Active")
+        </th>
+        <th>
+            @Html.Label("Role Name")
+        </th>
+        <th>
+            @Html.Label("Action")
+        </th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
+            @Html.DisplayFor(modelItem => item.LastName)
+            @Html.DisplayFor(modelItem => item.FirstName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Email)
         </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RoleName)
+        </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { userId = item.UserId }) |
             @Html.ActionLink("Details", "Details", new { userId = item.UserId }) |
