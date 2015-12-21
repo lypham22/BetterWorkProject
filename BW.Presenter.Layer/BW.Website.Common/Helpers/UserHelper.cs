@@ -14,7 +14,8 @@ namespace BW.Website.Common.Helpers
         {
             List<UserDTO> userDTO = new List<UserDTO>();
             var response = new ResponeMessage<List<UserDTO>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<UserDTO>() };
-            HttpResponseMessage reponse = ApiServiceUtilities.GetReponse("api/UserApi/getalluser");
+            string path = "api/UserApi/getalluser/ApiKey" + ApiServiceUtilities.ComputeHash("Pa$$w0rd", "username") + "ApiKey" + DateTime.Now.Ticks;
+            HttpResponseMessage reponse = ApiServiceUtilities.GetReponse(path);
             if (reponse.IsSuccessStatusCode)
             {
                 var users = reponse.Content.ReadAsAsync <ResponeMessage<List<UserDTO>>>().Result;

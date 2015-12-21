@@ -6,9 +6,11 @@ using System.Linq;
 using BW.Data.Contract.DTOs;
 using BW.Data.Contract;
 using BW.Common.Enums;
+using Hmac.Api.Filters;
 
 namespace BW.Services.Api.Controllers
 {
+    //[Authenticate]
     public class UserApiController : ApiController
     {
         private readonly IUserRepository userRepository;
