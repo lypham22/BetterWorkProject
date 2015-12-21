@@ -161,7 +161,8 @@ namespace BW.Repository.Data.Repositories
         public ResponeMessage<AuthenticationInfoDTO> Login(string email, string password)
         {
             var response = new ResponeMessage<AuthenticationInfoDTO> { Code = ErrorCodeEnum.SUCCESS, Data = new AuthenticationInfoDTO() };
-            var authen = this.GetMany(u => u.Email == email && u.Password == password).Select(u => new AuthenticationInfoDTO { 
+            var authen = this.GetMany(u => u.Email == email && u.Password == password).Select(u => new AuthenticationInfoDTO
+            {
                 UserId = u.UserId,
                 Email = u.Email,
                 Password = u.Password,
@@ -170,7 +171,8 @@ namespace BW.Repository.Data.Repositories
                 IsActive = u.IsActive,
                 CreatedDate = u.CreatedDate
             }).FirstOrDefault();
-            if (authen != null) {
+            if (authen != null)
+            {
                 var userId = new SqlParameter
                 {
                     ParameterName = "UserId",
@@ -182,18 +184,18 @@ namespace BW.Repository.Data.Repositories
                 string permissionName = string.Empty;
                 foreach (var item in result)
                 {
-                    if (string.IsNullOrEmpty(item.Permission)) continue;
-                    var str = item.Permission.Remove(item.Permission.Length - 1, 1).Split(',');
+                    if (string.IsNullOrEmpty(item.PermissionCode)) continue;
+                    var str = item.PermissionCode.Remove(item.PermissionCode.Length - 1, 1).Split(',');
                     foreach (var per in str)
                     {
-                        if (!string.IsNullOrEmpty(item.Permission))
-                        { 
+                        if (!string.IsNullOrEmpty(item.PermissionCode))
+                        {
                             data = new ModuleDTO();
                             data.ModuleId = item.ModuleId;
                             data.ModuleName = item.ModuleName;
                             permissionName = data.ModuleName + per;
-                            data.Permission = permissionName;
-                            if (permission.Find(x => x.Permission.Contains(permissionName)) != null) continue;
+                            data.PermissionCode = permissionName;
+                            if (permission.Find(x => x.PermissionCode.Contains(permissionName)) != null) continue;
                             permission.Add(data);
                         }
                     }

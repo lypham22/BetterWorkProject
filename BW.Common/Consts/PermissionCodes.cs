@@ -9,6 +9,8 @@ namespace BW.Common.Consts
     public static class PermissionCodes
     {
         public const string AllowAnonymous = "AllowAnonymous";
+        public const string AllowAccess = "AllowAccess";
+        public const string NotAllow = "NotAllow";
 
         #region View Permissions
         public const string ViewUser = "ViewUser";

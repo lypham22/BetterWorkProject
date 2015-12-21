@@ -8,12 +8,15 @@ using System.Web;
 using System.Web.Mvc;
 using BW.Website.Common.Helpers;
 using BW.Data.Contract.DTOs;
+using BW.Website.Common.Utilities;
+using BW.Common.Consts;
 
 namespace BW.WebsiteApp.Controllers
 {
     public class UserController : Controller
     {
         // GET: Users
+        [AuthorizedUser(PermissionCodes.AllowAnonymous)]
         public ActionResult Index()
         {
             var getAllUser = UserHelper.GetAllUser().Data;
@@ -21,6 +24,7 @@ namespace BW.WebsiteApp.Controllers
         }
 
         // GET: Users/Details/5
+        [AuthorizedUser(PermissionCodes.AllowAnonymous)]
         public ActionResult Details(string userId)
         {
             var result = UserHelper.GetUserById(userId).Data;
@@ -28,6 +32,7 @@ namespace BW.WebsiteApp.Controllers
         }
 
         // GET: Users/Create
+        [AuthorizedUser(PermissionCodes.AllowAnonymous)]
         public ActionResult Create()
         {
             UserCreateView dto = new UserCreateView();
@@ -40,6 +45,7 @@ namespace BW.WebsiteApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizedUser(PermissionCodes.AllowAnonymous)]
         public ActionResult Create(UserCreateView userCreateView, string[] groupRole)
         {
             if (ModelState.IsValid)
@@ -55,6 +61,7 @@ namespace BW.WebsiteApp.Controllers
         }
 
         // GET: Users/Edit/5
+        [AuthorizedUser(PermissionCodes.AllowAnonymous)]
         public ActionResult Edit(string userId)
         {
             if (string.IsNullOrEmpty(userId))
@@ -74,6 +81,7 @@ namespace BW.WebsiteApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizedUser(PermissionCodes.AllowAnonymous)]
         public ActionResult Edit(UserCreateView userView, string[] groupRole)
         {
             //UserCreateView userView = null;
@@ -92,6 +100,7 @@ namespace BW.WebsiteApp.Controllers
         }
 
         //GET: Users/Delete/5
+        [AuthorizedUser(PermissionCodes.AllowAnonymous)]
         public ActionResult Delete(string userId)
         {
             if (string.IsNullOrEmpty(userId))
@@ -109,6 +118,7 @@ namespace BW.WebsiteApp.Controllers
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [AuthorizedUser(PermissionCodes.AllowAnonymous)]
         public ActionResult DeleteConfirmed(int userId)
         {
             UserHelper.DeleteUser(userId);

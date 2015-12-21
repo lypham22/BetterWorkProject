@@ -6,9 +6,10 @@
     public enum ErrorCodeEnum
     {
         SUCCESS = 0,
-        FAILED = 1,
-        EMAIL_EXIST = 2,
-        EMAIL_NONEXIST = 3,
+        ACCEPTED = 1,
+        FAILED = 2,
+        EMAIL_EXIST = 3,
+        EMAIL_NONEXIST = 4,
         BAD_REQUEST = 400,
         UNAUTHORIZED = 401,
         FORBIDDEN = 403,

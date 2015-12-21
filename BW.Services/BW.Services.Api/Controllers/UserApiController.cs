@@ -41,5 +41,9 @@ namespace BW.Services.Api.Controllers
         {
             return userRepository.DeleteUser(user.UserId);
         }
+        public ResponeMessage<AuthenticationInfoDTO> Login(string email, string password)
+        {
+            return userRepository.Login(email, password);
+        }
     }
 }

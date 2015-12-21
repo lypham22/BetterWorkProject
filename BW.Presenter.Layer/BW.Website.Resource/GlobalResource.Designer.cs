@@ -61,6 +61,15 @@ namespace BW.Website.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to UnAuthorized Request.
+        /// </summary>
+        public static string responseMessageUnAuthorized {
+            get {
+                return ResourceManager.GetString("responseMessageUnAuthorized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do not match with Password.
         /// </summary>
         public static string validComaprePass {
