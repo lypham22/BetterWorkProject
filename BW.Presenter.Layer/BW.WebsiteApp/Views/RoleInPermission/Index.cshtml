@@ -1,0 +1,75 @@
+﻿@model IEnumerable<BW.Data.Contract.DTOs.RoleInPermissonView>
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@*<dl class="dl-horizontal">
+    <dt>
+        @Html.Label("Role Name")
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.RoleName)
+    </dd>
+</dl>*@
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Role")
+        </th>
+        <th>
+            @Html.Label("Module")
+        </th>
+        <th>
+            @Html.Label("Add")
+        </th>
+        <th>
+            @Html.Label("Edit")
+        </th>
+        <th>
+            @Html.Label("Delete")
+        </th>
+        <th>
+            @Html.Label("View")
+        </th>
+        @*<th>
+            @Html.Label("Action")
+        </th>*@
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModuleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PAdd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PEdit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PDelete)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PView)
+            </td>
+            @*<td>
+                @Html.ActionLink("Edit", "Edit", new { roleId = item.RoleId }) |
+                @Html.ActionLink("Details", "Details", new { roleId = item.RoleId }) |
+                @Html.ActionLink("Delete", "Delete", new { roleId = item.RoleId })
+            </td>*@
+        </tr>
+    }
+
+</table>
