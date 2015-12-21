@@ -92,9 +92,9 @@
     <Compile Include="Repositories\UserInRoleRepository\IUserInRoleRepository.cs" />
     <Compile Include="Repositories\UserInRoleRepository\UserInRoleRepository.cs" />
     <Compile Include="Repositories\RoleRepository\IRoleRepository.cs" />
-    <Compile Include="Repositories\RoleRepository\RoleRepository..cs" />
+    <Compile Include="Repositories\RoleRepository\RoleRepository.cs" />
     <Compile Include="Repositories\UserRepository\IUserRepository.cs" />
-    <Compile Include="Repositories\UserRepository\UserRepository..cs" />
+    <Compile Include="Repositories\UserRepository\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -108,6 +108,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BW.Common\BW.Common.csproj">
+      <Project>{c90b9ce2-687d-428c-9b2b-78d8efdf07ee}</Project>
+      <Name>BW.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BW.Data.Contracts\BW.Data.Contract\BW.Data.Contract.csproj">
       <Project>{275de784-85a0-4be6-bd71-534d3b8153de}</Project>
       <Name>BW.Data.Contract</Name>

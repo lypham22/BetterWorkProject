@@ -28,15 +28,15 @@
         </EntityType>
         <EntityType Name="BW_RoleInPermission">
           <Key>
-            <PropertyRef Name="RoleId" />
-            <PropertyRef Name="ModuleId" />
+            <PropertyRef Name="RoleInPermissionId" />
           </Key>
-          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="RoleInPermissionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ModuleId" Type="int" Nullable="false" />
-          <Property Name="PView" Type="bit" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
           <Property Name="PAdd" Type="bit" Nullable="false" />
           <Property Name="PEdit" Type="bit" Nullable="false" />
           <Property Name="PDelete" Type="bit" Nullable="false" />
+          <Property Name="PView" Type="bit" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
@@ -55,9 +55,9 @@
         </EntityType>
         <EntityType Name="BW_UserInRole">
           <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="UserInRoleId" />
           </Key>
+          <Property Name="UserInRoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="RoleId" Type="int" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" />
@@ -186,15 +186,15 @@
         </EntityType>
         <EntityType Name="BW_RoleInPermission">
           <Key>
-            <PropertyRef Name="RoleId" />
-            <PropertyRef Name="ModuleId" />
+            <PropertyRef Name="RoleInPermissionId" />
           </Key>
-          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="RoleInPermissionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ModuleId" Type="Int32" Nullable="false" />
-          <Property Name="PView" Type="Boolean" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
           <Property Name="PAdd" Type="Boolean" Nullable="false" />
           <Property Name="PEdit" Type="Boolean" Nullable="false" />
           <Property Name="PDelete" Type="Boolean" Nullable="false" />
+          <Property Name="PView" Type="Boolean" Nullable="false" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="BW_Module" Relationship="BetterWorkModel.FK_BW_RoleInPermission_BW_Module" FromRole="BW_RoleInPermission" ToRole="BW_Module" />
@@ -216,9 +216,9 @@
         </EntityType>
         <EntityType Name="BW_UserInRole">
           <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="UserInRoleId" />
           </Key>
+          <Property Name="UserInRoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="RoleId" Type="Int32" Nullable="false" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
@@ -307,12 +307,13 @@
               <MappingFragment StoreEntitySet="BW_RoleInPermission">
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="PView" ColumnName="PView" />
                 <ScalarProperty Name="PDelete" ColumnName="PDelete" />
                 <ScalarProperty Name="PEdit" ColumnName="PEdit" />
                 <ScalarProperty Name="PAdd" ColumnName="PAdd" />
-                <ScalarProperty Name="PView" ColumnName="PView" />
-                <ScalarProperty Name="ModuleId" ColumnName="ModuleId" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="ModuleId" ColumnName="ModuleId" />
+                <ScalarProperty Name="RoleInPermissionId" ColumnName="RoleInPermissionId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -336,6 +337,7 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserInRoleId" ColumnName="UserInRoleId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

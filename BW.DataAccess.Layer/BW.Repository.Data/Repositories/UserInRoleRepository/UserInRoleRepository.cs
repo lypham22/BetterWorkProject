@@ -16,5 +16,12 @@ namespace BW.Repository.Data.Repositories
             : base(databaseFactory)
         {
         }
+
+        public bool AddUserInRole(BW_UserInRole userInRole)
+        {
+            this.Add(userInRole);
+            this.DataContext.SaveChanges();
+            return true;
+        }
     }
 }

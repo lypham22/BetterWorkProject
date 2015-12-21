@@ -4,9 +4,13 @@ using System.Collections.Generic;
 using System.Web.Http;
 using System.Linq;
 using BW.Data.Contract.DTOs;
+using BW.Data.Contract;
+using BW.Common.Enums;
+using Hmac.Api.Filters;
 
 namespace BW.Services.Api.Controllers
 {
+    //[Authenticate]
     public class UserApiController : ApiController
     {
         private readonly IUserRepository userRepository;
@@ -14,30 +18,35 @@ namespace BW.Services.Api.Controllers
         {
             this.userRepository = userRepository;
         }
-
-        public List<UserDTO> GetAllUser()
+        public ResponeMessage<List<UserDTO>> GetAllUser()
         {
-            var data = userRepository.GetAllUser();
-            return data;
+            var response = new ResponeMessage<List<UserDTO>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<UserDTO>() };
+            var result = userRepository.GetAllUser();
+            response.Data = result.Data;
+            return response;
         }
 
-        //public UserInRole GetUserById(int id)
-        //{
-        //    var data = userRepository.GetUserById(id);
-        //    return data;
-        //}
-        public bool InsertUser(UserCreateDTO user)
+        public ResponeMessage<UserDTO> GetUserById(int id)
+        {
+            return  userRepository.GetUserById(id);;
+        }
+        public ResponeMessageBaseType<bool> InsertUser(UserCreateDTO user)
         {
             return userRepository.CreateUser(user);
         }
-        //public bool UpdateUser(UserCreateView user)
-        //{
-        //    return userRepository.UpdateUser(user);
-        //}
+        public ResponeMessageBaseType<bool> UpdateUser(UserCreateDTO user)
+        {
+            return userRepository.UpdateUser(user);
+        }
 
-        //public bool RemoveUser(User user)
-        //{
-        //    return userRepository.DeleteUser(user.UserId);
-        //}
+        public ResponeMessageBaseType<bool> RemoveUser(UserDTO user)
+        {
+            return userRepository.DeleteUser(user.UserId);
+        }
+        [HttpGet]
+        public ResponeMessage<AuthenticationInfoDTO> Login(string email, string password)
+        {
+            return userRepository.Login(email, password);
+        }
     }
 }

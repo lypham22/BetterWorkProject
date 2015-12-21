@@ -1,0 +1,52 @@
+﻿@model IEnumerable<BW.Data.Contract.DTOs.RoleView>
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Role Name")
+        </th>
+        <th>
+           @Html.Label("Role Description")
+        </th>
+        <th>
+            @Html.Label("Is Active")
+        </th>
+        <th>
+            @Html.Label("Created Date")
+        </th>
+        <th>
+            @Html.Label("Action")
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { roleId = item.RoleId }) |
+                @Html.ActionLink("Details", "Details", new { roleId = item.RoleId }) |
+                @Html.ActionLink("Delete", "Delete", new { roleId = item.RoleId })
+            </td>
+        </tr>
+    }
+
+</table>

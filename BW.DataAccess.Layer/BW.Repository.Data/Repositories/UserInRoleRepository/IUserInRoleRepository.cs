@@ -10,6 +10,7 @@ namespace BW.Repository.Data.Repositories
 {
     public interface IUserInRoleRepository : IRepository<BW_UserInRole>
     {
+        bool AddUserInRole(BW_UserInRole userInRole);
     }   
 
 }

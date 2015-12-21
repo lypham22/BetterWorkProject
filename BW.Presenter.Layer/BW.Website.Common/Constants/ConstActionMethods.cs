@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BW.Common.Enums
+namespace BW.Website.Common.Constants
 {
-    //TODO: remove if no use
-    public enum UserTypeEnum
+    public static class ConstActionMethods
     {
-        WORKFORCE = 0,
-        AUDITOR = 1,
+        public const string LOGIN = "Login";
     }
 }

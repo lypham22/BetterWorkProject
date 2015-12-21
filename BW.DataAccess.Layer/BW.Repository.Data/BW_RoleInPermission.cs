@@ -14,12 +14,13 @@ namespace BW.Repository.Data
     
     public partial class BW_RoleInPermission
     {
-        public int RoleId { get; set; }
+        public int RoleInPermissionId { get; set; }
         public int ModuleId { get; set; }
-        public bool PView { get; set; }
+        public int RoleId { get; set; }
         public bool PAdd { get; set; }
         public bool PEdit { get; set; }
         public bool PDelete { get; set; }
+        public bool PView { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
     
