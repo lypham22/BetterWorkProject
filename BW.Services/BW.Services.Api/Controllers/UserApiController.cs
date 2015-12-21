@@ -43,6 +43,7 @@ namespace BW.Services.Api.Controllers
         {
             return userRepository.DeleteUser(user.UserId);
         }
+        [HttpGet]
         public ResponeMessage<AuthenticationInfoDTO> Login(string email, string password)
         {
             return userRepository.Login(email, password);

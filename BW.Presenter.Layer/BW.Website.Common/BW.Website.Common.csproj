@@ -61,7 +61,7 @@
     <Compile Include="Constants\ConstActionMethods.cs" />
     <Compile Include="Constants\SessionKeys.cs" />
     <Compile Include="Helpers\ExceptionHelper.cs" />
-    <Compile Include="Helpers\HomeHelper.cs" />
+    <Compile Include="Helpers\AuthorizationHelper.cs" />
     <Compile Include="Helpers\RoleHelper.cs" />
     <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="BWFilterAuth.cs" />

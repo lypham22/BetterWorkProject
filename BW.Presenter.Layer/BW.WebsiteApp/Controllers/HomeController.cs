@@ -1,4 +1,7 @@
 ﻿using BW.Common.Consts;
+using BW.Common.Enums;
+using BW.Data.Contract.DTOs;
+using BW.Website.Common.Helpers;
 using BW.Website.Common.Utilities;
 using System;
 using System.Collections.Generic;
@@ -21,6 +24,26 @@ namespace BW.WebsiteApp.Controllers
         public ActionResult Login()
         {
             return View();
+        }
+
+        [AuthorizedUser(PermissionCodes.AllowAnonymous)]
+        [HttpPost]
+        public ActionResult Login(LoginInfoDTO login)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(login);
+            }
+            var result = AuthorizationHelper.Login(login);
+            if (result.Code == ErrorCodeEnum.SUCCESS)
+            {
+                return RedirectToAction("Index", "User");
+            }
+            else
+            {
+                return View(login);
+            }
+            
         }
     }
 }

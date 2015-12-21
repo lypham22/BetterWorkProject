@@ -61,6 +61,33 @@ namespace BW.Website.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string btnLogin {
+            get {
+                return ResourceManager.GetString("btnLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        public static string lblEmail {
+            get {
+                return ResourceManager.GetString("lblEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string lblPassword {
+            get {
+                return ResourceManager.GetString("lblPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UnAuthorized Request.
         /// </summary>
         public static string responseMessageUnAuthorized {
@@ -120,6 +147,15 @@ namespace BW.Website.Resource {
         public static string validPassRequire {
             get {
                 return ResourceManager.GetString("validPassRequire", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is required field.
+        /// </summary>
+        public static string validRequire {
+            get {
+                return ResourceManager.GetString("validRequire", resourceCulture);
             }
         }
         

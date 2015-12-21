@@ -27,7 +27,7 @@ namespace BW.Website.Common
                 authAttrs = authorizationContext.ActionDescriptor.ControllerDescriptor.GetCustomAttributes(typeof(AuthorizedUserAttribute), true);
             }
 
-            if (HomeHelper.IsAuthorized(user, controller, action, authorizationContext.HttpContext.Request.QueryString,
+            if (AuthorizationHelper.IsAuthorized(user, controller, action, authorizationContext.HttpContext.Request.QueryString,
                 authorizationContext.RequestContext.HttpContext.Request.HttpMethod, authAttrs.Length > 0 ? (AuthorizedUserAttribute)authAttrs[0] : null) != ErrorCodeEnum.SUCCESS)
             {
                 return;

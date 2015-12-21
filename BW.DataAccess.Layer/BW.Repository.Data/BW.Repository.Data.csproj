@@ -94,7 +94,7 @@
     <Compile Include="Repositories\RoleRepository\IRoleRepository.cs" />
     <Compile Include="Repositories\RoleRepository\RoleRepository.cs" />
     <Compile Include="Repositories\UserRepository\IUserRepository.cs" />
-    <Compile Include="Repositories\UserRepository\UserRepository..cs" />
+    <Compile Include="Repositories\UserRepository\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
