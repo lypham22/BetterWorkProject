@@ -8,18 +8,22 @@ using System.Net.Http.Headers;
 using BW.Data.Contract.DTOs;
 using System.Net;
 using System.Configuration;
+using System.Security.Cryptography;
 
 
 namespace BW.Website.Common.Utilities
 {
     public class ApiServiceUtilities
     {
+
         public static HttpClient ConnectClient()
         {
             var url = ConfigurationManager.AppSettings["BWApiServiceUrl"];
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(url);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            //var credentials = Encoding.ASCII.GetBytes("myUsername:myPassword");
+            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(credentials));
             return client;
         }
 
@@ -43,6 +47,20 @@ namespace BW.Website.Common.Utilities
             {
                 return reponse;
             }
+        }
+
+        public static string ComputeHash(string hashedPassword, string message)
+        {
+            var key = Encoding.UTF8.GetBytes(hashedPassword.ToUpper());
+            string hashString;
+
+            using (var hmac = new HMACSHA256(key))
+            {
+                var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(message));
+                hashString = Convert.ToBase64String(hash);
+            }
+
+            return hashString;
         }
     }
 }

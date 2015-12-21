@@ -1,6 +1,7 @@
 ﻿using BW.Common.Enums;
 using BW.Data.Contract;
 using BW.Data.Contract.DTOs;
+using BW.Website.Common.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
