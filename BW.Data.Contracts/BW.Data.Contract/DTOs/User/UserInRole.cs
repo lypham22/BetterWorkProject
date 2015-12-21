@@ -8,6 +8,7 @@ namespace BW.Data.Contract.DTOs
 {
     public class UserInRole
     {
+        public int UserInRoleId { get; set; }
         public int UserId { get; set; }
         public int RoleId { get; set; }
         public string UserName { get; set; }

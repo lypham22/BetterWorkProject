@@ -14,6 +14,7 @@ namespace BW.Repository.Data
     
     public partial class BW_UserInRole
     {
+        public int UserInRoleId { get; set; }
         public int UserId { get; set; }
         public int RoleId { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }

@@ -79,7 +79,7 @@ namespace BW.Website.Common.Helpers
                 user.Email = userView.Email;
                 user.CreatedDate = userView.CreatedDate;
                 user.IsActive = userView.IsActive;
-                if (groupRole.Length > 0)
+                if (groupRole != null)
                 {
                     foreach (var item in groupRole)
                     {
@@ -108,7 +108,7 @@ namespace BW.Website.Common.Helpers
                 user.LastName = userCreateView.LastName;
                 user.Email = userCreateView.Email;
                 user.Password = userCreateView.Password;
-                if (groupRole.Length > 0)
+                if (groupRole != null)
                 {
                     foreach (var item in groupRole)
                     {

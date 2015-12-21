@@ -22,7 +22,7 @@ namespace BW.Repository.Data.Repositories
         public ResponeMessage<List<RoleDTO>> GetAllRole()
         {
             var response = new ResponeMessage<List<RoleDTO>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<RoleDTO>() };
-            var result = this.GetAll()
+            var result = this.GetMany(r => r.IsActive == true)
                           .Select(u => new RoleDTO
                           {
                               RoleId = u.RoleId,
