@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Web.Http;
 using System.Linq;
 using BW.Data.Contract.DTOs;
+using BW.Data.Contract;
 
 namespace BW.Services.Api.Controllers
 {
@@ -14,11 +15,27 @@ namespace BW.Services.Api.Controllers
         {
             this.roleRepository = roleRepository;
         }
-        public List<RoleDTO> GetAllRole()
+        public ResponeMessage<List<RoleDTO>> GetAllRole()
         {
-            var data = roleRepository.GetAllRole();
-            return data;
+            return roleRepository.GetAllRole();;
         }
 
+        public ResponeMessage<RoleDTO> GetRoleById(int id)
+        {
+            return roleRepository.GetRoleById(id);
+        }
+        public ResponeMessageBaseType<bool> InsertRole(RoleCreateDTO role)
+        {
+            return roleRepository.CreateRole(role);
+        }
+        public ResponeMessageBaseType<bool> UpdateRole(RoleCreateDTO role)
+        {
+            return roleRepository.UpdateRole(role);
+        }
+
+        public ResponeMessageBaseType<bool> RemoveRole(RoleDTO role)
+        {
+            return roleRepository.DeleteRole(role.RoleId);
+        }
     }
 }

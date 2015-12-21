@@ -63,50 +63,28 @@ namespace BW.Repository.Data.Repositories
         }
         public ResponeMessage<UserDTO> GetUserById(int userId)
         {
-            //var result = this.GetById(userId);
-            //userInRole = new UserInRoleRepository(this.DatabaseFactory);
-            //List<RoleDTO> roles = userInRole.GetMany(r => r.UserId == userId && r.BW_Role.IsActive == true).Select(u => new RoleDTO
-            //{
-            //    RoleName = u.BW_Role.RoleName
-            //}).ToList();
-            //StringBuilder builder = new StringBuilder();
-            //foreach (var r in roles)
-            //{
-            //    builder.Append(r.RoleName).Append(", ");
-            //}
-            return null;   
+            var response = new ResponeMessage<UserDTO> { Code = ErrorCodeEnum.SUCCESS, Data = new UserDTO() };
+            var result = this.GetById(userId);
+            if (result != null)
+            {
+                UserDTO userDTO = this.ToUserDTO(result);
+                userInRole = new UserInRoleRepository(this.DatabaseFactory);
+                List<RoleDTO> roles = userInRole.GetMany(r => r.UserId == userId && r.BW_Role.IsActive == true).Select(u => new RoleDTO
+                {
+                    RoleName = u.BW_Role.RoleName,
+                    RoleId = u.BW_Role.RoleId,
+                    RoleDescription = u.BW_Role.RoleDescription,
+                    CreatedDate = (DateTime)u.BW_Role.CreatedDate,
+                    IsActive = u.BW_Role.IsActive
+                }).ToList();
 
-            //item.RoleName = !string.IsNullOrEmpty(builder.ToString()) ? builder.Remove(builder.Length - 2, 1).ToString() : string.Empty;
-
-            //var result = this.GetAll()
-            //              .Select(u => new UserDTO
-            //              {
-            //                  UserId = u.UserId,
-            //                  FirstName = u.FirstName,
-            //                  LastName = u.LastName,
-            //                  Email = u.Email,
-            //                  CreatedDate = u.CreatedDate,
-            //                  IsActive = u.IsActive,
-            //              }).ToList();
-
-            //userInRole = new UserInRoleRepository(this.DatabaseFactory);
-            //List<RoleDTO> roles;
-            //foreach (var item in result)
-            //{
-            //    roles = userInRole.GetMany(r => r.UserId == item.UserId && r.BW_Role.IsActive == true).Select(u => new RoleDTO
-            //    {
-            //        RoleName = u.BW_Role.RoleName
-            //    }).ToList();
-            //    StringBuilder builder = new StringBuilder();
-            //    foreach (var r in roles)
-            //    {
-            //        builder.Append(r.RoleName).Append(", ");
-            //    }
-
-            //    item.RoleName = !string.IsNullOrEmpty(builder.ToString()) ? builder.Remove(builder.Length - 2, 1).ToString() : string.Empty;
-            //}
-
-            //return result;
+                response.Data = userDTO;
+                response.Data.RoleDTOs = roles;
+                response.Data.RoleName = string.Join(", ", userDTO.RoleDTOs.Select(x => x.RoleName).ToArray());
+                response.Message = "GetUserById Success";
+                return response;
+            }
+            return response;
         }
         public ResponeMessageBaseType<bool> CreateUser(UserCreateDTO user)
         {
@@ -129,41 +107,51 @@ namespace BW.Repository.Data.Repositories
             response.Data = true;
             return response;
         }
-        public ResponeMessageBaseType<bool> UpdateUser(BW_User user)
+        public ResponeMessageBaseType<bool> UpdateUser(UserCreateDTO user)
         {
             var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = false };
             var userData = this.GetById(user.UserId);
             if (userData != null)
             {
+                userData.FirstName = user.FirstName;
+                userData.LastName = user.LastName;
                 userData.Email = user.Email;
-                //userData.UpdatedDate = user.UpdatedDate;
+                userData.UpdatedDate = DateTime.Now;
+                userData.IsActive = user.IsActive;
                 this.Update(userData);
                 this.DataContext.SaveChanges();
+
+                string delete = "DELETE FROM BW_UserInRole WHERE UserId = " + userData.UserId;
+                DataContext.Database.ExecuteSqlCommand(delete);
+                foreach (var item in user.roles)
+                {
+                    string update = "INSERT INTO BW_UserInRole(UserId, RoleId, CreatedDate) VALUES(" + userData.UserId + "," + int.Parse(item.ToString()) + ", '" + DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss") + "')";
+                    DataContext.Database.ExecuteSqlCommand(update);
+                }
                 response.Data = true;
-            }
-            else
-            {
-                response.Data = false;
+                return response;
             }
             return response;
         }
+
         public ResponeMessageBaseType<bool> DeleteUser(int userId)
         {
             var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = false };
             var userData = this.GetById(userId);
             if (userData != null)
             {
+                string delete = "DELETE FROM BW_UserInRole WHERE UserId = " + userId;
+                DataContext.Database.ExecuteSqlCommand(delete);
+
                 this.Delete(userData);
                 this.DataContext.SaveChanges();
                 response.Data = true;
+                return response;
             }
-            else
-            {
-                response.Data = false;
-            }
-
             return response;
+
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -212,6 +200,19 @@ namespace BW.Repository.Data.Repositories
                 }
             }
             return response;
+        }
+        private UserDTO ToUserDTO(BW_User obj)
+        {
+            return new UserDTO()
+            {
+                UserId = obj.UserId,
+                FirstName = obj.FirstName,
+                LastName = obj.LastName,
+                Email = obj.Email,
+                Password = obj.Password,
+                CreatedDate = obj.CreatedDate,
+                IsActive = obj.IsActive
+            };
         }
     }
 }

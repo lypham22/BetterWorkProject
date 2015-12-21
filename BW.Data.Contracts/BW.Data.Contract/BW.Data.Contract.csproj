@@ -47,6 +47,8 @@
   <ItemGroup>
     <Compile Include="DTOs\Home\AuthenticationInfoDTO.cs" />
     <Compile Include="DTOs\Home\ModuleDTO.cs" />
+    <Compile Include="DTOs\Role\RoleCreateDTO.cs" />
+    <Compile Include="DTOs\Role\RoleCreateView.cs" />
     <Compile Include="DTOs\Role\RoleListView.cs" />
     <Compile Include="DTOs\User\UserCreateView.cs" />
     <Compile Include="DTOs\User\UserCreateDTO.cs" />

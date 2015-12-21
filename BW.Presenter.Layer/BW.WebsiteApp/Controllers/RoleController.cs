@@ -11,28 +11,26 @@ using BW.Data.Contract.DTOs;
 
 namespace BW.WebsiteApp.Controllers
 {
-    public class UserController : Controller
+    public class RoleController : Controller
     {
         // GET: Users
         public ActionResult Index()
         {
-            var getAllUser = UserHelper.GetAllUser().Data;
-            return View(getAllUser);
+            var getAllRole = RoleHelper.GetAllRoleMoreInfo().Data;
+            return View(getAllRole);
         }
 
         // GET: Users/Details/5
-        public ActionResult Details(string userId)
+        public ActionResult Details(string roleId)
         {
-            var result = UserHelper.GetUserById(userId).Data;
+            var result = RoleHelper.GetRoleById(roleId).Data;
             return View(result);
         }
 
         // GET: Users/Create
         public ActionResult Create()
         {
-            UserCreateView dto = new UserCreateView();
-            dto.roles = RoleHelper.GetAllRole().Data;
-            return View(dto);
+            return View();
         }
 
         // POST: Users/Create
@@ -40,28 +38,27 @@ namespace BW.WebsiteApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(UserCreateView userCreateView, string[] groupRole)
+        public ActionResult Create(RoleCreateView roleCreateView)
         {
             if (ModelState.IsValid)
             {
-                var result = UserHelper.InsertUser(userCreateView, groupRole);
+                var result = RoleHelper.InsertRole(roleCreateView);
                 if (result.Data)
                 {
                     return RedirectToAction("Index");
                 }
             }
-
-            return View(userCreateView);
+            return View(roleCreateView);
         }
 
         // GET: Users/Edit/5
-        public ActionResult Edit(string userId)
+        public ActionResult Edit(string roleId)
         {
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrEmpty(roleId))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var result = UserHelper.GetUserById(userId).Data;
+            var result = RoleHelper.GetRoleById(roleId).Data;
             if (result == null)
             {
                 return HttpNotFound();
@@ -74,31 +71,28 @@ namespace BW.WebsiteApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(UserCreateView userView, string[] groupRole)
+        public ActionResult Edit(RoleCreateView roleView)
         {
-            //UserCreateView userView = null;
-            //var errors = ModelState.Values.SelectMany(v => v.Errors);
             if (ModelState.IsValid)
             {
-                //userView = ToUserCreaView(userDTOs);
-                var result = UserHelper.UpdateUser(userView, groupRole);
-                if (result.Data)
+                var result = RoleHelper.UpdateRole(roleView).Data;
+                if (result)
                 {
                     return RedirectToAction("Index");
                 }
             }
 
-            return View(userView);
+            return View(roleView);
         }
 
-        //GET: Users/Delete/5
-        public ActionResult Delete(string userId)
+         //GET: Users/Delete/5
+        public ActionResult Delete(string roleId)
         {
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrEmpty(roleId))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var result = UserHelper.GetUserById(userId).Data;
+            var result = RoleHelper.GetRoleById(roleId).Data;
             if (result == null)
             {
                 return HttpNotFound();
@@ -109,9 +103,9 @@ namespace BW.WebsiteApp.Controllers
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int userId)
+        public ActionResult DeleteConfirmed(int roleId)
         {
-            UserHelper.DeleteUser(userId);
+            RoleHelper.DeleteRole(roleId);
             return RedirectToAction("Index");
         }
     }

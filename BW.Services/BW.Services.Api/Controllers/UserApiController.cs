@@ -24,23 +24,22 @@ namespace BW.Services.Api.Controllers
             return response;
         }
 
-        public BW_User GetUserById(int id)
+        public ResponeMessage<UserDTO> GetUserById(int id)
         {
-            var data = userRepository.GetById(id);
-            return data;
+            return  userRepository.GetUserById(id);;
         }
-        public bool InsertUser(UserCreateDTO user)
+        public ResponeMessageBaseType<bool> InsertUser(UserCreateDTO user)
         {
-            return userRepository.CreateUser(user).Data;
+            return userRepository.CreateUser(user);
         }
-        //public bool UpdateUser(UserCreateView user)
-        //{
-        //    return userRepository.UpdateUser(user);
-        //}
+        public ResponeMessageBaseType<bool> UpdateUser(UserCreateDTO user)
+        {
+            return userRepository.UpdateUser(user);
+        }
 
-        //public bool RemoveUser(User user)
-        //{
-        //    return userRepository.DeleteUser(user.UserId);
-        //}
+        public ResponeMessageBaseType<bool> RemoveUser(UserDTO user)
+        {
+            return userRepository.DeleteUser(user.UserId);
+        }
     }
 }
