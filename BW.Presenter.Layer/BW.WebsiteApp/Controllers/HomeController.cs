@@ -1,6 +1,7 @@
 ﻿using BW.Common.Consts;
 using BW.Common.Enums;
 using BW.Data.Contract.DTOs;
+using BW.Website.Common.Constants;
 using BW.Website.Common.Helpers;
 using BW.Website.Common.Utilities;
 using System;
@@ -17,7 +18,15 @@ namespace BW.WebsiteApp.Controllers
         [AuthorizedUser(PermissionCodes.AllowAnonymous)]
         public ActionResult Index()
         {
-            return RedirectToAction("Login");
+            var currentUser = AuthorizationHelper.CurrentUser;
+            if (AuthorizationHelper.IsLogged && currentUser != null)
+            {
+                return RedirectToAction(ConstActionMethods.INDEX, ConstActionMethods.CTL_USER);
+            }
+            else
+            {
+                return RedirectToAction(ConstActionMethods.LOGIN);
+            }
         }
 
         [AuthorizedUser(PermissionCodes.AllowAnonymous)]
@@ -44,6 +53,16 @@ namespace BW.WebsiteApp.Controllers
                 return View(login);
             }
             
+        }
+        [AuthorizedUser(PermissionCodes.AllowAnonymous)]
+        public ActionResult Logout()
+        {
+            if (!AuthorizationHelper.IsLogged)
+            {
+                return RedirectToAction(ConstActionMethods.INDEX);
+            }
+            AuthorizationHelper.SignOut();
+            return RedirectToAction(ConstActionMethods.INDEX);
         }
     }
 }
