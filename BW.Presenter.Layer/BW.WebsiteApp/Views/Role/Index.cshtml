@@ -22,6 +22,9 @@
             @Html.Label("Created Date")
         </th>
         <th>
+            @Html.Label("Module Name")
+        </th>
+        <th>
             @Html.Label("Action")
         </th>
     </tr>
@@ -40,6 +43,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModuleName)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { roleId = item.RoleId }) |

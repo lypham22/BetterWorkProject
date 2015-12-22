@@ -15,9 +15,13 @@ namespace BW.Services.Api.Controllers
         {
             this.roleRepository = roleRepository;
         }
-        public ResponeMessage<List<RoleDTO>> GetAllRole()
+        public ResponeMessage<List<RoleDTO>> GetRoleActive()
         {
-            return roleRepository.GetAllRole();;
+            return roleRepository.GetRoleActive();;
+        }
+        public ResponeMessage<List<RoleDTO>> GetAllRoleMore()
+        {
+            return roleRepository.GetAllRoleMore();
         }
 
         public ResponeMessage<RoleDTO> GetRoleById(int id)

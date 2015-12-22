@@ -2,51 +2,50 @@
 @{
     ViewBag.Title = "Index";
 }
+
+<link href="~/Content/style.css" rel="stylesheet" />
+
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<select class="ddlRoles">
+    @foreach (var item in BW.Website.Common.Helpers.RoleHelper.GetAllRole().Data)
+    {
+        <option value="@item.RoleName" id="@item.RoleName">@item.RoleName</option>
+    }
+</select>
+<br />
 
-@*<dl class="dl-horizontal">
-    <dt>
-        @Html.Label("Role Name")
-    </dt>
-
-    <dd>
-        @Html.DisplayFor(model => model.RoleName)
-    </dd>
-</dl>*@
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.Label("Role")
-        </th>
-        <th>
-            @Html.Label("Module")
-        </th>
-        <th>
-            @Html.Label("Add")
-        </th>
-        <th>
-            @Html.Label("Edit")
-        </th>
-        <th>
-            @Html.Label("Delete")
-        </th>
-        <th>
-            @Html.Label("View")
-        </th>
-        @*<th>
-            @Html.Label("Action")
-        </th>*@
-    </tr>
+<table class="table" id="tbl_RoleInPermission">
+    <thead>
+        <tr>
+            <th ng-hide="true">
+                @Html.Label("Role")
+            </th>
+            <th>
+                @Html.Label("Module")
+            </th>
+            <th>
+                @Html.Label("Add")
+            </th>
+            <th>
+                @Html.Label("Edit")
+            </th>
+            <th>
+                @Html.Label("Delete")
+            </th>
+            <th>
+                @Html.Label("View")
+            </th>
+            <th>
+                @Html.Label("Action")
+            </th>
+        </tr>
+    </thead>
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
+        <tr style="display: none">
+            <td ng-hide="true" class="lstRoles">
                 @Html.DisplayFor(modelItem => item.RoleName)
             </td>
             <td>
@@ -64,12 +63,23 @@
             <td>
                 @Html.DisplayFor(modelItem => item.PView)
             </td>
-            @*<td>
-                @Html.ActionLink("Edit", "Edit", new { roleId = item.RoleId }) |
-                @Html.ActionLink("Details", "Details", new { roleId = item.RoleId }) |
-                @Html.ActionLink("Delete", "Delete", new { roleId = item.RoleId })
-            </td>*@
+            <td>
+                @Html.ActionLink("Save", "Save", new { roleInPermId = item.RoleInPermissionId })
+            </td>
         </tr>
     }
-
 </table>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    $(".ddlRoles").change(function () {
+        var roleName = $(this).val();
+        $("td.lstRoles ").each(function (index) {
+            if ($(this).html().trim() == roleName) {
+                $(this).closest('tr').css("display", "");
+            } else
+                $(this).closest('tr').css("display", "none");
+
+        });
+    });
+    $('.ddlRoles').change();
+</script>

@@ -5,6 +5,7 @@ using System.Web.Http;
 using System.Linq;
 using BW.Data.Contract.DTOs;
 using BW.Data.Contract;
+using BW.Common.Enums;
 
 namespace BW.Services.Api.Controllers
 {
@@ -17,25 +18,7 @@ namespace BW.Services.Api.Controllers
         }
         public ResponeMessage<List<RoleInPermissonDTO>> GetAllRoleInPermisson()
         {
-            return roleInPermissonRepository.GetAllRoleInPermission(); ;
+            return roleInPermissonRepository.GetAllRoleInPermission();
         }
-
-        //public ResponeMessage<RoleDTO> GetRoleById(int id)
-        //{
-        //    return roleRepository.GetRoleById(id);
-        //}
-        //public ResponeMessageBaseType<bool> InsertRole(RoleCreateDTO role)
-        //{
-        //    return roleRepository.CreateRole(role);
-        //}
-        //public ResponeMessageBaseType<bool> UpdateRole(RoleCreateDTO role)
-        //{
-        //    return roleRepository.UpdateRole(role);
-        //}
-
-        //public ResponeMessageBaseType<bool> RemoveRole(RoleDTO role)
-        //{
-        //    return roleRepository.DeleteRole(role.RoleId);
-        //}
     }
 }
