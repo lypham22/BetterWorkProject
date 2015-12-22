@@ -20,6 +20,7 @@ namespace BW.WebsiteApp.Controllers
         public ActionResult Index()
         {
             var getAllUser = UserHelper.GetAllUser().Data;
+            
             return View(getAllUser);
         }
 
