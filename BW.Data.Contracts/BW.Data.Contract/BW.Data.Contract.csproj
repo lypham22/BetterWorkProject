@@ -47,6 +47,9 @@
   <ItemGroup>
     <Compile Include="DTOs\Home\AuthenticationInfoDTO.cs" />
     <Compile Include="DTOs\Home\AuthenticationInfoStateServer.cs" />
+    <Compile Include="DTOs\Home\BWHandleErrorInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DTOs\Home\LoginInfoDTO.cs" />
     <Compile Include="DTOs\Home\ModuleDTO.cs" />
     <Compile Include="DTOs\Role\RoleCreateDTO.cs" />

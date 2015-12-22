@@ -30,6 +30,7 @@ namespace BW.Website.Common.Utilities
         public static HttpResponseMessage GetReponse(string path)
         {
             HttpClient client = ConnectClient();
+            client.DefaultRequestHeaders.Add("ApiKey", ComputeHash());
             HttpResponseMessage reponse = client.GetAsync(path).Result;
             return reponse;
         }
@@ -37,6 +38,7 @@ namespace BW.Website.Common.Utilities
         public static HttpResponseMessage PostJson(string path, object value)
         {
             HttpClient client = ConnectClient();
+            client.DefaultRequestHeaders.Add("ApiKey", ComputeHash());
             HttpResponseMessage reponse = new HttpResponseMessage(HttpStatusCode.ServiceUnavailable);
             try
             {
@@ -49,18 +51,26 @@ namespace BW.Website.Common.Utilities
             }
         }
 
-        public static string ComputeHash(string hashedPassword, string message)
+        public static string ComputeHash( )
         {
+            string hashedPassword = ConfigurationManager.AppSettings["password"];
+            string username = ConfigurationManager.AppSettings["username"];
             var key = Encoding.UTF8.GetBytes(hashedPassword.ToUpper());
             string hashString;
 
             using (var hmac = new HMACSHA256(key))
             {
-                var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(message));
+                var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(username));
                 hashString = Convert.ToBase64String(hash);
             }
 
-            return hashString;
+            return hashString + "ApiKey" + DateTime.UtcNow.Ticks; ;
+        }
+
+        public static string  ParsePath()
+        {
+            string path="";
+            return path;
         }
     }
 }

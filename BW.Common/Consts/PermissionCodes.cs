@@ -13,23 +13,23 @@ namespace BW.Common.Consts
         public const string NotAllow = "NotAllow";
 
         #region View Permissions
-        public const string ViewUser = "ViewUser";
-        public const string ViewRole = "ViewRole";
+        public const string ViewManageUser = "ViewManageUser";
+        public const string ViewManageRole = "ViewManageRole";
         #endregion
 
         #region Add Permissions
-        public const string AddUser = "AddUser";
-        public const string AddRole = "AddRole";
+        public const string AddManageUser = "AddManageUser";
+        public const string AddManageRole = "AddManageRole";
         #endregion
 
         #region Edit Permissions
-        public const string EditUser = "EditUser";
-        public const string EditRole = "EditRole";
+        public const string EditManageUser = "EditManageUser";
+        public const string EditManageRole = "EditManageRole";
         #endregion
 
         #region Delete Permissions
-        public const string DeleteUser = "DeleteUser";
-        public const string DeleteRole = "DeleteRole";
+        public const string DeleteManageUser = "DeleteManageUser";
+        public const string DeleteManageRole = "DeleteManageRole";
         #endregion
     }
 }

@@ -15,8 +15,7 @@ namespace BW.WebsiteApp.Controllers
 {
     public class UserController : Controller
     {
-        // GET: Users
-        [AuthorizedUser(PermissionCodes.AllowAnonymous)]
+        [AuthorizedUser(PermissionCodes.ViewManageUser)]
         public ActionResult Index()
         {
             var getAllUser = UserHelper.GetAllUser().Data;
@@ -24,7 +23,7 @@ namespace BW.WebsiteApp.Controllers
         }
 
         // GET: Users/Details/5
-        [AuthorizedUser(PermissionCodes.AllowAnonymous)]
+        [AuthorizedUser(PermissionCodes.ViewManageUser)]
         public ActionResult Details(string userId)
         {
             var result = UserHelper.GetUserById(userId).Data;
@@ -32,7 +31,7 @@ namespace BW.WebsiteApp.Controllers
         }
 
         // GET: Users/Create
-        [AuthorizedUser(PermissionCodes.AllowAnonymous)]
+        [AuthorizedUser(PermissionCodes.AddManageUser)]
         public ActionResult Create()
         {
             UserCreateView dto = new UserCreateView();
@@ -45,7 +44,7 @@ namespace BW.WebsiteApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [AuthorizedUser(PermissionCodes.AllowAnonymous)]
+        [AuthorizedUser(PermissionCodes.AddManageUser)]
         public ActionResult Create(UserCreateView userCreateView, string[] groupRole)
         {
             if (ModelState.IsValid)
@@ -61,7 +60,7 @@ namespace BW.WebsiteApp.Controllers
         }
 
         // GET: Users/Edit/5
-        [AuthorizedUser(PermissionCodes.AllowAnonymous)]
+        [AuthorizedUser(PermissionCodes.EditManageUser)]
         public ActionResult Edit(string userId)
         {
             if (string.IsNullOrEmpty(userId))
@@ -76,12 +75,8 @@ namespace BW.WebsiteApp.Controllers
             return View(result);
         }
 
-        // POST: Users/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        [AuthorizedUser(PermissionCodes.AllowAnonymous)]
+        [AuthorizedUser(PermissionCodes.EditManageUser)]
         public ActionResult Edit(UserCreateView userView, string[] groupRole)
         {
             //UserCreateView userView = null;
@@ -99,8 +94,7 @@ namespace BW.WebsiteApp.Controllers
             return View(userView);
         }
 
-        //GET: Users/Delete/5
-        [AuthorizedUser(PermissionCodes.AllowAnonymous)]
+        [AuthorizedUser(PermissionCodes.DeleteManageUser)]
         public ActionResult Delete(string userId)
         {
             if (string.IsNullOrEmpty(userId))
@@ -117,8 +111,7 @@ namespace BW.WebsiteApp.Controllers
 
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        [AuthorizedUser(PermissionCodes.AllowAnonymous)]
+        [AuthorizedUser(PermissionCodes.DeleteManageUser)]
         public ActionResult DeleteConfirmed(int userId)
         {
             UserHelper.DeleteUser(userId);

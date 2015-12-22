@@ -8,7 +8,7 @@ using BW.Data.Contract;
 
 namespace BW.Services.Api.Controllers
 {
-    //[Authenticate]
+    // [Authenticate]
     public class RoleApiController : ApiController
     {
         private readonly IRoleRepository roleRepository;
