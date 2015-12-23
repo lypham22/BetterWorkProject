@@ -58,6 +58,27 @@ namespace BW.WebsiteApp.Controllers
             return View(roleInPermissonView);
         }
 
+        [AuthorizedUser(PermissionCodes.AllowAnonymous)]
+        public ActionResult ViewAll()
+        {
+            var getAllRoleInPermission = RoleInPermissionHelper.GetAllRoleInPermisson().Data;
+            return View(getAllRoleInPermission);
+        }
+
+        [AuthorizedUser(PermissionCodes.AllowAnonymous)]
+        public ActionResult Save(string roleInPermIdEnc, string roleInPermAddEnc,
+            string roleInPermEditEnc, string roleInPermDelEnc, string roleInPermViewEnc)
+        {
+
+            var result = RoleInPermissionHelper.UpdateRoleInPermissionJSCript(roleInPermIdEnc, roleInPermAddEnc,
+            roleInPermEditEnc, roleInPermDelEnc, roleInPermViewEnc).Data;
+            if (result)
+            {
+                return RedirectToAction("ViewAll");
+            }
+
+            return View(result);
+        }
         //[AuthorizedUser(PermissionCodes.AllowAnonymous)]
         //public ActionResult Save(string roleInPermIdEnc, string roleInPermAddEnc, string roleInPermEditEnc, string roleInPermDelEnc, string roleInPermViewEnc)
         //{

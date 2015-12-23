@@ -3,8 +3,6 @@
     ViewBag.Title = "Index";
 }
 
-<link href="~/Content/style.css" rel="stylesheet" />
-
 <h2>Index</h2>
 
 <select class="ddlRoles">
@@ -81,7 +79,7 @@
         </tr>
     }
 </table>
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+@Scripts.Render("~/bundles/jquery")
 <script>
     $(".ddlRoles").change(function () {
         var roleName = $(this).val();

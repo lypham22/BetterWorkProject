@@ -85,6 +85,35 @@ namespace BW.Website.Common.Helpers
             }
         }
 
+        public static ResponeMessageBaseType<bool> UpdateRoleInPermissionJSCript(string roleInPermIdEnc, string roleInPermAddEnc,
+            string roleInPermEditEnc, string roleInPermDelEnc, string roleInPermViewEnc)
+        {
+            var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = true };
+            if (!string.IsNullOrEmpty(roleInPermIdEnc) && !string.IsNullOrEmpty(roleInPermAddEnc)
+                && !string.IsNullOrEmpty(roleInPermEditEnc) && !string.IsNullOrEmpty(roleInPermDelEnc)
+                && !string.IsNullOrEmpty(roleInPermViewEnc))
+            {
+                int roleInPermId = int.Parse(roleInPermIdEnc);
+                bool roleInPermAdd = bool.Parse(roleInPermAddEnc);
+                bool roleInPermEdit = bool.Parse(roleInPermEditEnc);
+                bool roleInPermDel = bool.Parse(roleInPermDelEnc);
+                bool roleInPermView = bool.Parse(roleInPermViewEnc);
+                RoleInPermissonDTO roleInPerm = new RoleInPermissonDTO();
+                roleInPerm.RoleInPermissionId = roleInPermId;
+                roleInPerm.PAdd = roleInPermAdd;
+                roleInPerm.PEdit = roleInPermEdit;
+                roleInPerm.PDelete = roleInPermDel;
+                roleInPerm.PView = roleInPermView;
+
+                ApiServiceUtilities.PostJson("api/RoleInPermissionApi/UpdateRoleInPermission/", roleInPerm);
+                return response;
+            }
+            else
+            {
+                return response;
+            }
+        }
+
         //public static ResponeMessage<List<RoleView>> GetAllRoleMoreInfo()
         //{
         //    var response = new ResponeMessage<List<RoleView>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<RoleView>() };
