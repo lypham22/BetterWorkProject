@@ -14,9 +14,8 @@ namespace BW.Website.Common.Helpers
         public static ResponeMessage<List<UserView>> GetAllUser()
         {
             List<UserView> userDTO = new List<UserView>();
-            var response = new ResponeMessage<List<UserView>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<UserView>() };
-            string path = "api/UserApi/getalluser/ApiKey" + ApiServiceUtilities.ComputeHash("Pa$$w0rd", "username") + "ApiKey" + DateTime.Now.Ticks;
-            HttpResponseMessage reponse = ApiServiceUtilities.GetReponse(path);
+            var response = new ResponeMessage<List<UserView>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<UserView>() };            
+            HttpResponseMessage reponse = ApiServiceUtilities.GetReponse("api/UserApi/getalluser/");
             if (reponse.IsSuccessStatusCode)
             {
                 var users = reponse.Content.ReadAsAsync <ResponeMessage<List<UserDTO>>>().Result;
@@ -45,21 +44,25 @@ namespace BW.Website.Common.Helpers
             UserView userView = new UserView();
             if (!string.IsNullOrEmpty(userIdEnc))
             {
-                int userId = int.Parse(userIdEnc);
+                int userId = int.Parse(userIdEnc);               
                 HttpResponseMessage reponse = ApiServiceUtilities.GetReponse("api/UserApi/GetUserById/" + userId);
                 if (reponse.IsSuccessStatusCode)
                 {
-                    var user = reponse.Content.ReadAsAsync<ResponeMessage<UserDTO>>().Result;
-                    userView.UserId = user.Data.UserId;
-                    userView.FirstName = user.Data.FirstName;
-                    userView.LastName = user.Data.LastName;
-                    userView.Email = user.Data.Email;
-                    userView.CreatedDate = user.Data.CreatedDate;
-                    userView.IsActive = user.Data.IsActive;
-                    userView.RoleName = user.Data.RoleName;
-                    userView.RoleDTOs = user.Data.RoleDTOs;
-                    response.Code = user.Code;
-                    response.Data = userView;
+                    try
+                    {
+                        var user = reponse.Content.ReadAsAsync<ResponeMessage<UserDTO>>().Result;
+                        userView.UserId = user.Data.UserId;
+                        userView.FirstName = user.Data.FirstName;
+                        userView.LastName = user.Data.LastName;
+                        userView.Email = user.Data.Email;
+                        userView.CreatedDate = user.Data.CreatedDate;
+                        userView.IsActive = user.Data.IsActive;
+                        userView.RoleName = user.Data.RoleName;
+                        userView.RoleDTOs = user.Data.RoleDTOs;
+                        response.Code = user.Code;
+                        response.Data = userView;
+                    }catch(Exception e)
+                    { }
                 }
             }
             return response;

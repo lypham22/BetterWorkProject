@@ -5,6 +5,7 @@ namespace BW.Data.Contract.DTOs
 {
     public class UserDTO
     {
+        //Test branch
         public UserDTO()
         {
             RoleDTOs = new List<RoleDTO>();

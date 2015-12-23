@@ -1,0 +1,10 @@
+﻿@model BW.Data.Contract.DTOs.BWHandleErrorInfo
+@{
+    ViewBag.Title = "Error Page";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+<div class="error-container">
+<h1 class="error-title">Server Error</h1>
+<p class="error-content">@Model.FriendlyErrorMessage</p>
+<pre class="error-stack-trace">@Model.StackTraceMessage</pre>
+</div>
