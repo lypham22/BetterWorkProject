@@ -45,5 +45,52 @@ namespace BW.Repository.Data.Repositories
             response.Data = result;
             return response;
         }
+
+        public ResponeMessage<RoleInPermissonDTO> GetRoleInPermissionById(int roleInPermissionId)
+        {
+            var response = new ResponeMessage<RoleInPermissonDTO> { Code = ErrorCodeEnum.SUCCESS, Data = new RoleInPermissonDTO() };
+            var result = this.GetById(roleInPermissionId);
+            if (result != null)
+            {
+                response.Data = this.ToRoleInPermissonDTO(result);
+                return response;
+            }
+            return response;
+        }
+        public ResponeMessageBaseType<bool> UpdateRoleInPermission(RoleInPermissonDTO roleInPerm)
+        {
+            var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = true };
+            var roleInPermData = this.GetById(roleInPerm.RoleInPermissionId);
+            if (roleInPermData != null)
+            {
+                roleInPermData.PAdd = roleInPerm.PAdd;
+                roleInPermData.PEdit = roleInPerm.PEdit;
+                roleInPermData.PDelete = roleInPerm.PDelete;
+                roleInPermData.PView = roleInPerm.PView;
+                roleInPermData.UpdatedDate = DateTime.Now;
+
+                this.Update(roleInPermData);
+                this.DataContext.SaveChanges();
+                return response;
+            }
+            else
+            {
+                response.Data = false;
+                return response;
+            }
+        }
+        private RoleInPermissonDTO ToRoleInPermissonDTO(BW_RoleInPermission obj)
+        {
+            return new RoleInPermissonDTO()
+            {
+                RoleInPermissionId = obj.RoleInPermissionId,
+                ModuleId = obj.ModuleId,
+                RoleId = obj.RoleId,
+                PAdd = obj.PAdd,
+                PEdit = obj.PEdit,
+                PDelete = obj.PDelete,
+                PView = obj.PView,
+            };
+        }
     }
 }

@@ -148,6 +148,9 @@ namespace BW.Repository.Data.Repositories
                 string delete = "DELETE FROM BW_UserInRole WHERE RoleId = " + roleId;
                 DataContext.Database.ExecuteSqlCommand(delete);
 
+                string delete1 = "DELETE FROM BW_RoleInPermission WHERE RoleId = " + roleId;
+                DataContext.Database.ExecuteSqlCommand(delete1);
+
                 this.Delete(roleData);
                 this.DataContext.SaveChanges();
 

@@ -18,7 +18,7 @@
 <table class="table" id="tbl_RoleInPermission">
     <thead>
         <tr>
-            <th ng-hide="true">
+            <th style="display: none">
                 @Html.Label("Role")
             </th>
             <th>
@@ -45,7 +45,7 @@
     @foreach (var item in Model)
     {
         <tr style="display: none">
-            <td ng-hide="true" class="lstRoles">
+            <td style="display: none" class="lstRoles">
                 @Html.DisplayFor(modelItem => item.RoleName)
             </td>
             <td>
@@ -53,18 +53,30 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PAdd)
+                @*@Html.CheckBoxFor(modelItem => item.PAdd)*@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PEdit)
+                @*@Html.CheckBoxFor(modelItem => item.PEdit)*@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PDelete)
+                @*@Html.CheckBoxFor(modelItem => item.PDelete)*@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PView)
+                @*Html.CheckBoxFor(modelItem => item.PView)*@
             </td>
             <td>
-                @Html.ActionLink("Save", "Save", new { roleInPermId = item.RoleInPermissionId })
+                @Html.ActionLink("Edit", "Edit", new { roleInPermIdEnc = item.RoleInPermissionId })
+                @*@Html.ActionLink("Save", "Save", new
+                    {
+                        roleInPermIdEnc = item.RoleInPermissionId,
+                        roleInPermAddEnc = item.PAdd,
+                        roleInPermEditEnc = item.PEdit,
+                        roleInPermDelEnc = item.PDelete,
+                        roleInPermViewEnc = item.PView
+                    })*@
             </td>
         </tr>
     }
@@ -82,4 +94,6 @@
         });
     });
     $('.ddlRoles').change();
+
+
 </script>

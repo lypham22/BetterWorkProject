@@ -22,6 +22,52 @@ namespace BW.WebsiteApp.Controllers
             var getAllRoleInPermission = RoleInPermissionHelper.GetAllRoleInPermisson().Data;
             return View(getAllRoleInPermission);
         }
+        // GET: Users/Edit/5
+        [AuthorizedUser(PermissionCodes.AllowAnonymous)]
+        public ActionResult Edit(string roleInPermIdEnc)
+        {
+            if (string.IsNullOrEmpty(roleInPermIdEnc))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var result = RoleInPermissionHelper.GetRoleInPermissionById(roleInPermIdEnc).Data;
+            if (result == null)
+            {
+                return HttpNotFound();
+            }
+            return View(result);
+        }
+
+        // POST: Users/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AuthorizedUser(PermissionCodes.AllowAnonymous)]
+        public ActionResult Edit(RoleInPermissonView roleInPermissonView)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = RoleInPermissionHelper.UpdateRoleInPermission(roleInPermissonView).Data;
+                if (result)
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+
+            return View(roleInPermissonView);
+        }
+
+        //[AuthorizedUser(PermissionCodes.AllowAnonymous)]
+        //public ActionResult Save(string roleInPermIdEnc, string roleInPermAddEnc, string roleInPermEditEnc, string roleInPermDelEnc, string roleInPermViewEnc)
+        //{
+        //    var result = RoleInPermissionHelper.UpdateRoleInPermission(roleInPermIdEnc, roleInPermAddEnc, roleInPermEditEnc, roleInPermDelEnc, roleInPermViewEnc);
+        //    if (result != null)
+        //    {
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(result);
+        //}
 
         // GET: Users/Details/5
         //[AuthorizedUser(PermissionCodes.AllowAnonymous)]
@@ -57,43 +103,7 @@ namespace BW.WebsiteApp.Controllers
         //    return View(roleCreateView);
         //}
 
-        // GET: Users/Edit/5
-        //[AuthorizedUser(PermissionCodes.AllowAnonymous)]
-        //public ActionResult Edit(string roleId)
-        //{
-        //    if (string.IsNullOrEmpty(roleId))
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    var result = RoleHelper.GetRoleById(roleId).Data;
-        //    if (result == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(result);
-        //}
-
-        // POST: Users/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[AuthorizedUser(PermissionCodes.AllowAnonymous)]
-        //public ActionResult Edit(RoleCreateView roleView)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var result = RoleHelper.UpdateRole(roleView).Data;
-        //        if (result)
-        //        {
-        //            return RedirectToAction("Index");
-        //        }
-        //    }
-
-        //    return View(roleView);
-        //}
-
-         //GET: Users/Delete/5
+        //GET: Users/Delete/5
         //[AuthorizedUser(PermissionCodes.AllowAnonymous)]
         //public ActionResult Delete(string roleId)
         //{

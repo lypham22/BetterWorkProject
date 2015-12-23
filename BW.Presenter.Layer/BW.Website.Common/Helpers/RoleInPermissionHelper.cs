@@ -41,6 +41,50 @@ namespace BW.Website.Common.Helpers
             return response;
         }
 
+        public static ResponeMessage<RoleInPermissonView> GetRoleInPermissionById(string roleInPermIdEnc)
+        {
+            var response = new ResponeMessage<RoleInPermissonView> { Code = ErrorCodeEnum.SUCCESS, Data = new RoleInPermissonView() };
+            RoleInPermissonView roleInPermView = new RoleInPermissonView();
+            if (!string.IsNullOrEmpty(roleInPermIdEnc))
+            {
+                int roleInPermId = int.Parse(roleInPermIdEnc);
+                HttpResponseMessage reponse = ApiServiceUtilities.GetReponse("api/RoleInPermissionApi/GetRoleInPermissionById/" + roleInPermId);
+                if (reponse.IsSuccessStatusCode)
+                {
+                    var roleInPerm = reponse.Content.ReadAsAsync<ResponeMessage<RoleInPermissonDTO>>().Result;
+                    roleInPermView.RoleInPermissionId = roleInPerm.Data.RoleInPermissionId;
+                    roleInPermView.PAdd = roleInPerm.Data.PAdd;
+                    roleInPermView.PEdit = roleInPerm.Data.PEdit;
+                    roleInPermView.PDelete = roleInPerm.Data.PDelete;
+                    roleInPermView.PView = roleInPerm.Data.PView;
+
+                    response.Data = roleInPermView;
+                }
+            }
+            return response;
+        }
+
+        public static ResponeMessageBaseType<bool> UpdateRoleInPermission(RoleInPermissonView roleInPermView)
+        {
+            var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = true };
+            if (roleInPermView != null)
+            {
+                RoleInPermissonDTO roleInPerm = new RoleInPermissonDTO();
+                roleInPerm.RoleInPermissionId = roleInPermView.RoleInPermissionId;
+                roleInPerm.PAdd = roleInPermView.PAdd;
+                roleInPerm.PEdit = roleInPermView.PEdit;
+                roleInPerm.PDelete = roleInPermView.PDelete;
+                roleInPerm.PView = roleInPermView.PView;
+
+                ApiServiceUtilities.PostJson("api/RoleInPermissionApi/UpdateRoleInPermission/", roleInPerm);
+                return response;
+            }
+            else
+            {
+                return response;
+            }
+        }
+
         //public static ResponeMessage<List<RoleView>> GetAllRoleMoreInfo()
         //{
         //    var response = new ResponeMessage<List<RoleView>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<RoleView>() };
@@ -106,24 +150,7 @@ namespace BW.Website.Common.Helpers
         //        return response;
         //    }
         //}
-        //public static ResponeMessageBaseType<bool> UpdateRole(RoleCreateView roleCreateView)
-        //{
-        //    var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = true };
-        //    if (roleCreateView != null)
-        //    {
-        //        RoleCreateDTO role = new RoleCreateDTO();
-        //        role.RoleId = roleCreateView.RoleId;
-        //        role.RoleName = roleCreateView.RoleName;
-        //        role.RoleDescription = roleCreateView.RoleDescription;
-        //        role.IsActive = roleCreateView.IsActive;
-        //        ApiServiceUtilities.PostJson("api/RoleApi/UpdateRole/", role);
-        //        return response;
-        //    }
-        //    else
-        //    {
-        //        return response;
-        //    }
-        //}
+        
 
         //public static ResponeMessageBaseType<bool> DeleteRole(int roleId)
         //{

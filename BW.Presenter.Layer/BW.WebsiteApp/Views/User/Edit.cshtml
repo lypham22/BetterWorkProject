@@ -52,7 +52,7 @@
         <div class="form-group">
             <label class="control-label col-md-2">Roles</label>
             <div class="col-md-10">
-                @foreach (var item in BW.Website.Common.Helpers.RoleHelper.GetAllRole().Data)
+                @foreach (var item in BW.Website.Common.Helpers.RoleHelper.GetRoleActive().Data)
                 {
                     var check = Model.RoleDTOs.Where(x => x.RoleId == item.RoleId).Any();
                     <input type="checkbox" name="groupRole" value="@item.RoleId" @(check ? "checked='checked'" : "")/>
