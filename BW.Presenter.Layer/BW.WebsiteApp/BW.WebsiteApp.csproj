@@ -170,6 +170,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\RoleInPermission\ViewAll.cshtml" />
     <Content Include="Views\RoleInPermission\Edit.cshtml" />
+    <Content Include="Views\RoleInPermission\_PermissionsPartialView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

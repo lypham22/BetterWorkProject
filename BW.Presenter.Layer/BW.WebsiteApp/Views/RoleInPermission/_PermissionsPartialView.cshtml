@@ -1,0 +1,61 @@
+﻿@model IEnumerable<BW.Data.Contract.DTOs.RoleInPermissonView>
+
+<table class="table" id="tbl_RoleInPermission">
+    <thead>
+        <tr>
+            <th style="display: none">
+                @Html.Label("Role")
+            </th>
+            <th>
+                @Html.Label("Module")
+            </th>
+            <th>
+                @Html.Label("Add")
+            </th>
+            <th>
+                @Html.Label("Edit")
+            </th>
+            <th>
+                @Html.Label("Delete")
+            </th>
+            <th>
+                @Html.Label("View")
+            </th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="lstRoles" style="display: none">
+                @Html.DisplayFor(modelItem => item.RoleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModuleName)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.PAdd)*@
+                @*@Html.CheckBoxFor(modelItem => item.PAdd, new { @value = "true" })*@
+                <input name="permission" type="checkbox" value="@item.PAdd.ToString()" @(item.PAdd == true ? "checked='checked'" : "") />
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.PEdit)*@
+                <input name="permission" type="checkbox" value="@item.PAdd.ToString()" @(item.PEdit == true ? "checked='checked'" : "") />
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.PDelete)*@
+                <input name="permission" type="checkbox" value="@item.PAdd.ToString()" @(item.PDelete == true ? "checked='checked'" : "") />
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.PView)*@
+                <input name="permission" type="checkbox" value="@item.PAdd.ToString()" @(item.PView == true ? "checked='checked'" : "") />
+            </td>
+        </tr>
+    }
+</table>
+<script>
+    $(':checkbox').change(function () {
+        $(this).val($(this).prop('checked'))
+    });
+
+    var RoleId = $(".lstRoles").prop;
+</script>

@@ -46,6 +46,32 @@ namespace BW.Repository.Data.Repositories
             return response;
         }
 
+        public ResponeMessage<List<RoleInPermissonDTO>> GetRoleInPermissionByRoleId(int roleId)
+        {
+            var response = new ResponeMessage<List<RoleInPermissonDTO>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<RoleInPermissonDTO>() };
+            roleRepository = new RoleRepository(this.DatabaseFactory);
+            moduleRepository = new ModuleRepository(this.DatabaseFactory);
+            var result = this.GetMany(r => r.RoleId == roleId)
+                .Join(roleRepository.GetAll(), l => l.RoleId, r => r.RoleId, (l, r) => new { l, r })
+                .Join(moduleRepository.GetAll(), l1 => l1.l.ModuleId, r1 => r1.ModuleId, (l1, r1) => new { l1, r1 })
+                .Select(p => new RoleInPermissonDTO
+                {
+                    RoleInPermissionId = p.l1.l.RoleInPermissionId,
+                    ModuleId = p.l1.l.ModuleId,
+                    RoleId = p.l1.l.RoleId,
+                    PAdd = p.l1.l.PAdd,
+                    PEdit = p.l1.l.PEdit,
+                    PDelete = p.l1.l.PDelete,
+                    PView = p.l1.l.PView,
+                    CreatedDate = (DateTime)p.l1.l.CreatedDate,
+                    RoleName = p.l1.r.RoleName,
+                    ModuleName = p.r1.ModuleName
+                }).ToList();
+
+            response.Data = result;
+            return response;
+        }
+
         public ResponeMessage<RoleInPermissonDTO> GetRoleInPermissionById(int roleInPermissionId)
         {
             var response = new ResponeMessage<RoleInPermissonDTO> { Code = ErrorCodeEnum.SUCCESS, Data = new RoleInPermissonDTO() };

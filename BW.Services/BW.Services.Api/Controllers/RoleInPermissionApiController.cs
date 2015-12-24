@@ -20,6 +20,10 @@ namespace BW.Services.Api.Controllers
         {
             return roleInPermissonRepository.GetAllRoleInPermission();
         }
+        public ResponeMessage<List<RoleInPermissonDTO>> GetRoleInPermissionByRoleId(int id)
+        {
+            return roleInPermissonRepository.GetRoleInPermissionByRoleId(id);
+        }
         public ResponeMessage<RoleInPermissonDTO> GetRoleInPermissionById(int id)
         {
             return roleInPermissonRepository.GetRoleInPermissionById(id);

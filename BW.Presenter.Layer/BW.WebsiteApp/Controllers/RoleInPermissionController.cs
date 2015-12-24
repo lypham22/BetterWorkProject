@@ -79,6 +79,20 @@ namespace BW.WebsiteApp.Controllers
 
             return View(result);
         }
+
+        public ActionResult ShowData(string roleIdEnc)
+        {
+            var result = RoleInPermissionHelper.GetRoleInPermissionByRoleId(roleIdEnc).Data;
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_PermissionsPartialView", result);
+            }
+            else
+            {
+                return View();
+            }
+        }
         //[AuthorizedUser(PermissionCodes.AllowAnonymous)]
         //public ActionResult Save(string roleInPermIdEnc, string roleInPermAddEnc, string roleInPermEditEnc, string roleInPermDelEnc, string roleInPermViewEnc)
         //{

@@ -1,97 +1,61 @@
 ﻿@model IEnumerable<BW.Data.Contract.DTOs.RoleInPermissonView>
+@using BW.Website.Common.Helpers
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
+<div>
+    <select class="ddlRoles">
+        @foreach (var item in RoleHelper.GetAllRole().Data)
+        {
+            <option value="@item.RoleId" id="@item.RoleName">@item.RoleName</option>
+        }
+    </select>
 
-<select class="ddlRoles">
-    @foreach (var item in BW.Website.Common.Helpers.RoleHelper.GetAllRole().Data)
-    {
-        <option value="@item.RoleName" id="@item.RoleName">@item.RoleName</option>
-    }
-</select>
+    <input type="button" value="Save" name="btnSavePerm"/>
+</div>
 <br />
 
-<table class="table" id="tbl_RoleInPermission">
-    <thead>
-        <tr>
-            <th style="display: none">
-                @Html.Label("Role")
-            </th>
-            <th>
-                @Html.Label("Module")
-            </th>
-            <th>
-                @Html.Label("Add")
-            </th>
-            <th>
-                @Html.Label("Edit")
-            </th>
-            <th>
-                @Html.Label("Delete")
-            </th>
-            <th>
-                @Html.Label("View")
-            </th>
-            <th>
-                @Html.Label("Action")
-            </th>
-        </tr>
-    </thead>
+<div id="myPartialContainer"></div>
 
-    @foreach (var item in Model)
-    {
-        <tr style="display: none">
-            <td style="display: none" class="lstRoles">
-                @Html.DisplayFor(modelItem => item.RoleName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModuleName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PAdd)
-                @*@Html.CheckBoxFor(modelItem => item.PAdd)*@
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PEdit)
-                @*@Html.CheckBoxFor(modelItem => item.PEdit)*@
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PDelete)
-                @*@Html.CheckBoxFor(modelItem => item.PDelete)*@
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PView)
-                @*Html.CheckBoxFor(modelItem => item.PView)*@
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { roleInPermIdEnc = item.RoleInPermissionId })
-                @*@Html.ActionLink("Save", "Save", new
-                    {
-                        roleInPermIdEnc = item.RoleInPermissionId,
-                        roleInPermAddEnc = item.PAdd,
-                        roleInPermEditEnc = item.PEdit,
-                        roleInPermDelEnc = item.PDelete,
-                        roleInPermViewEnc = item.PView
-                    })*@
-            </td>
-        </tr>
-    }
-</table>
-@Scripts.Render("~/bundles/jquery")
-<script>
-    $(".ddlRoles").change(function () {
-        var roleName = $(this).val();
-        $("td.lstRoles ").each(function (index) {
-            if ($(this).html().trim() == roleName) {
-                $(this).closest('tr').css("display", "");
-            } else
-                $(this).closest('tr').css("display", "none");
+@*@Scripts.Render("~/bundles/jquery")
 
+@*<script>
+        $(".ddlRoles").change(function () {
+            var roleName = $(this).val();
+            $("td.lstRoles ").each(function (index) {
+                if ($(this).html().trim() == roleName) {
+                    $(this).closest('tr').css("display", "");
+                } else
+                    $(this).closest('tr').css("display", "none");
+            });
         });
+        $('.ddlRoles').change();
+    </script>*@
+
+<script>
+    $(document).ready(function () {
+        initialLoad();
     });
-    $('.ddlRoles').change();
 
+    function initialLoad() {
+        var roleId = $(".ddlRoles").val();
+        renderPermissionList(roleId);
+    }
 
+    $(".ddlRoles").change(function () {
+        var roleId = $(this).val();
+        renderPermissionList(roleId);
+    });
+
+    function renderPermissionList(roleId) {
+        $.ajax({
+            url: 'http://localhost:8790/RoleInPermission/ShowData/?roleIdEnc=' + roleId,
+            dataType: 'html',
+            success: function (data) {
+                $('#myPartialContainer').html(data);
+            }
+        });
+    }
 </script>

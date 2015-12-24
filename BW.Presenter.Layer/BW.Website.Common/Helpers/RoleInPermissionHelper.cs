@@ -41,6 +41,40 @@ namespace BW.Website.Common.Helpers
             return response;
         }
 
+        public static ResponeMessage<List<RoleInPermissonView>> GetRoleInPermissionByRoleId(string roleIdEnc)
+        {
+            var response = new ResponeMessage<List<RoleInPermissonView>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<RoleInPermissonView>() };
+            List<RoleInPermissonView> roleInPermView = new List<RoleInPermissonView>();
+            if (!string.IsNullOrEmpty(roleIdEnc))
+            {
+                int roleId = int.Parse(roleIdEnc);
+                HttpResponseMessage reponse = ApiServiceUtilities.GetReponse("api/RoleInPermissionApi/GetRoleInPermissionByRoleId/" + roleId);
+                if (reponse.IsSuccessStatusCode)
+                {
+                    var roleInPerms = reponse.Content.ReadAsAsync<ResponeMessage<List<RoleInPermissonDTO>>>().Result;
+                    foreach (var s in roleInPerms.Data)
+                    {
+                        roleInPermView.Add(new RoleInPermissonView
+                        {
+                            RoleInPermissionId = s.RoleInPermissionId,
+                            RoleId = s.RoleId,
+                            ModuleId = s.ModuleId,
+                            PAdd = s.PAdd,
+                            PEdit = s.PEdit,
+                            PDelete = s.PDelete,
+                            PView = s.PView,
+                            CreatedDate = s.CreatedDate,
+                            RoleName = s.RoleName,
+                            ModuleName = s.ModuleName
+                        });
+                    }
+                    response.Code = roleInPerms.Code;
+                    response.Data = roleInPermView;
+                }
+            }
+            return response;
+        }
+
         public static ResponeMessage<RoleInPermissonView> GetRoleInPermissionById(string roleInPermIdEnc)
         {
             var response = new ResponeMessage<RoleInPermissonView> { Code = ErrorCodeEnum.SUCCESS, Data = new RoleInPermissonView() };
@@ -179,7 +213,7 @@ namespace BW.Website.Common.Helpers
         //        return response;
         //    }
         //}
-        
+
 
         //public static ResponeMessageBaseType<bool> DeleteRole(int roleId)
         //{
