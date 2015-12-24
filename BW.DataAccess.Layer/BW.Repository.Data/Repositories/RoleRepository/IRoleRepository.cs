@@ -11,7 +11,8 @@ namespace BW.Repository.Data.Repositories
 {
     public interface IRoleRepository : IRepository<BW_Role>
     {
-        ResponeMessage<List<RoleDTO>> GetAllRole();
+        ResponeMessage<List<RoleDTO>> GetRoleActive();
+        ResponeMessage<List<RoleDTO>> GetAllRoleMore();
         ResponeMessage<RoleDTO> GetRoleById(int roleId);
         ResponeMessageBaseType<bool> CreateRole(RoleCreateDTO role);
         ResponeMessageBaseType<bool> UpdateRole(RoleCreateDTO role);

@@ -102,7 +102,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\RoleApiControlle.cs" />
+    <Compile Include="Controllers\RoleApiController.cs" />
+    <Compile Include="Controllers\RoleInPermissionApiController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Filters\AuthenticateAttribute.cs" />
     <Compile Include="Global.asax.cs">

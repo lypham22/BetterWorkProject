@@ -19,7 +19,10 @@ namespace BW.Repository.Data.Repositories
         {
         }
 
-        public ResponeMessage<List<RoleDTO>> GetAllRole()
+        private RoleInPermissonRepository roleInPermission;
+        private ModuleRepository moduleRepository;
+
+        public ResponeMessage<List<RoleDTO>> GetRoleActive()
         {
             var response = new ResponeMessage<List<RoleDTO>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<RoleDTO>() };
             var result = this.GetMany(r => r.IsActive == true)
@@ -32,6 +35,42 @@ namespace BW.Repository.Data.Repositories
                               CreatedDate = (DateTime)u.CreatedDate
                           }).ToList();
             response.Data = result;
+            response.Message = "GetAllRole Success";
+            return response;
+        }
+
+        public ResponeMessage<List<RoleDTO>> GetAllRoleMore()
+        {
+            var response = new ResponeMessage<List<RoleDTO>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<RoleDTO>() };
+            var result = this.GetAll()
+                          .Select(u => new RoleDTO
+                          {
+                              RoleId = u.RoleId,
+                              RoleName = u.RoleName,
+                              RoleDescription = u.RoleDescription,
+                              IsActive = u.IsActive,
+                              CreatedDate = (DateTime)u.CreatedDate
+                          }).ToList();
+
+            roleInPermission = new RoleInPermissonRepository(this.DatabaseFactory);
+            List<ModuleDTO> module;
+            StringBuilder builder;
+            foreach (var item in result)
+            {
+                module = roleInPermission.GetMany(r => r.RoleId == item.RoleId && r.BW_Module.IsActive == true).Select(u => new ModuleDTO
+                {
+                    ModuleName = u.BW_Module.ModuleName
+                }).ToList();
+                builder = new StringBuilder();
+                foreach (var r in module)
+                {
+                    builder.Append(r.ModuleName).Append(", ");
+                }
+
+                item.ModuleName = !string.IsNullOrEmpty(builder.ToString()) ? builder.Remove(builder.Length - 2, 1).ToString() : string.Empty;
+            }
+            response.Data = result;
+            response.Message = "GetAllRoleMore Success";
             return response;
         }
         public ResponeMessage<RoleDTO> GetRoleById(int roleId)
@@ -40,7 +79,18 @@ namespace BW.Repository.Data.Repositories
             var result = this.GetById(roleId);
             if (result != null)
             {
-                response.Data = this.ToRoleDTO(result);
+                RoleDTO roleDTOs = this.ToRoleDTO(result);
+                roleInPermission = new RoleInPermissonRepository(this.DatabaseFactory);
+                List<ModuleDTO> modules = roleInPermission.GetMany(r => r.RoleId == roleId && r.BW_Module.IsActive == true).Select(u => new ModuleDTO
+                {
+                    ModuleId = u.BW_Module.ModuleId,
+                    ModuleName = u.BW_Module.ModuleName   
+                }).ToList();
+
+                response.Data = roleDTOs;
+                response.Data.ModuleDTOs = modules;
+                response.Data.ModuleName = string.Join(", ", roleDTOs.ModuleDTOs.Select(x => x.ModuleName).ToArray());
+                response.Message = "GetUserById Success";
                 return response;
             }
             return response;
@@ -56,6 +106,16 @@ namespace BW.Repository.Data.Repositories
             r.IsActive = true;
             this.Add(r);
             this.DataContext.SaveChanges();
+
+            moduleRepository = new ModuleRepository(this.DatabaseFactory);
+            foreach (var item in moduleRepository.GetAll().ToList())
+            {
+                string sql = @"INSERT INTO BW_RoleInPermission(ModuleId, RoleId, PAdd, PEdit, PDelete, PView, CreatedDate) VALUES({0}, {1}, {2}, {3}, {4}, {5}, {6})";
+                DataContext.Database.ExecuteSqlCommand(sql, item.ModuleId, r.RoleId, false, false, false, false, DateTime.Now);
+            }
+
+            response.Data = true;
+
             return response;
         }
         public ResponeMessageBaseType<bool> UpdateRole(RoleCreateDTO role)
@@ -87,6 +147,9 @@ namespace BW.Repository.Data.Repositories
             {
                 string delete = "DELETE FROM BW_UserInRole WHERE RoleId = " + roleId;
                 DataContext.Database.ExecuteSqlCommand(delete);
+
+                string delete1 = "DELETE FROM BW_RoleInPermission WHERE RoleId = " + roleId;
+                DataContext.Database.ExecuteSqlCommand(delete1);
 
                 this.Delete(roleData);
                 this.DataContext.SaveChanges();

@@ -37,7 +37,7 @@ namespace BW.WebsiteApp.Controllers
         public ActionResult Create()
         {
             UserCreateView dto = new UserCreateView();
-            dto.roles = RoleHelper.GetAllRole().Data;
+            dto.roles = RoleHelper.GetRoleActive().Data;
             return View(dto);
         }
 

@@ -19,8 +19,8 @@ namespace BW.WebsiteApp.Controllers
         [AuthorizedUser(PermissionCodes.AllowAnonymous)]
         public ActionResult Index()
         {
-            var getAllRole = RoleHelper.GetAllRoleMoreInfo().Data;
-            return View(getAllRole);
+            var getAllRoleMore = RoleHelper.GetAllRoleMoreInfo().Data;
+            return View(getAllRoleMore);
         }
 
         // GET: Users/Details/5
