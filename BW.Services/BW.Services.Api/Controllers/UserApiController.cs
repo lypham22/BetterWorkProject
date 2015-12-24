@@ -10,7 +10,7 @@ using Hmac.Api.Filters;
 
 namespace BW.Services.Api.Controllers
 {
-   // [Authenticate]
+    [Authenticate]
     public class UserApiController : ApiController
     {
         private readonly IUserRepository userRepository;
@@ -26,7 +26,8 @@ namespace BW.Services.Api.Controllers
             return response;
         }
 
-        public ResponeMessage<UserDTO> GetUserById(int id)
+        [HttpPost]
+        public ResponeMessage<UserDTO> GetUserById([FromBody]int id)
         {
             return  userRepository.GetUserById(id);
         }

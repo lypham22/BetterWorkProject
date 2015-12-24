@@ -44,8 +44,8 @@ namespace BW.Website.Common.Helpers
             UserView userView = new UserView();
             if (!string.IsNullOrEmpty(userIdEnc))
             {
-                int userId = int.Parse(userIdEnc);               
-                HttpResponseMessage reponse = ApiServiceUtilities.GetReponse("api/UserApi/GetUserById/" + userId);
+                int userId = int.Parse(userIdEnc);
+                HttpResponseMessage reponse = ApiServiceUtilities.PostJson2("api/UserApi/GetUserById/",userId);
                 if (reponse.IsSuccessStatusCode)
                 {
                     try
