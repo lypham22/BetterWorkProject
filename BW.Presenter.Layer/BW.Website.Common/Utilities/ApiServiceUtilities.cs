@@ -53,13 +53,11 @@ namespace BW.Website.Common.Utilities
             }
         }
 
-        public static HttpResponseMessage PostJson2(string path, object value)
+        public static HttpResponseMessage PostParram(string path, object value)
         {
             HttpClient client = ConnectClient();
             client.DefaultRequestHeaders.Add("ApiKey", ComputeHash());
             HttpResponseMessage reponse = new HttpResponseMessage(HttpStatusCode.ServiceUnavailable);
-            string decryp = Encrypt(path);
-            string encryp = Decrypt(decryp);
             try
             {                
                 reponse = client.PostAsJsonAsync(path, value).Result;
@@ -118,8 +116,9 @@ namespace BW.Website.Common.Utilities
                                                 new AppSettingsReader();
             // Get the key from config file
 
-            string key = (string)settingsReader.GetValue("password",
-                                                             typeof(String));
+            //string key = (string)settingsReader.GetValue("password",
+            //                                                 typeof(String));
+            string key = HttpContext.Current.Session.SessionID.ToString();
             //System.Windows.Forms.MessageBox.Show(key);
             //If hashing use get hashcode regards to your key
             if (useHashing)
@@ -175,9 +174,10 @@ namespace BW.Website.Common.Utilities
             System.Configuration.AppSettingsReader settingsReader =
                                                 new AppSettingsReader();
             //Get your key from config file to open the lock!
-            string key = (string)settingsReader.GetValue("password",
-                                                         typeof(String));
-
+            //string key = (string)settingsReader.GetValue("password",
+            //                                             typeof(String));
+            string key =  HttpContext.Current.Session.SessionID.ToString();
+            
             if (useHashing)
             {
                 //if hashing was used get the hash code with regards to your key

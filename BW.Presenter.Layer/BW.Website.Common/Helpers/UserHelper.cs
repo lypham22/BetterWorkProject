@@ -45,7 +45,7 @@ namespace BW.Website.Common.Helpers
             if (!string.IsNullOrEmpty(userIdEnc))
             {
                 int userId = int.Parse(userIdEnc);
-                HttpResponseMessage reponse = ApiServiceUtilities.PostJson2("api/UserApi/GetUserById/",userId);
+                HttpResponseMessage reponse = ApiServiceUtilities.PostParram("api/UserApi/GetUserById/",userId);
                 if (reponse.IsSuccessStatusCode)
                 {
                     try
@@ -110,7 +110,7 @@ namespace BW.Website.Common.Helpers
                 user.FirstName = userCreateView.FirstName;
                 user.LastName = userCreateView.LastName;
                 user.Email = userCreateView.Email;
-                user.Password = userCreateView.Password;
+                user.Password = ApiServiceUtilities.MD5Hash(userCreateView.Password);
                 if (groupRole != null)
                 {
                     foreach (var item in groupRole)
