@@ -11,6 +11,7 @@
           </Key>
           <Property Name="ModuleId" Type="int" Nullable="false" />
           <Property Name="ModuleName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="ModuleCode" Type="varchar" MaxLength="255" />
           <Property Name="ModuleDescription" Type="nvarchar" MaxLength="255" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" />
@@ -166,6 +167,7 @@
           </Key>
           <Property Name="ModuleId" Type="Int32" Nullable="false" />
           <Property Name="ModuleName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ModuleCode" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="ModuleDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
@@ -285,6 +287,7 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="ModuleDescription" ColumnName="ModuleDescription" />
+                <ScalarProperty Name="ModuleCode" ColumnName="ModuleCode" />
                 <ScalarProperty Name="ModuleName" ColumnName="ModuleName" />
                 <ScalarProperty Name="ModuleId" ColumnName="ModuleId" />
               </MappingFragment>

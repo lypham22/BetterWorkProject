@@ -194,7 +194,7 @@ namespace BW.Repository.Data.Repositories
                             data = new ModuleDTO();
                             data.ModuleId = item.ModuleId;
                             data.ModuleName = item.ModuleName;
-                            permissionName = per + data.ModuleName;
+                            permissionName = per + item.ModuleCode;
                             data.PermissionCode = permissionName;
                             if (permissions.Find(x => x.PermissionCode.Contains(permissionName)) != null) continue;
                             permissions.Add(data);
