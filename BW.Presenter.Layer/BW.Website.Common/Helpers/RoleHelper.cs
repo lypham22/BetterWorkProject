@@ -15,7 +15,28 @@ namespace BW.Website.Common.Helpers
         {
             var response = new ResponeMessage<List<RoleListView>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<RoleListView>() };
             List<RoleListView> roleDTO = new List<RoleListView>();
-            HttpResponseMessage reponse = ApiServiceUtilities.GetReponse("api/RoleApi/GetAllRole");
+            HttpResponseMessage reponse = ApiServiceUtilities.GetReponse("api/RoleApi/GetAllRoleMore");
+            if (reponse.IsSuccessStatusCode)
+            {
+                var roles = reponse.Content.ReadAsAsync<ResponeMessage<List<RoleDTO>>>().Result;
+                foreach (var s in roles.Data)
+                {
+                    roleDTO.Add(new RoleListView
+                    {
+                        RoleId = s.RoleId,
+                        RoleName = s.RoleName,
+                    });
+                }
+                response.Code = roles.Code;
+                response.Data = roleDTO;
+            }
+            return response;
+        }
+        public static ResponeMessage<List<RoleListView>> GetRoleActive()
+        {
+            var response = new ResponeMessage<List<RoleListView>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<RoleListView>() };
+            List<RoleListView> roleDTO = new List<RoleListView>();
+            HttpResponseMessage reponse = ApiServiceUtilities.GetReponse("api/RoleApi/GetRoleActive");
             if (reponse.IsSuccessStatusCode)
             {
                 var roles = reponse.Content.ReadAsAsync<ResponeMessage<List<RoleDTO>>>().Result;
@@ -37,7 +58,7 @@ namespace BW.Website.Common.Helpers
         {
             var response = new ResponeMessage<List<RoleView>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<RoleView>() };
             List<RoleView> roleDTO = new List<RoleView>();
-            HttpResponseMessage reponse = ApiServiceUtilities.GetReponse("api/RoleApi/GetAllRole");
+            HttpResponseMessage reponse = ApiServiceUtilities.GetReponse("api/RoleApi/GetAllRoleMore");
             if (reponse.IsSuccessStatusCode)
             {
                 var roles = reponse.Content.ReadAsAsync<ResponeMessage<List<RoleDTO>>>().Result;
@@ -49,7 +70,8 @@ namespace BW.Website.Common.Helpers
                         RoleName = s.RoleName,
                         RoleDescription = s.RoleDescription,
                         IsActive = s.IsActive,
-                        CreatedDate = s.CreatedDate
+                        CreatedDate = s.CreatedDate,
+                        ModuleName = s.ModuleName
                     });
                 }
                 response.Code = roles.Code;
@@ -74,6 +96,7 @@ namespace BW.Website.Common.Helpers
                     roleView.RoleDescription = role.Data.RoleDescription;
                     roleView.IsActive = role.Data.IsActive;
                     roleView.CreatedDate = role.Data.CreatedDate;
+                    roleView.ModuleName = role.Data.ModuleName;
                     response.Data = roleView;
                 }
             }

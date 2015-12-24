@@ -41,3 +41,8 @@ app.controller('validUsernameCtrl', function ($scope) {
 //        $scope.names = response;
 //    });
 //});
+
+var permission = angular.module('roleInPermission', []);
+permission.controller('permissionCtrl', function ($scope) {
+    $scope.RoleID = [];
+});

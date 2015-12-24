@@ -52,6 +52,9 @@
     </Compile>
     <Compile Include="DTOs\Home\LoginInfoDTO.cs" />
     <Compile Include="DTOs\Home\ModuleDTO.cs" />
+    <Compile Include="DTOs\RoleInPermisson\RoleInPermissonView.cs" />
+    <Compile Include="DTOs\RoleInPermisson\RoleInPermissonDTO.cs" />
+    <Compile Include="DTOs\RoleInPermisson\RoleInPermListView.cs" />
     <Compile Include="DTOs\Role\RoleCreateDTO.cs" />
     <Compile Include="DTOs\Role\RoleCreateView.cs" />
     <Compile Include="DTOs\Role\RoleView.cs" />
