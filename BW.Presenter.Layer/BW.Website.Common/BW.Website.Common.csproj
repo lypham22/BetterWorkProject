@@ -62,11 +62,8 @@
     <Compile Include="Constants\SessionKeys.cs" />
     <Compile Include="Helpers\ExceptionHelper.cs" />
     <Compile Include="Helpers\AuthorizationHelper.cs" />
-    <Compile Include="Helpers\RoleInPermissionHelper.cs" />
     <Compile Include="Helpers\RoleHelper.cs" />
-    <Compile Include="Helpers\RoleInPermissionHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Helpers\RoleInPermissionHelper.cs" />
     <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="BWFilterAuth.cs" />
     <Compile Include="BWException.cs" />
