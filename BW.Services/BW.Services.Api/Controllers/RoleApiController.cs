@@ -17,7 +17,7 @@ namespace BW.Services.Api.Controllers
         }
         public ResponeMessage<List<RoleDTO>> GetRoleActive()
         {
-            return roleRepository.GetRoleActive();;
+            return roleRepository.GetRoleActive();
         }
         public ResponeMessage<List<RoleDTO>> GetAllRoleMore()
         {
