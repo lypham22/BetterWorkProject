@@ -12,6 +12,7 @@ namespace BW.Repository.Data.Repositories
     public interface IRoleInPermissonRepository : IRepository<BW_RoleInPermission>
     {
         ResponeMessage<List<RoleInPermissonDTO>> GetAllRoleInPermission();
+        ResponeMessage<List<RoleInPermissonDTO>> GetRoleInPermissionByRoleId(int roleId);
         ResponeMessage<RoleInPermissonDTO> GetRoleInPermissionById(int roleInPermissionId);
         ResponeMessageBaseType<bool> UpdateRoleInPermission(RoleInPermissonDTO role);
         //ResponeMessageBaseType<bool> DeleteRole(int roleId);

@@ -21,6 +21,7 @@ namespace BW.Repository.Data
     
         public int ModuleId { get; set; }
         public string ModuleName { get; set; }
+        public string ModuleCode { get; set; }
         public string ModuleDescription { get; set; }
         public bool IsActive { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }

@@ -32,7 +32,15 @@ namespace BW.WebsiteApp.Controllers
         [AuthorizedUser(PermissionCodes.AllowAnonymous)]
         public ActionResult Login()
         {
-            return View();
+            var currentUser = AuthorizationHelper.CurrentUser;
+            if (AuthorizationHelper.IsLogged && currentUser != null)
+            {
+                return RedirectToAction(ConstActionMethods.INDEX, ConstActionMethods.CTL_USER);
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [AuthorizedUser(PermissionCodes.AllowAnonymous)]

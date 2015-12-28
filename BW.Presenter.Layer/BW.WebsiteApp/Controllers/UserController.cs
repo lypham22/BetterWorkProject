@@ -18,8 +18,6 @@ namespace BW.WebsiteApp.Controllers
         [AuthorizedUser(PermissionCodes.ViewManageUser)]
         public ActionResult Index()
         {
-
-
             var getAllUser = UserHelper.GetAllUser().Data;
             return View(getAllUser);
         }

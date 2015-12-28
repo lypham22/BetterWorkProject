@@ -85,7 +85,7 @@ namespace BW.Website.Common.Helpers
 
         public static ResponeMessage<AuthenticationInfoDTO> Login(LoginInfoDTO login)
         {
-            HttpResponseMessage response = ApiServiceUtilities.GetReponse(string.Format("api/UserApi/login/?email={0}&password={1}", login.Email, login.Password));
+            HttpResponseMessage response = ApiServiceUtilities.GetReponse(string.Format("api/UserApi/login/?email={0}&password={1}", login.Email, ApiServiceUtilities.MD5Hash(login.Password)));
             var result = new ResponeMessage<AuthenticationInfoDTO> { Code = ErrorCodeEnum.SUCCESS, Data = new AuthenticationInfoDTO() };
             if (response.IsSuccessStatusCode)
             {

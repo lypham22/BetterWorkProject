@@ -1,11 +1,17 @@
 ﻿@model IEnumerable<BW.Data.Contract.DTOs.RoleView>
+@using BW.Website.Common.Helpers;
+@using BW.Common.Consts;
+
 @{
     ViewBag.Title = "Index";
+    var isPermission = AuthorizationHelper.HasPermissionFor(PermissionCodes.ViewManageUser) == true;
 }
-<h2>Index</h2>
+<h2>Role Management</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @if (isPermission) { 
+        @Html.ActionLink("Create New", "Create")
+    }
 </p>
 <table class="table">
     <tr>
@@ -54,5 +60,4 @@
             </td>
         </tr>
     }
-
 </table>
