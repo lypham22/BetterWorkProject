@@ -4,60 +4,76 @@
 
 @{
     ViewBag.Title = "Index";
-    var isPermission = AuthorizationHelper.HasPermissionFor(PermissionCodes.ViewManageUser) == true;
+    var isViewManageRole = AuthorizationHelper.HasPermissionFor(PermissionCodes.ViewManageRole);
+    var isAddManageRole = AuthorizationHelper.HasPermissionFor(PermissionCodes.AddManageRole);
+    var isEditManageRole = AuthorizationHelper.HasPermissionFor(PermissionCodes.EditManageRole);
+    var isDeleteManageRole = AuthorizationHelper.HasPermissionFor(PermissionCodes.DeleteManageRole);
 }
-<h2>Role Management</h2>
+@if (isViewManageRole)
+{
+    <h2>Role Management</h2>
 
-<p>
-    @if (isPermission) { 
-        @Html.ActionLink("Create New", "Create")
-    }
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.Label("Role Name")
-        </th>
-        <th>
-           @Html.Label("Role Description")
-        </th>
-        <th>
-            @Html.Label("Is Active")
-        </th>
-        <th>
-            @Html.Label("Created Date")
-        </th>
-        <th>
-            @Html.Label("Module Name")
-        </th>
-        <th>
-            @Html.Label("Action")
-        </th>
-    </tr>
+    <p>
+        @if (isAddManageRole)
+        {
+            @Html.ActionLink("Create New", "Create")
+        }
+    </p>
 
-    @foreach (var item in Model)
-    {
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoleName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoleDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModuleName)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { roleId = item.RoleId }) |
-                @Html.ActionLink("Details", "Details", new { roleId = item.RoleId }) |
-                @Html.ActionLink("Delete", "Delete", new { roleId = item.RoleId })
-            </td>
+            <th>
+                @Html.Label("Role Name")
+            </th>
+            <th>
+                @Html.Label("Role Description")
+            </th>
+            <th>
+                @Html.Label("Is Active")
+            </th>
+            <th>
+                @Html.Label("Created Date")
+            </th>
+            <th>
+                @Html.Label("Module Name")
+            </th>
+            <th>
+                @Html.Label("Action")
+            </th>
         </tr>
-    }
-</table>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoleName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoleDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModuleName)
+                </td>
+                <td>
+                    @if (isEditManageRole)
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { roleId = item.RoleId })
+                    }
+                    | @Html.ActionLink("Details", "Details", new { roleId = item.RoleId }) |
+                    @if (isDeleteManageRole)
+                    {
+
+                        @Html.ActionLink("Delete", "Delete", new { roleId = item.RoleId })
+                    }
+                </td>
+            </tr>
+        }
+
+    </table>
+}

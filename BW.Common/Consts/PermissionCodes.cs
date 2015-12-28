@@ -15,6 +15,7 @@ namespace BW.Common.Consts
         #region View Permissions
         public const string ViewManageUser = "ViewManageUser";
         public const string ViewManageRole = "ViewManageRole";
+        public const string ViewRoleInPermission = "ViewManageRoleInPermission";
         #endregion
 
         #region Add Permissions
@@ -25,6 +26,7 @@ namespace BW.Common.Consts
         #region Edit Permissions
         public const string EditManageUser = "EditManageUser";
         public const string EditManageRole = "EditManageRole";
+        public const string EditRoleInPermission = "EditManageRoleInPermission";
         #endregion
 
         #region Delete Permissions

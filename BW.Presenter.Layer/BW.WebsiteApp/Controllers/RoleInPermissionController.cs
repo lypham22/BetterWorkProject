@@ -37,10 +37,10 @@ namespace BW.WebsiteApp.Controllers
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         [AuthorizedUser(PermissionCodes.AllowAnonymous)]
-        public ActionResult SaveChange(List<RoleInPermissonView> data)
+        public bool SaveChange(List<RoleInPermissonView> data)
         {
             var result = RoleInPermissionHelper.UpdateRoleInPermission(data).Data;
-            return View(result);
+            return result;
         }
     }
 }

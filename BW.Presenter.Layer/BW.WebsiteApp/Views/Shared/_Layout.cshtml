@@ -11,6 +11,15 @@
 </head>
 <body>
     @using BW.Website.Common.Constants
+    @using BW.Website.Common.Helpers;
+    @using BW.Common.Consts;
+    @{
+        var isViewManageUser = AuthorizationHelper.HasPermissionFor(PermissionCodes.ViewManageUser);
+
+        var isViewManageRole = AuthorizationHelper.HasPermissionFor(PermissionCodes.ViewManageRole);
+
+        var isViewRoleInPermission = AuthorizationHelper.HasPermissionFor(PermissionCodes.ViewRoleInPermission);
+    }
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -20,13 +29,22 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("Better Work", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                
+
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("User Management", "Index", "User")</li>
-                    <li>@Html.ActionLink("Role Management", "Index", "Role")</li>
-                    <li>@Html.ActionLink("Role In Permission", "Index", "RoleInPermission")</li>
+                    @if (isViewManageUser)
+                    {
+                        <li>@Html.ActionLink("User Management", "Index", "User")</li>
+                    }
+                    @if (isViewManageRole)
+                    {
+                        <li>@Html.ActionLink("Role Management", "Index", "Role")</li>
+                    }
+                    @if (isViewRoleInPermission)
+                    {
+                        <li>@Html.ActionLink("Role In Permission", "Index", "RoleInPermission")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
