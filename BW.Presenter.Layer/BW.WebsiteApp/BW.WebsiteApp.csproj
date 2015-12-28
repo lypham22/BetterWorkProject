@@ -168,9 +168,9 @@
     <Content Include="Views\Role\Index.cshtml" />
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\RoleInPermission\ViewAll.cshtml" />
     <Content Include="Views\RoleInPermission\Edit.cshtml" />
     <Content Include="Views\RoleInPermission\_PermissionsPartialView.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

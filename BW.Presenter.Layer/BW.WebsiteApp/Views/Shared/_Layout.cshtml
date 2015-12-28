@@ -19,12 +19,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Log Out", ConstActionMethods.LOGOUT, ConstActionMethods.CTL_HOME, new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Better Work", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("User Management", "Index", "User")</li>
+                    <li>@Html.ActionLink("Role Management", "Index", "Role")</li>
+                    <li>@Html.ActionLink("Role In Permission", "Index", "RoleInPermission")</li>
                 </ul>
+                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>

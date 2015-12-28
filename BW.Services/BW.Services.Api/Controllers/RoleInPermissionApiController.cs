@@ -16,17 +16,9 @@ namespace BW.Services.Api.Controllers
         {
             this.roleInPermissonRepository = roleInPermissonRepository;
         }
-        public ResponeMessage<List<RoleInPermissonDTO>> GetAllRoleInPermisson()
-        {
-            return roleInPermissonRepository.GetAllRoleInPermission();
-        }
         public ResponeMessage<List<RoleInPermissonDTO>> GetRoleInPermissionByRoleId(int id)
         {
             return roleInPermissonRepository.GetRoleInPermissionByRoleId(id);
-        }
-        public ResponeMessage<RoleInPermissonDTO> GetRoleInPermissionById(int id)
-        {
-            return roleInPermissonRepository.GetRoleInPermissionById(id);
         }
         public ResponeMessageBaseType<bool> UpdateRoleInPermission(RoleInPermissonDTO roleInPerm)
         {

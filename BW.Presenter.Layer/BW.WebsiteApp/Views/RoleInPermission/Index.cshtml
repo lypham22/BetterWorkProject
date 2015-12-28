@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Role In Permission</h2>
 <div>
     <select class="ddlRoles">
         @foreach (var item in RoleHelper.GetAllRole().Data)
@@ -12,8 +12,6 @@
             <option value="@item.RoleId" id="@item.RoleName">@item.RoleName</option>
         }
     </select>
-
-    <input type="button" value="Save" name="btnSavePerm"/>
 </div>
 <br />
 

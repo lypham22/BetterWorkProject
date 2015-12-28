@@ -6,7 +6,7 @@
     ViewBag.Title = "Index";
     var isPermission = AuthorizationHelper.HasPermissionFor(PermissionCodes.ViewManageUser) == true;
 }
-<h2>Index</h2>
+<h2>Role Management</h2>
 
 <p>
     @if (isPermission) { 

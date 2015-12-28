@@ -86,7 +86,7 @@ namespace BW.Repository.Data.Repositories
         public ResponeMessageBaseType<bool> UpdateRoleInPermission(RoleInPermissonDTO roleInPerm)
         {
             var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = true };
-            var roleInPermData = this.GetById(roleInPerm.RoleInPermissionId);
+            var roleInPermData = this.Get(x => x.RoleId == roleInPerm.RoleId && x.ModuleId == roleInPerm.ModuleId);
             if (roleInPermData != null)
             {
                 roleInPermData.PAdd = roleInPerm.PAdd;

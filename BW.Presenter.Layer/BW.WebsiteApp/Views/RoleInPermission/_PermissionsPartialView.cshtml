@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<BW.Data.Contract.DTOs.RoleInPermissonView>
 
+<input type="button" value="Save" id="btnSavePerm" />
+
 <table class="table" id="tbl_RoleInPermission">
     <thead>
         <tr>
@@ -25,37 +27,59 @@
     </thead>
     @foreach (var item in Model)
     {
-        <tr>
-            <td class="lstRoles" style="display: none">
+        <tr class="row-data">
+            <td class="lstRoles" style="display: none" id="@item.RoleId">
                 @Html.DisplayFor(modelItem => item.RoleName)
             </td>
-            <td>
+            <td class="lstModule" id="@item.ModuleId">
                 @Html.DisplayFor(modelItem => item.ModuleName)
             </td>
             <td>
-                @*@Html.DisplayFor(modelItem => item.PAdd)*@
-                @*@Html.CheckBoxFor(modelItem => item.PAdd, new { @value = "true" })*@
-                <input name="permission" type="checkbox" value="@item.PAdd.ToString()" @(item.PAdd == true ? "checked='checked'" : "") />
+                <input class="lstPAdd" value="@item.PAdd.ToString()" type="checkbox" @(item.PAdd == true ? "checked='checked'" : "") />
             </td>
             <td>
-                @*@Html.DisplayFor(modelItem => item.PEdit)*@
-                <input name="permission" type="checkbox" value="@item.PAdd.ToString()" @(item.PEdit == true ? "checked='checked'" : "") />
+                <input class="lstPEdit" value="@item.PEdit.ToString()" type="checkbox" @(item.PEdit == true ? "checked='checked'" : "") />
             </td>
             <td>
-                @*@Html.DisplayFor(modelItem => item.PDelete)*@
-                <input name="permission" type="checkbox" value="@item.PAdd.ToString()" @(item.PDelete == true ? "checked='checked'" : "") />
+                <input class="lstPDel" value="@item.PDelete.ToString()" type="checkbox" @(item.PDelete == true ? "checked='checked'" : "") />
             </td>
             <td>
-                @*@Html.DisplayFor(modelItem => item.PView)*@
-                <input name="permission" type="checkbox" value="@item.PAdd.ToString()" @(item.PView == true ? "checked='checked'" : "") />
+                <input class="lstPView" value="@item.PView.ToString()" type="checkbox" @(item.PView == true ? "checked='checked'" : "") />
             </td>
         </tr>
     }
 </table>
+
 <script>
-    $(':checkbox').change(function () {
-        $(this).val($(this).prop('checked'))
+    //$(':checkbox').change(function () {
+    //    $(this).val($(this).prop('checked'))
+    //});
+    //var RoleId = $(".lstRoles").prop;
+
+    $('#btnSavePerm').click(function () {
+        var result = new Array();
+        $('#tbl_RoleInPermission .row-data').each(function () {
+            var itemData = {};
+            itemData.roleId = $(this).find('.lstRoles').attr('id');
+            itemData.moduleId = $(this).find('.lstModule').attr('id');
+            itemData.pAdd = $(this).find('.lstPAdd').is(':checked');
+            itemData.pEdit = $(this).find('.lstPEdit').is(':checked');
+            itemData.pDelete = $(this).find('.lstPDel').is(':checked');
+            itemData.pView = $(this).find('.lstPView').is(':checked');
+
+            result.push(itemData);
+        });
+
+        $.ajax({
+            url: 'http://localhost:8790/RoleInPermission/SaveChange',
+            method: 'POST',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(result),
+            success: function () {
+                alert("Save successful!");
+            }
+        });
     });
 
-    var RoleId = $(".lstRoles").prop;
 </script>
