@@ -147,7 +147,7 @@ namespace BW.Website.Common.Helpers
                 // Convert UserInfo to User.
                 UserDTO user = new UserDTO();
                 user.UserId = userPassView.UserId;
-                user.Password = userPassView.NewPassword;
+                user.Password = ApiServiceUtilities.MD5Hash(userPassView.NewPassword);
 
                 // Update data
                 var result = ApiServiceUtilities.PostJson("api/UserApi/UpdatePassword/", user);

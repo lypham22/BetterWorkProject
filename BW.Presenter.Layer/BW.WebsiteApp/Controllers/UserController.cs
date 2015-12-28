@@ -134,11 +134,12 @@ namespace BW.WebsiteApp.Controllers
             if (!UserHelper.CheckOldPassword(user.Email, ApiServiceUtilities.MD5Hash(userPassView.OldPassword)))
             {
                 //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                ViewBag.Error = "Wrong!";
+                ViewBag.Error = "Wrong current password!";
                 return View();
             }else
             {
                 UserHelper.UpdatePassword(userPassView);
+                ViewBag.success = "Change password success!";
                 return View();
             }
 
