@@ -50,7 +50,8 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { userId = item.UserId }) |
             @Html.ActionLink("Details", "Details", new { userId = item.UserId }) |
-            @Html.ActionLink("Delete", "Delete", new { userId = item.UserId })
+            @Html.ActionLink("Delete", "Delete", new { userId = item.UserId }) |
+            @Html.ActionLink("Change Password", "UpdatePassword", new { userId = item.UserId })
         </td>
     </tr>
 }

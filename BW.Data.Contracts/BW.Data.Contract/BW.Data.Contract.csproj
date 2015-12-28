@@ -65,6 +65,7 @@
     <Compile Include="DTOs\User\UserInRoleDTO.cs" />
     <Compile Include="DTOs\User\UserDetailsDTO.cs" />
     <Compile Include="DTOs\User\UserDTO.cs" />
+    <Compile Include="DTOs\User\UserPasswordView.cs" />
     <Compile Include="DTOs\User\UserView.cs" />
     <Compile Include="DTOs\Role\RoleDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

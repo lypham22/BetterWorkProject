@@ -119,5 +119,31 @@ namespace BW.WebsiteApp.Controllers
             UserHelper.DeleteUser(userId);
             return RedirectToAction("Index");
         }
+        [AuthorizedUser(PermissionCodes.EditManageUser)]
+        public ActionResult UpdatePassword(string userId)
+        {
+            if (string.IsNullOrEmpty(userId))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            return View();
+        }
+        [HttpPost]
+        public ActionResult UpdatePassword(UserPasswordView userPassView)
+        {
+            //check old password
+            var user = UserHelper.GetUserById(userPassView.UserId.ToString()).Data;
+            if (!UserHelper.CheckOldPassword(user.Email, ApiServiceUtilities.MD5Hash(userPassView.OldPassword)))
+            {
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                ViewBag.Error = "Wrong!";
+                return View();
+            }else
+            {
+                UserHelper.UpdatePassword(userPassView);
+                return View();
+            }
+
+        }
     }
 }

@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Data;
 using BW.Data.Contract;
 using BW.Common.Enums;
+using BW.Data.Contract.DTOs;
 
 namespace BW.Repository.Data.Repositories
 {
@@ -217,6 +218,19 @@ namespace BW.Repository.Data.Repositories
                 CreatedDate = obj.CreatedDate,
                 IsActive = obj.IsActive
             };
+        }
+
+        public ResponeMessageBaseType<bool> UpdatePassword(UserDTO user)
+        {
+            var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = false };
+            var userData = this.GetById(user.UserId);
+            if (userData != null)
+            {
+                userData.Password = user.Password;
+                this.Update(userData);
+                this.DataContext.SaveChanges();
+            }
+            return response;
         }
     }
 }

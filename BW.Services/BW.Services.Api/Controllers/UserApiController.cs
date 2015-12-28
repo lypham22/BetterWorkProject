@@ -7,6 +7,7 @@ using BW.Data.Contract.DTOs;
 using BW.Data.Contract;
 using BW.Common.Enums;
 using Hmac.Api.Filters;
+using BW.Data.Contract.DTOs;
 
 namespace BW.Services.Api.Controllers
 {
@@ -38,6 +39,11 @@ namespace BW.Services.Api.Controllers
         public ResponeMessageBaseType<bool> UpdateUser(UserCreateDTO user)
         {
             return userRepository.UpdateUser(user);
+        }
+
+        public ResponeMessageBaseType<bool> UpdatePassword(UserDTO user)
+        {
+            return userRepository.UpdatePassword(user);
         }
 
         public ResponeMessageBaseType<bool> RemoveUser(UserDTO user)
