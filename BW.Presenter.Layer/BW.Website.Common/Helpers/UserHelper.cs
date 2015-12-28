@@ -1,6 +1,7 @@
 ﻿using BW.Common.Enums;
 using BW.Data.Contract;
 using BW.Data.Contract.DTOs;
+using BW.Data.Contract.DTOs;
 using BW.Website.Common.Utilities;
 using System;
 using System.Collections.Generic;
@@ -136,6 +137,44 @@ namespace BW.Website.Common.Helpers
             // Delete data
             ApiServiceUtilities.PostJson("api/UserApi/RemoveUser/", user);
             return response;
+        }
+
+        public static ResponeMessageBaseType<bool> UpdatePassword(UserPasswordView userPassView)
+        {
+            var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = true };
+            if (userPassView != null)
+            {
+                // Convert UserInfo to User.
+                UserDTO user = new UserDTO();
+                user.UserId = userPassView.UserId;
+                user.Password = ApiServiceUtilities.MD5Hash(userPassView.NewPassword);
+
+                // Update data
+                var result = ApiServiceUtilities.PostJson("api/UserApi/UpdatePassword/", user);
+                return response;
+            }
+            else
+            {
+                return response;
+            }
+        }
+
+        public static bool CheckOldPassword(string Email, string OldPassword)
+        {
+            HttpResponseMessage response = ApiServiceUtilities.GetReponse(string.Format("api/UserApi/login/?email={0}&password={1}", Email, OldPassword));
+            var result = new ResponeMessage<AuthenticationInfoDTO> { Code = ErrorCodeEnum.SUCCESS, Data = new AuthenticationInfoDTO() };
+            if (response.IsSuccessStatusCode)
+            {
+                result = response.Content.ReadAsAsync<ResponeMessage<AuthenticationInfoDTO>>().Result;
+
+                if (result.Data.UserId != 0)
+                {
+                    return true;
+                }
+
+               
+            }
+            return false;
         }
     }
 }

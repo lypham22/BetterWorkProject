@@ -1,5 +1,6 @@
 ﻿using BW.Data.Contract;
 using BW.Data.Contract.DTOs;
+using BW.Data.Contract.DTOs;
 using BW.Repository.Data.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace BW.Repository.Data.Repositories
         ResponeMessageBaseType<bool> UpdateUser(UserCreateDTO user);
         ResponeMessageBaseType<bool> DeleteUser(int userId);
         ResponeMessage<AuthenticationInfoDTO> Login(string email, string password);
+        ResponeMessageBaseType<bool> UpdatePassword(UserDTO user);
     }   
 
 }
