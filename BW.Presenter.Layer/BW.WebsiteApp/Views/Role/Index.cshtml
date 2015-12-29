@@ -4,6 +4,7 @@
 
 @{
     ViewBag.Title = "Index";
+    ViewBag.System = "RoleManagement";    
     var isViewManageRole = AuthorizationHelper.HasPermissionFor(PermissionCodes.ViewManageRole);
     var isAddManageRole = AuthorizationHelper.HasPermissionFor(PermissionCodes.AddManageRole);
     var isEditManageRole = AuthorizationHelper.HasPermissionFor(PermissionCodes.EditManageRole);

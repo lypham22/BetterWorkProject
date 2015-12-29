@@ -61,6 +61,13 @@ namespace BW.Website.Common.Helpers
                     roleInPerm.PView = item.PView;
                     ApiServiceUtilities.PostJson("api/RoleInPermissionApi/UpdateRoleInPermission/", roleInPerm);
                 }
+
+                string curentEmail = AuthorizationHelper.Email;
+                if (!string.IsNullOrEmpty(curentEmail))
+                {
+                    AuthorizationHelper.AutoUpdatePermForUser(curentEmail);
+                }
+
                 return response;
             }
             else
@@ -68,5 +75,7 @@ namespace BW.Website.Common.Helpers
                 return response;
             }
         }
+
+        
     }
 }

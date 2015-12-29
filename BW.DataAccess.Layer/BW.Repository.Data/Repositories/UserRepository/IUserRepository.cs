@@ -18,6 +18,7 @@ namespace BW.Repository.Data.Repositories
         ResponeMessageBaseType<bool> UpdateUser(UserCreateDTO user);
         ResponeMessageBaseType<bool> DeleteUser(int userId);
         ResponeMessage<AuthenticationInfoDTO> Login(string email, string password);
+        ResponeMessage<AuthenticationInfoDTO> AutoUpdatePermForUser(string email);
         ResponeMessageBaseType<bool> UpdatePassword(UserDTO user);
     }   
 

@@ -102,6 +102,26 @@ namespace BW.Website.Common.Helpers
             return result;
         }
 
+        public static ResponeMessage<AuthenticationInfoDTO> AutoUpdatePermForUser(string curentEmail)
+        {
+            HttpResponseMessage response = ApiServiceUtilities.GetReponse(string.Format("api/UserApi/AutoUpdatePermForUser/?email={0}", curentEmail));
+            var result = new ResponeMessage<AuthenticationInfoDTO> { Code = ErrorCodeEnum.SUCCESS, Data = new AuthenticationInfoDTO() };
+            if (response.IsSuccessStatusCode)
+            {
+                result = response.Content.ReadAsAsync<ResponeMessage<AuthenticationInfoDTO>>().Result;
+
+                if (result.Code != ErrorCodeEnum.SUCCESS)
+                {
+                    return result;
+                }
+
+                SessionManager.Instance.RemoveItem(SessionKeys.USERINFO);
+                SessionManager.Instance.AddItem(SessionKeys.USERINFO, TransToStateServerEntity(result.Data));
+            }
+            return result;
+        }
+
+
         public static ErrorCodeEnum IsAuthorized(IPrincipal user, string controller, string action,
             NameValueCollection queryString, string httpMethod, AuthorizedUserAttribute authAttr)
         {

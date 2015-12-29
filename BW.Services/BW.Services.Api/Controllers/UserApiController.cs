@@ -11,7 +11,7 @@ using BW.Data.Contract.DTOs;
 
 namespace BW.Services.Api.Controllers
 {
-    [Authenticate]
+    //[Authenticate]
     public class UserApiController : ApiController
     {
         private readonly IUserRepository userRepository;
@@ -54,6 +54,11 @@ namespace BW.Services.Api.Controllers
         public ResponeMessage<AuthenticationInfoDTO> Login(string email, string password)
         {
             return userRepository.Login(email, password);
+        }
+        [HttpGet]
+        public ResponeMessage<AuthenticationInfoDTO> AutoUpdatePermForUser(string email)
+        {
+            return userRepository.AutoUpdatePermForUser(email);
         }
     }
 }

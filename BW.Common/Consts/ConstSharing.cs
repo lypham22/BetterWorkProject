@@ -11,6 +11,10 @@ namespace BW.Common.Consts
         //TODO: declare constants of system.
         #region
         public const string USER_API = "api/UserApi/";
+
+        public const string userIndex = "UserManagement";
+        public const string roleIndex = "RoleManagement";
+        public const string roleInPerm = "RoleInPermission";
         #endregion
     }
 }

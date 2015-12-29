@@ -92,6 +92,13 @@ namespace BW.Website.Common.Helpers
                 }
                 // Update data
                 var result = ApiServiceUtilities.PostJson("api/UserApi/UpdateUser/", user);
+
+                string curentEmail = AuthorizationHelper.Email;
+                if (!string.IsNullOrEmpty(curentEmail))
+                {
+                    AuthorizationHelper.AutoUpdatePermForUser(curentEmail);
+                }
+
                 return response;
             }
             else

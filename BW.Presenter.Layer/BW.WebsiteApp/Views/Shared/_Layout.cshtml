@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
-    @Styles.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
 </head>
@@ -35,15 +35,21 @@
                 <ul class="nav navbar-nav">
                     @if (isViewManageUser)
                     {
-                        <li>@Html.ActionLink("User Management", "Index", "User")</li>
+                        <li class="@(ViewBag.System == ConstSharing.userIndex ? "active" : "")">
+                            @Html.ActionLink("User Management", "Index", "User")
+                        </li>
                     }
                     @if (isViewManageRole)
                     {
-                        <li>@Html.ActionLink("Role Management", "Index", "Role")</li>
+                        <li class="@(ViewBag.System == ConstSharing.roleIndex ? "active" : "")">
+                            @Html.ActionLink("Role Management", "Index", "Role")
+                        </li>
                     }
                     @if (isViewRoleInPermission)
                     {
-                        <li>@Html.ActionLink("Role In Permission", "Index", "RoleInPermission")</li>
+                        <li class="@(ViewBag.System == ConstSharing.roleInPerm ? "active" : "")">
+                            @Html.ActionLink("Role In Permission", "Index", "RoleInPermission")
+                        </li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")

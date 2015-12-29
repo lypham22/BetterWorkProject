@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using BW.Data.Contract.DTOs;
 using BW.Repository.Data.Infrastructure;
 using System.Data.SqlClient;
-using System.Data;
 using BW.Data.Contract;
 using BW.Common.Enums;
-using BW.Data.Contract.DTOs;
 
 namespace BW.Repository.Data.Repositories
 {
@@ -163,6 +160,53 @@ namespace BW.Repository.Data.Repositories
         {
             var response = new ResponeMessage<AuthenticationInfoDTO> { Code = ErrorCodeEnum.SUCCESS, Data = new AuthenticationInfoDTO() };
             var authen = this.GetMany(u => u.Email == email && u.Password == password).Select(u => new AuthenticationInfoDTO
+            {
+                UserId = u.UserId,
+                Email = u.Email,
+                Password = u.Password,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                IsActive = u.IsActive,
+                CreatedDate = u.CreatedDate
+            }).FirstOrDefault();
+            if (authen != null)
+            {
+                response.Data = authen;
+                var userId = new SqlParameter
+                {
+                    ParameterName = "UserId",
+                    Value = authen.UserId
+                };
+                var result = DataContext.Database.SqlQuery<ModuleDTO>("spa_BW_GetPermissionListByUserId  @UserId", userId).ToList<ModuleDTO>();
+                List<ModuleDTO> permissions = new List<ModuleDTO>();
+                ModuleDTO data = null;
+                string permissionName = string.Empty;
+                foreach (var item in result)
+                {
+                    if (string.IsNullOrEmpty(item.PermissionCode)) continue;
+                    var str = item.PermissionCode.Remove(item.PermissionCode.Length - 1, 1).Split(',');
+                    foreach (var per in str)
+                    {
+                        if (!string.IsNullOrEmpty(item.PermissionCode))
+                        {
+                            data = new ModuleDTO();
+                            data.ModuleId = item.ModuleId;
+                            data.ModuleName = item.ModuleName;
+                            permissionName = per + item.ModuleCode;
+                            data.PermissionCode = permissionName;
+                            if (permissions.Find(x => x.PermissionCode.Contains(permissionName)) != null) continue;
+                            permissions.Add(data);
+                        }
+                    }
+                }
+                response.Data.modules = permissions;
+            }
+            return response;
+        }
+        public ResponeMessage<AuthenticationInfoDTO> AutoUpdatePermForUser(string email)
+        {
+            var response = new ResponeMessage<AuthenticationInfoDTO> { Code = ErrorCodeEnum.SUCCESS, Data = new AuthenticationInfoDTO() };
+            var authen = this.GetMany(u => u.Email == email).Select(u => new AuthenticationInfoDTO
             {
                 UserId = u.UserId,
                 Email = u.Email,

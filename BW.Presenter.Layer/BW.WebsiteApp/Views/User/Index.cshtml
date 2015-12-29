@@ -3,6 +3,7 @@
 @using BW.Common.Consts;
 @{
     ViewBag.Title = "Index";
+    ViewBag.System = "UserManagement";
     var isViewManageUser = AuthorizationHelper.HasPermissionFor(PermissionCodes.ViewManageUser);
     var isAddManageUser = AuthorizationHelper.HasPermissionFor(PermissionCodes.AddManageUser);
     var isEditManageUser = AuthorizationHelper.HasPermissionFor(PermissionCodes.EditManageUser);
@@ -63,7 +64,7 @@
                 <td>
                     @if (isEditManageUser)
                     {
-                        @Html.ActionLink("Edit", "Edit", new { userId = item.UserId })
+                        @Html.ActionLink("Edit | ", "Edit", new { userId = item.UserId })
                         @Html.ActionLink("Change Password", "UpdatePassword", new { userId = item.UserId })
                     }
                     | @Html.ActionLink("Details", "Details", new { userId = item.UserId }) |
