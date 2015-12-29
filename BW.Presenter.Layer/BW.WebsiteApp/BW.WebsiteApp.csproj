@@ -173,6 +173,7 @@
     <Content Include="Views\User\UpdatePassword.cshtml" />
     <Content Include="Views\RoleInPermission\_PermissionsPartialView.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\User\_UserProfilePartialView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

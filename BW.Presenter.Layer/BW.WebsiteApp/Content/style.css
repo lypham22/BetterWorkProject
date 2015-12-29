@@ -1,3 +1,6 @@
 ﻿.chk_MarginTop {
     margin-top: 6px;
 }
+.modal-backdrop {
+        z-index: 0;
+}

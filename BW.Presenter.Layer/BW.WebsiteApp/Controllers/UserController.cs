@@ -30,6 +30,23 @@ namespace BW.WebsiteApp.Controllers
             return View(result);
         }
 
+        // GET: Users/Details/5
+        [AuthorizedUser(PermissionCodes.ViewManageUser)]
+        public ActionResult ViewProfile()
+        {
+            string userIdEnc = AuthorizationHelper.UserId.ToString();
+            var result = UserHelper.GetUserById(userIdEnc).Data;
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_UserProfilePartialView", result);
+            }
+            else
+            {
+                return View();
+            }
+        }
+
         // GET: Users/Create
         [AuthorizedUser(PermissionCodes.AddManageUser)]
         public ActionResult Create()
