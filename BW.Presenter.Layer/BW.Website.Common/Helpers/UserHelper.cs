@@ -15,11 +15,11 @@ namespace BW.Website.Common.Helpers
         public static ResponeMessage<List<UserView>> GetAllUser()
         {
             List<UserView> userDTO = new List<UserView>();
-            var response = new ResponeMessage<List<UserView>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<UserView>() };            
+            var response = new ResponeMessage<List<UserView>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<UserView>() };
             HttpResponseMessage reponse = ApiServiceUtilities.GetReponse("api/UserApi/getalluser/");
             if (reponse.IsSuccessStatusCode)
             {
-                var users = reponse.Content.ReadAsAsync <ResponeMessage<List<UserDTO>>>().Result;
+                var users = reponse.Content.ReadAsAsync<ResponeMessage<List<UserDTO>>>().Result;
                 foreach (var s in users.Data)
                 {
                     userDTO.Add(new UserView
@@ -45,8 +45,8 @@ namespace BW.Website.Common.Helpers
             UserView userView = new UserView();
             if (!string.IsNullOrEmpty(userIdEnc))
             {
-                int userId = int.Parse(userIdEnc);
-                HttpResponseMessage reponse = ApiServiceUtilities.PostParram("api/UserApi/GetUserById/",userId);
+                int userId = int.Parse(ApiServiceUtilities.Decrypt(userIdEnc));
+                HttpResponseMessage reponse = ApiServiceUtilities.PostParram("api/UserApi/GetUserById/", userId);
                 if (reponse.IsSuccessStatusCode)
                 {
                     try
@@ -62,7 +62,8 @@ namespace BW.Website.Common.Helpers
                         userView.RoleDTOs = user.Data.RoleDTOs;
                         response.Code = user.Code;
                         response.Data = userView;
-                    }catch(Exception e)
+                    }
+                    catch (Exception e)
                     { }
                 }
             }
@@ -136,11 +137,13 @@ namespace BW.Website.Common.Helpers
             }
         }
 
-        public static ResponeMessageBaseType<bool> DeleteUser(int userId)
+        public static ResponeMessageBaseType<bool> DeleteUser(string userId)
         {
             var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = true };
             UserDTO user = new UserDTO();
-            user.UserId = userId;
+
+            user.UserId = int.Parse(ApiServiceUtilities.Decrypt(userId));
+
             // Delete data
             ApiServiceUtilities.PostJson("api/UserApi/RemoveUser/", user);
             return response;
@@ -179,7 +182,7 @@ namespace BW.Website.Common.Helpers
                     return true;
                 }
 
-               
+
             }
             return false;
         }

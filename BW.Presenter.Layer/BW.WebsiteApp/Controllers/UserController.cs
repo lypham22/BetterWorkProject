@@ -26,7 +26,7 @@ namespace BW.WebsiteApp.Controllers
         [AuthorizedUser(PermissionCodes.ViewManageUser)]
         public ActionResult Details(string userId)
         {
-            var result = UserHelper.GetUserById(userId).Data;
+            var result = UserHelper.GetUserById(ApiServiceUtilities.Encrypt(userId)).Data;
             return View(result);
         }
 
@@ -84,7 +84,7 @@ namespace BW.WebsiteApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var result = UserHelper.GetUserById(userId).Data;
+            var result = UserHelper.GetUserById(ApiServiceUtilities.Encrypt(userId)).Data;
             if (result == null)
             {
                 return HttpNotFound();
@@ -118,7 +118,7 @@ namespace BW.WebsiteApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var result = UserHelper.GetUserById(userId).Data;
+            var result = UserHelper.GetUserById(ApiServiceUtilities.Encrypt(userId)).Data;
             if (result == null)
             {
                 return HttpNotFound();
@@ -129,9 +129,9 @@ namespace BW.WebsiteApp.Controllers
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [AuthorizedUser(PermissionCodes.DeleteManageUser)]
-        public ActionResult DeleteConfirmed(int userId)
+        public ActionResult DeleteConfirmed(string userId)
         {
-            UserHelper.DeleteUser(userId);
+            UserHelper.DeleteUser(ApiServiceUtilities.Encrypt(userId));
             return RedirectToAction("Index");
         }
         [AuthorizedUser(PermissionCodes.EditManageUser)]
