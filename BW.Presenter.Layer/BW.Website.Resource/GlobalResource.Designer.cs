@@ -133,6 +133,24 @@ namespace BW.Website.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to First name is required..
+        /// </summary>
+        public static string validFirstNameRequire {
+            get {
+                return ResourceManager.GetString("validFirstNameRequire", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last name is required.
+        /// </summary>
+        public static string validLastNameRequire {
+            get {
+                return ResourceManager.GetString("validLastNameRequire", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password must have least 6 word..
         /// </summary>
         public static string validPassMinLenght {
@@ -156,6 +174,15 @@ namespace BW.Website.Resource {
         public static string validRequire {
             get {
                 return ResourceManager.GetString("validRequire", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New user have to have least a role..
+        /// </summary>
+        public static string validRoleRequire {
+            get {
+                return ResourceManager.GetString("validRoleRequire", resourceCulture);
             }
         }
         

@@ -1,4 +1,6 @@
-﻿@model IEnumerable<BW.Data.Contract.DTOs.UserView>
+﻿@*@model IEnumerable<BW.Data.Contract.DTOs.UserView>*@
+@model PagedList.IPagedList<BW.Data.Contract.DTOs.UserView>
+@using PagedList.Mvc;
 @using BW.Website.Common.Helpers;
 @using BW.Common.Consts;
 @{
@@ -26,7 +28,7 @@
                 @Html.Label("Full Name")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                @Html.Label("Email")
             </th>
             <th>
                 @Html.Label("Created Date")
@@ -64,8 +66,8 @@
                 <td>
                     @if (isEditManageUser)
                     {
-                        @Html.ActionLink("Edit | ", "Edit", new { userId = item.UserId })
-                        @Html.ActionLink("Change Password", "UpdatePassword", new { userId = item.UserId })
+                        @Html.ActionLink("Edit", "Edit", new { userId = item.UserId })
+                        @*@Html.ActionLink("Change Password", "UpdatePassword", new { userId = item.UserId })*@
                     }
                     | @Html.ActionLink("Details", "Details", new { userId = item.UserId }) |
                     @if (isDeleteManageUser)
@@ -75,7 +77,9 @@
                 </td>
             </tr>
         }
-
-
     </table>
+    <div>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    </div>
 }

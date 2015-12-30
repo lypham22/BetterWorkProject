@@ -52,7 +52,7 @@ namespace BW.WebsiteApp.Controllers
                 return View(login);
             }
             var result = AuthorizationHelper.Login(login);
-            if (result.Code == ErrorCodeEnum.SUCCESS)
+            if (result.Code == ErrorCodeEnum.SUCCESS && result.Data != null)
             {
                 return RedirectToAction("Index", "User");
             }

@@ -10,16 +10,19 @@ using BW.Website.Common.Helpers;
 using BW.Data.Contract.DTOs;
 using BW.Website.Common.Utilities;
 using BW.Common.Consts;
+using PagedList;
 
 namespace BW.WebsiteApp.Controllers
 {
     public class UserController : Controller
     {
         [AuthorizedUser(PermissionCodes.ViewManageUser)]
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             var getAllUser = UserHelper.GetAllUser().Data;
-            return View(getAllUser);
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(getAllUser.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Users/Details/5
@@ -35,7 +38,7 @@ namespace BW.WebsiteApp.Controllers
         public ActionResult ViewProfile()
         {
             string userIdEnc = AuthorizationHelper.UserId.ToString();
-            var result = UserHelper.GetUserById(userIdEnc).Data;
+            var result = UserHelper.GetUserById(ApiServiceUtilities.Encrypt(userIdEnc)).Data;
 
             if (Request.IsAjaxRequest())
             {
@@ -94,13 +97,43 @@ namespace BW.WebsiteApp.Controllers
 
         [HttpPost]
         [AuthorizedUser(PermissionCodes.EditManageUser)]
-        public ActionResult Edit(UserCreateView userView, string[] groupRole)
+        public ActionResult Edit(UserView userView, string[] groupRole)
         {
-            //UserCreateView userView = null;
-            //var errors = ModelState.Values.SelectMany(v => v.Errors);
             if (ModelState.IsValid)
             {
-                //userView = ToUserCreaView(userDTOs);
+                var result = UserHelper.UpdateUser(userView, groupRole);
+                if (result.Data)
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+
+            return View(userView);
+        }
+
+        // GET: Users/EditProfile/5
+        [AuthorizedUser(PermissionCodes.EditManageUser)]
+        public ActionResult EditProfile()
+        {
+            string userIdEnc = AuthorizationHelper.UserId.ToString();
+            var result = UserHelper.GetUserById(ApiServiceUtilities.Encrypt(userIdEnc)).Data;
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_EditProfilePartialView", result);
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+        [AuthorizedUser(PermissionCodes.EditManageUser)]
+        public ActionResult EditProfile(UserView userView, string[] groupRole)
+        {
+            if (ModelState.IsValid)
+            {
                 var result = UserHelper.UpdateUser(userView, groupRole);
                 if (result.Data)
                 {
@@ -134,30 +167,32 @@ namespace BW.WebsiteApp.Controllers
             UserHelper.DeleteUser(ApiServiceUtilities.Encrypt(userId));
             return RedirectToAction("Index");
         }
+
         [AuthorizedUser(PermissionCodes.EditManageUser)]
-        public ActionResult UpdatePassword(string userId)
+        public ActionResult UpdatePassword()
         {
-            if (string.IsNullOrEmpty(userId))
+            if (Request.IsAjaxRequest())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return PartialView("_UpdatePasswordPartialView");
             }
-            return View();
+            else
+            {
+                return View();
+            }
         }
         [HttpPost]
-        public ActionResult UpdatePassword(UserPasswordView userPassView)
+        public string UpdatePassword(UserPasswordView userPassView)
         {
             //check old password
-            var user = UserHelper.GetUserById(userPassView.UserId.ToString()).Data;
+            string userIdEnc = AuthorizationHelper.UserId.ToString();
+            var user = UserHelper.GetUserById(ApiServiceUtilities.Encrypt(userIdEnc)).Data;
             if (!UserHelper.CheckOldPassword(user.Email, ApiServiceUtilities.MD5Hash(userPassView.OldPassword)))
             {
-                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                ViewBag.Error = "Wrong current password!";
-                return View();
+                return "Wrong current password!";
             }else
             {
                 UserHelper.UpdatePassword(userPassView);
-                ViewBag.success = "Change password success!";
-                return View();
+                return "Change password success!";
             }
 
         }

@@ -17,20 +17,31 @@
                         @*@Html.ActionLink("View Profile", "Details", new { userId = @AuthorizationHelper.UserId })*@
                     </li>
                     <li>
-                        @Html.ActionLink("Edit Profile", "Edit", new { userId = @AuthorizationHelper.UserId })
+                        <a href="" data-toggle="modal" data-target="#editProfile" id="btnEditProfile">Edit Profile</a>
+                        @*@Html.ActionLink("Edit Profile", "Edit", new { userId = @AuthorizationHelper.UserId })*@
+                    </li>
+                    <li>
+                        <a href="" data-toggle="modal" data-target="#changePass" id="btnChangePass">Change Password</a>
                     </li>
                     <li class="divider"></li>
                     <li>
-                        @Html.ActionLink("Log Out", ConstActionMethods.LOGOUT, ConstActionMethods.CTL_HOME, new { area = "" })
+                        @Html.ActionLink("Log Out", ConstActionMethods.LOGOUT, ConstActionMethods.CTL_HOME, new { }, new { })
                     </li>
                 </ul>
             </li>
             <li></li>
         </ul>
-        @*string userId = AuthorizationHelper.UserId.ToString();
-        var result = UserHelper.GetUserById(userId).Data;
-        @Html.Partial("_UserProfilePartialView", result);*@
-    <div class="modal fade" id="userProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"></div>
+
+        <div class="modal fade" id="userProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"></div>
+        <div class="modal fade" id="editProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"></div>
+        <div class="modal fade" id="changePass" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"></div>
+    }
+    else
+    {
+        <ul class="nav navbar-nav navbar-right">
+            <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+            <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        </ul>
     }
 }
 
@@ -41,6 +52,26 @@
             dataType: 'html',
             success: function (data) {
                 $("#userProfile").html(data);
+            }
+        });
+    });
+
+    $('#btnEditProfile').click(function () {
+        $.ajax({
+            url: 'http://localhost:8790/User/EditProfile/',
+            dataType: 'html',
+            success: function (data) {
+                $("#editProfile").html(data);
+            }
+        });
+    });
+
+    $('#btnChangePass').click(function () {
+        $.ajax({
+            url: 'http://localhost:8790/User/UpdatePassword/',
+            dataType: 'html',
+            success: function (data) {
+                $("#changePass").html(data);
             }
         });
     });

@@ -70,7 +70,7 @@ namespace BW.Website.Common.Helpers
             return response;
         }
 
-        public static ResponeMessageBaseType<bool> UpdateUser(UserCreateView userView, string[] groupRole)
+        public static ResponeMessageBaseType<bool> UpdateUser(UserView userView, string[] groupRole)
         {
             var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = true };
             if (userView != null)
@@ -78,11 +78,8 @@ namespace BW.Website.Common.Helpers
                 // Convert UserInfo to User.
                 UserCreateDTO user = new UserCreateDTO();
                 user.UserId = userView.UserId;
-                user.Password = userView.Password;
                 user.FirstName = userView.FirstName;
                 user.LastName = userView.LastName;
-                user.Email = userView.Email;
-                user.CreatedDate = userView.CreatedDate;
                 user.IsActive = userView.IsActive;
                 if (groupRole != null)
                 {
@@ -156,7 +153,7 @@ namespace BW.Website.Common.Helpers
             {
                 // Convert UserInfo to User.
                 UserDTO user = new UserDTO();
-                user.UserId = userPassView.UserId;
+                user.UserId = AuthorizationHelper.UserId.Value;
                 user.Password = ApiServiceUtilities.MD5Hash(userPassView.NewPassword);
 
                 // Update data

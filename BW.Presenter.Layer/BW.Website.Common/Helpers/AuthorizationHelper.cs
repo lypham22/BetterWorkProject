@@ -86,12 +86,12 @@ namespace BW.Website.Common.Helpers
         public static ResponeMessage<AuthenticationInfoDTO> Login(LoginInfoDTO login)
         {
             HttpResponseMessage response = ApiServiceUtilities.GetReponse(string.Format("api/UserApi/login/?email={0}&password={1}", login.Email, ApiServiceUtilities.MD5Hash(login.Password)));
-            var result = new ResponeMessage<AuthenticationInfoDTO> { Code = ErrorCodeEnum.SUCCESS, Data = new AuthenticationInfoDTO() };
+            var result = new ResponeMessage<AuthenticationInfoDTO> { Code = ErrorCodeEnum.SUCCESS};
             if (response.IsSuccessStatusCode)
             {
                 result = response.Content.ReadAsAsync<ResponeMessage<AuthenticationInfoDTO>>().Result;
 
-                if (result.Code != ErrorCodeEnum.SUCCESS)
+                if (result.Code != ErrorCodeEnum.SUCCESS || result.Data == null)
                 {
                     return result;
                 }

@@ -113,7 +113,6 @@ namespace BW.Repository.Data.Repositories
             {
                 userData.FirstName = user.FirstName;
                 userData.LastName = user.LastName;
-                userData.Email = user.Email;
                 userData.UpdatedDate = DateTime.Now;
                 userData.IsActive = user.IsActive;
                 this.Update(userData);
@@ -158,7 +157,7 @@ namespace BW.Repository.Data.Repositories
         /// <returns></returns>
         public ResponeMessage<AuthenticationInfoDTO> Login(string email, string password)
         {
-            var response = new ResponeMessage<AuthenticationInfoDTO> { Code = ErrorCodeEnum.SUCCESS, Data = new AuthenticationInfoDTO() };
+            var response = new ResponeMessage<AuthenticationInfoDTO> { Code = ErrorCodeEnum.SUCCESS};
             var authen = this.GetMany(u => u.Email == email && u.Password == password).Select(u => new AuthenticationInfoDTO
             {
                 UserId = u.UserId,
@@ -171,6 +170,7 @@ namespace BW.Repository.Data.Repositories
             }).FirstOrDefault();
             if (authen != null)
             {
+                response.Data = new AuthenticationInfoDTO();
                 response.Data = authen;
                 var userId = new SqlParameter
                 {

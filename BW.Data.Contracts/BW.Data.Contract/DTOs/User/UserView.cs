@@ -29,7 +29,6 @@ namespace BW.Data.Contract.DTOs
 
 
 
-
         // @"^[a-z0-9A-Z\s!.?\+\[\]_\-\*\/\=\p{L}]*$"
         //public int UserId { get; set; }
 

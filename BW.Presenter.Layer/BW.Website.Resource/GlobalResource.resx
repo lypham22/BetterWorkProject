@@ -141,6 +141,12 @@
   <data name="validEmailRequire" xml:space="preserve">
     <value>Email is required.</value>
   </data>
+  <data name="validFirstNameRequire" xml:space="preserve">
+    <value>First name is required.</value>
+  </data>
+  <data name="validLastNameRequire" xml:space="preserve">
+    <value>Last name is required</value>
+  </data>
   <data name="validPassMinLenght" xml:space="preserve">
     <value>Password must have least 6 word.</value>
   </data>
@@ -149,6 +155,9 @@
   </data>
   <data name="validRequire" xml:space="preserve">
     <value>This is required field</value>
+  </data>
+  <data name="validRoleRequire" xml:space="preserve">
+    <value>New user have to have least a role.</value>
   </data>
   <data name="validUsernameLenght" xml:space="preserve">
     <value>Username must from 6 to 12 word.</value>
