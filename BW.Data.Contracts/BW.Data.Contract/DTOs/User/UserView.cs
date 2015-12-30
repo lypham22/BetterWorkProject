@@ -15,7 +15,11 @@ namespace BW.Data.Contract.DTOs
             RoleDTOs = new List<RoleDTO>();
         }
         public int UserId { get; set; }
+
+        [Required(ErrorMessageResourceType = typeof(GlobalResource), ErrorMessageResourceName = "validFirstNameRequire")]
         public string FirstName { get; set; }
+
+        [Required(ErrorMessageResourceType = typeof(GlobalResource), ErrorMessageResourceName = "validLastNameRequire")]
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }

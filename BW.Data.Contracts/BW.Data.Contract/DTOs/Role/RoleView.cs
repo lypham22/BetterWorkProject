@@ -1,6 +1,8 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using BW.Website.Resource;
 namespace BW.Data.Contract.DTOs
 {
     public class RoleView
@@ -10,6 +12,7 @@ namespace BW.Data.Contract.DTOs
             ModuleDTOs = new List<ModuleDTO>();
         }
         public int RoleId { get; set; }
+        [Required(ErrorMessageResourceType = typeof(GlobalResource), ErrorMessageResourceName = "validRoleNameRequire")]
         public string RoleName { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreatedDate { get; set; }

@@ -156,6 +156,9 @@
   <data name="validRequire" xml:space="preserve">
     <value>This is required field</value>
   </data>
+  <data name="validRoleNameRequire" xml:space="preserve">
+    <value>Role name is required</value>
+  </data>
   <data name="validRoleRequire" xml:space="preserve">
     <value>New user have to have least a role.</value>
   </data>

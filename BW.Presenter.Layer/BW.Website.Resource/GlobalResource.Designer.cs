@@ -178,6 +178,15 @@ namespace BW.Website.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Role name is required.
+        /// </summary>
+        public static string validRoleNameRequire {
+            get {
+                return ResourceManager.GetString("validRoleNameRequire", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New user have to have least a role..
         /// </summary>
         public static string validRoleRequire {
