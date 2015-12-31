@@ -15,7 +15,7 @@ namespace BW.Website.Common.Helpers
         {
             var response = new ResponeMessage<List<RoleListView>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<RoleListView>() };
             List<RoleListView> roleDTO = new List<RoleListView>();
-            HttpResponseMessage reponse = ApiServiceUtilities.GetReponse("api/RoleApi/GetAllRoleMore");
+            HttpResponseMessage reponse = ApiServiceUtilities.GetResponse("api/RoleApi/GetAllRoleMore");
             if (reponse.IsSuccessStatusCode)
             {
                 var roles = reponse.Content.ReadAsAsync<ResponeMessage<List<RoleDTO>>>().Result;
@@ -36,7 +36,7 @@ namespace BW.Website.Common.Helpers
         {
             var response = new ResponeMessage<List<RoleListView>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<RoleListView>() };
             List<RoleListView> roleDTO = new List<RoleListView>();
-            HttpResponseMessage reponse = ApiServiceUtilities.GetReponse("api/RoleApi/GetRoleActive");
+            HttpResponseMessage reponse = ApiServiceUtilities.GetResponse("api/RoleApi/GetRoleActive");
             if (reponse.IsSuccessStatusCode)
             {
                 var roles = reponse.Content.ReadAsAsync<ResponeMessage<List<RoleDTO>>>().Result;
@@ -58,7 +58,7 @@ namespace BW.Website.Common.Helpers
         {
             var response = new ResponeMessage<List<RoleView>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<RoleView>() };
             List<RoleView> roleDTO = new List<RoleView>();
-            HttpResponseMessage reponse = ApiServiceUtilities.GetReponse("api/RoleApi/GetAllRoleMore");
+            HttpResponseMessage reponse = ApiServiceUtilities.GetResponse("api/RoleApi/GetAllRoleMore");
             if (reponse.IsSuccessStatusCode)
             {
                 var roles = reponse.Content.ReadAsAsync<ResponeMessage<List<RoleDTO>>>().Result;
@@ -87,7 +87,7 @@ namespace BW.Website.Common.Helpers
             if (!string.IsNullOrEmpty(roleIdEnc))
             {
                 int roleId = int.Parse(roleIdEnc);
-                HttpResponseMessage reponse = ApiServiceUtilities.GetReponse("api/RoleApi/GetRoleById/" + roleId);
+                HttpResponseMessage reponse = ApiServiceUtilities.GetResponse("api/RoleApi/GetRoleById/" + roleId);
                 if (reponse.IsSuccessStatusCode)
                 {
                     var role = reponse.Content.ReadAsAsync<ResponeMessage<RoleDTO>>().Result;

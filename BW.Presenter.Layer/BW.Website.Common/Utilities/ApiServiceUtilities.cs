@@ -29,12 +29,12 @@ namespace BW.Website.Common.Utilities
             return client;
         }
 
-        public static HttpResponseMessage GetReponse(string path)
+        public static HttpResponseMessage GetResponse(string path)
         {
             HttpClient client = ConnectClient();
             client.DefaultRequestHeaders.Add("ApiKey", ComputeHash());
-            HttpResponseMessage reponse = client.GetAsync(path).Result;
-            return reponse;
+            HttpResponseMessage response = client.GetAsync(path).Result;
+            return response;
         }
 
         public static HttpResponseMessage PostJson(string path, object value)

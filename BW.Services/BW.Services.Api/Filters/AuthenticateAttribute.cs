@@ -19,8 +19,6 @@ namespace Hmac.Api.Filters
 {
     public class AuthenticateAttribute : ActionFilterAttribute
     {
-
-
         private static string ComputeHash()
         {
             string hashedPassword = ConfigurationManager.AppSettings["password"];
@@ -36,9 +34,6 @@ namespace Hmac.Api.Filters
 
             return hashString;
         }
-
-
-
         private static bool IsDateValidated(string timestampString)
         {
 
@@ -62,7 +57,6 @@ namespace Hmac.Api.Filters
 
             return true;
         }
-
         private bool IsAuthenticated(HttpActionContext actionContext)
         {
             string path = "";
@@ -97,7 +91,6 @@ namespace Hmac.Api.Filters
             }
             return true;
         }
-
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
             var isAuthenticated = IsAuthenticated(actionContext);
