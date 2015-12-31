@@ -12,6 +12,9 @@ using BW.Website.Common.Utilities;
 using BW.Common.Consts;
 using PagedList;
 
+
+
+
 namespace BW.WebsiteApp.Controllers
 {
     public class UserController : Controller
@@ -19,6 +22,8 @@ namespace BW.WebsiteApp.Controllers
         [AuthorizedUser(PermissionCodes.ViewManageUser)]
         public ActionResult Index(int? page)
         {
+            log4net.ILog logger = log4net.LogManager.GetLogger(typeof(UserController));
+            logger.Info("test12345");
             var getAllUser = UserHelper.GetAllUser().Data;
             int pageSize = 5;
             int pageNumber = (page ?? 1);
