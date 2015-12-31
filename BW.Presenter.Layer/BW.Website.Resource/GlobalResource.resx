@@ -135,6 +135,9 @@
   <data name="validConfirmPassRequire" xml:space="preserve">
     <value>Confirn Password is required.</value>
   </data>
+  <data name="validEmailIsExit" xml:space="preserve">
+    <value>Email is exit! Please enter another email!</value>
+  </data>
   <data name="validEmailRegex" xml:space="preserve">
     <value>Invalid email address.</value>
   </data>

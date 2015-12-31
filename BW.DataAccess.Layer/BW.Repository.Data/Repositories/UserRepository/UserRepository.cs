@@ -144,7 +144,7 @@ namespace BW.Repository.Data.Repositories
                 this.Update(userData);
                 this.DataContext.SaveChanges();
 
-                //response.Data = true;
+                response.Data = true;
                 return response;
             }
             return response;
@@ -294,6 +294,21 @@ namespace BW.Repository.Data.Repositories
                 this.DataContext.SaveChanges();
             }
             return response;
+        }
+
+        public ResponeMessageBaseType<bool> CheckUnitEmail(string email)
+        {
+            var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = false };
+            var data = this.Get(x => x.Email == email);
+            if (data != null)
+            {
+                response.Data = true;
+                return response;
+            }
+            else
+            {
+                return response;
+            }
         }
     }
 }

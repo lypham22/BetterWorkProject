@@ -1,4 +1,5 @@
 ﻿@model BW.Data.Contract.DTOs.UserView
+@using BW.Website.Common.Utilities;
 @{
     ViewBag.Title = "Details";
 }
@@ -50,6 +51,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { UserId = Model.UserId }) |
+    @Html.ActionLink("Edit", "Edit", new { UserId = ApiServiceUtilities.Encrypt(Model.UserId.ToString()) }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

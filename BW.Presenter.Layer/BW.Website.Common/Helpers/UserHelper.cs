@@ -211,5 +211,13 @@ namespace BW.Website.Common.Helpers
             }
             return false;
         }
+        public static ResponeMessageBaseType<bool> CheckUnitEmail(string email)
+        {
+            var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = true };
+
+            ApiServiceUtilities.PostJson("api/UserApi/CheckUnitEmail?email=", email);
+            return response;
+        }
+
     }
 }

@@ -1,37 +1,43 @@
 ﻿@model IEnumerable<BW.Data.Contract.DTOs.RoleInPermissonView>
-@using BW.Website.Common.Helpers
+@using BW.Website.Common.Helpers;
+@using BW.Common.Consts;
 @{
     ViewBag.Title = "Index";
-    ViewBag.System = "RoleInPermission";    
+    ViewBag.System = "RoleInPermission";
+
+    var isViewRoleInPermission = AuthorizationHelper.HasPermissionFor(PermissionCodes.ViewRoleInPermission);
 }
 
-<h2>Role In Permission</h2>
-<div>
-    <select class="ddlRoles">
-        @foreach (var item in RoleHelper.GetAllRole().Data)
-        {
-            <option value="@item.RoleId" id="@item.RoleName">@item.RoleName</option>
-        }
-    </select>
-</div>
-<br />
+@*@if (isViewRoleInPermission)
+{*@
+    <h2>Role In Permission</h2>
+    <div>
+        <select class="ddlRoles">
+            @foreach (var item in RoleHelper.GetAllRole().Data)
+            {
+                <option value="@item.RoleId" id="@item.RoleName">@item.RoleName</option>
+            }
+        </select>
+    </div>
+    <br />
 
+@*}*@
 <div id="myPartialContainer"></div>
 
 @*@Scripts.Render("~/bundles/jquery")
 
-@*<script>
-        $(".ddlRoles").change(function () {
-            var roleName = $(this).val();
-            $("td.lstRoles ").each(function (index) {
-                if ($(this).html().trim() == roleName) {
-                    $(this).closest('tr').css("display", "");
-                } else
-                    $(this).closest('tr').css("display", "none");
+    @*<script>
+            $(".ddlRoles").change(function () {
+                var roleName = $(this).val();
+                $("td.lstRoles ").each(function (index) {
+                    if ($(this).html().trim() == roleName) {
+                        $(this).closest('tr').css("display", "");
+                    } else
+                        $(this).closest('tr').css("display", "none");
+                });
             });
-        });
-        $('.ddlRoles').change();
-    </script>*@
+            $('.ddlRoles').change();
+        </script>*@
 
 <script>
     $(document).ready(function () {

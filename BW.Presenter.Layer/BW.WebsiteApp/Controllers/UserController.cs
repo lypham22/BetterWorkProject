@@ -29,7 +29,8 @@ namespace BW.WebsiteApp.Controllers
         [AuthorizedUser(PermissionCodes.ViewManageUser)]
         public ActionResult Details(string userId)
         {
-            var result = UserHelper.GetUserById(ApiServiceUtilities.Encrypt(userId)).Data;
+            //var result = UserHelper.GetUserById(ApiServiceUtilities.Encrypt(userId)).Data;
+            var result = UserHelper.GetUserById(userId).Data;
             return View(result);
         }
 
@@ -87,7 +88,7 @@ namespace BW.WebsiteApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var result = UserHelper.GetUserById(ApiServiceUtilities.Encrypt(userId)).Data;
+            var result = UserHelper.GetUserById(userId).Data;
             if (result == null)
             {
                 return HttpNotFound();
@@ -151,7 +152,7 @@ namespace BW.WebsiteApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var result = UserHelper.GetUserById(ApiServiceUtilities.Encrypt(userId)).Data;
+            var result = UserHelper.GetUserById(userId).Data;
             if (result == null)
             {
                 return HttpNotFound();
@@ -196,5 +197,9 @@ namespace BW.WebsiteApp.Controllers
             }
 
         }
+        //public JsonResult IsEmailExits(string email)
+        //{
+        //    return Json(!UserHelper.CheckUnitEmail(email).Data, JsonRequestBehavior.AllowGet);
+        //}
     }
 }

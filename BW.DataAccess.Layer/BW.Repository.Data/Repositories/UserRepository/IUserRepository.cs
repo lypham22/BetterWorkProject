@@ -21,6 +21,7 @@ namespace BW.Repository.Data.Repositories
         ResponeMessage<AuthenticationInfoDTO> Login(string email, string password);
         ResponeMessage<AuthenticationInfoDTO> AutoUpdatePermForUser(string email);
         ResponeMessageBaseType<bool> UpdatePassword(UserDTO user);
+        ResponeMessageBaseType<bool> CheckUnitEmail(string email);
     }   
 
 }

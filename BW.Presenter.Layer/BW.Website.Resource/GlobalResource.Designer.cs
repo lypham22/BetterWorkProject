@@ -115,6 +115,15 @@ namespace BW.Website.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email is exit! Please enter another email!.
+        /// </summary>
+        public static string validEmailIsExit {
+            get {
+                return ResourceManager.GetString("validEmailIsExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid email address..
         /// </summary>
         public static string validEmailRegex {

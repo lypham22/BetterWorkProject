@@ -57,7 +57,8 @@ namespace BW.Repository.Data.Repositories
             StringBuilder builder;
             foreach (var item in result)
             {
-                module = roleInPermission.GetMany(r => r.RoleId == item.RoleId && r.BW_Module.IsActive == true).Select(u => new ModuleDTO
+                module = roleInPermission.GetMany(r => r.RoleId == item.RoleId && r.BW_Module.IsActive == true 
+                    && (r.PAdd == true || r.PView == true || r.PEdit == true || r.PDelete == true)).Select(u => new ModuleDTO
                 {
                     ModuleName = u.BW_Module.ModuleName
                 }).ToList();

@@ -3,6 +3,7 @@
 @using PagedList.Mvc;
 @using BW.Website.Common.Helpers;
 @using BW.Common.Consts;
+@using BW.Website.Common.Utilities;
 @{
     ViewBag.Title = "Index";
     ViewBag.System = "UserManagement";
@@ -66,15 +67,15 @@
                 <td>
                     @if (isEditManageUser)
                     {
-                        @Html.ActionLink("Edit", "Edit", new { userId = item.UserId })
+                        @Html.ActionLink("Edit", "Edit", new { userId = ApiServiceUtilities.Encrypt(item.UserId.ToString()) })
                         <span>|</span>
                         @*@Html.ActionLink("Change Password", "UpdatePassword", new { userId = item.UserId })*@
                     }
-                    @Html.ActionLink("Details", "Details", new { userId = item.UserId })
+                    @Html.ActionLink("Details", "Details", new { userId = ApiServiceUtilities.Encrypt(item.UserId.ToString()) })
                     @if (isDeleteManageUser)
                     {
                         <span>|</span>
-                        @Html.ActionLink("Delete", "Delete", new { userId = item.UserId })
+                        @Html.ActionLink("Delete", "Delete", new { userId = ApiServiceUtilities.Encrypt(item.UserId.ToString()) })
                     }
                 </td>
             </tr>
