@@ -59,6 +59,8 @@
     <Compile Include="DTOs\Role\RoleCreateView.cs" />
     <Compile Include="DTOs\Role\RoleView.cs" />
     <Compile Include="DTOs\Role\RoleListView.cs" />
+    <Compile Include="DTOs\User\UserProfileDTO.cs" />
+    <Compile Include="DTOs\User\UserProfileView.cs" />
     <Compile Include="DTOs\User\UserCreateView.cs" />
     <Compile Include="DTOs\User\UserCreateDTO.cs" />
     <Compile Include="DTOs\User\UserInRole.cs" />

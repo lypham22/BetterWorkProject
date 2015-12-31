@@ -40,7 +40,10 @@ namespace BW.Services.Api.Controllers
         {
             return userRepository.UpdateUser(user);
         }
-
+        public ResponeMessageBaseType<bool> UpdateProfile(UserProfileDTO user)
+        {
+            return userRepository.UpdateProfile(user);
+        }
         public ResponeMessageBaseType<bool> UpdatePassword(UserDTO user)
         {
             return userRepository.UpdatePassword(user);

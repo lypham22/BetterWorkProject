@@ -105,6 +105,7 @@ namespace BW.Repository.Data.Repositories
             response.Data = true;
             return response;
         }
+
         public ResponeMessageBaseType<bool> UpdateUser(UserCreateDTO user)
         {
             var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = false };
@@ -126,6 +127,24 @@ namespace BW.Repository.Data.Repositories
                     DataContext.Database.ExecuteSqlCommand(update);
                 }
                 response.Data = true;
+                return response;
+            }
+            return response;
+        }
+
+        public ResponeMessageBaseType<bool> UpdateProfile(UserProfileDTO user)
+        {
+            var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = false };
+            var userData = this.GetById(user.UserId);
+            if (userData != null)
+            {
+                userData.FirstName = user.FirstName;
+                userData.LastName = user.LastName;
+                userData.UpdatedDate = DateTime.Now;
+                this.Update(userData);
+                this.DataContext.SaveChanges();
+
+                //response.Data = true;
                 return response;
             }
             return response;

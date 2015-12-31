@@ -58,6 +58,7 @@ namespace BW.WebsiteApp.Controllers
             }
             else
             {
+                ViewBag.Fail = "Username or Password is wrong! Please re-enter!";
                 return View(login);
             }
             

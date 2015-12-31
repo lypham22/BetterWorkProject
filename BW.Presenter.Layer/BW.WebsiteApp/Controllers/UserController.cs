@@ -130,18 +130,18 @@ namespace BW.WebsiteApp.Controllers
 
         [HttpPost]
         [AuthorizedUser(PermissionCodes.EditManageUser)]
-        public ActionResult EditProfile(UserView userView, string[] groupRole)
+        public string EditProfile(UserProfileView userProfileView)
         {
             if (ModelState.IsValid)
             {
-                var result = UserHelper.UpdateUser(userView, groupRole);
+                var result = UserHelper.EditProfile(userProfileView);
                 if (result.Data)
                 {
-                    return RedirectToAction("Index");
+                    return "Update successful!";
                 }
             }
 
-            return View(userView);
+            return "Update fail!";
         }
 
         [AuthorizedUser(PermissionCodes.DeleteManageUser)]

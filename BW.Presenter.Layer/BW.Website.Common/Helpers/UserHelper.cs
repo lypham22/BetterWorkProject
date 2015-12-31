@@ -105,6 +105,34 @@ namespace BW.Website.Common.Helpers
             }
         }
 
+        public static ResponeMessageBaseType<bool> EditProfile(UserProfileView userProfileView)
+        {
+            var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = true };
+            if (userProfileView != null)
+            {
+                // Convert UserInfo to User.
+                UserProfileDTO user = new UserProfileDTO();
+                user.UserId = AuthorizationHelper.UserId.Value;
+                user.FirstName = userProfileView.FirstName;
+                user.LastName = userProfileView.LastName;
+                
+                // Update data
+                var result = ApiServiceUtilities.PostJson("api/UserApi/UpdateProfile/", user);
+
+                string curentEmail = AuthorizationHelper.Email;
+                if (!string.IsNullOrEmpty(curentEmail))
+                {
+                    AuthorizationHelper.AutoUpdatePermForUser(curentEmail);
+                }
+
+                return response;
+            }
+            else
+            {
+                return response;
+            }
+        }
+
         public static ResponeMessageBaseType<bool> InsertUser(UserCreateView userCreateView, string[] groupRole)
         {
             var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = true };

@@ -18,7 +18,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
                             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -38,77 +38,32 @@
                             @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
                         </div>
                     </div>
-
-                    <div class="form-group" ng-controller="validUsernameCtrl">
-                        @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10 chk_MarginTop" ng-controller="validUsernameCtrl">
-                            @Html.CheckBoxFor(model => model.IsActive, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-md-2">Roles</label>
-                        <div class="col-md-10 chk_MarginTop">
-                            @foreach (var item in BW.Website.Common.Helpers.RoleHelper.GetRoleActive().Data)
-                            {
-                                var check = Model.RoleDTOs.Where(x => x.RoleId == item.RoleId).Any();
-                                <input type="checkbox" name="groupRole" value="@item.RoleId" @(check ? "checked='checked'" : "") />
-                                @Html.Raw("&nbsp;" + item.RoleName + "&nbsp;&nbsp;&nbsp;")
-                            }
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Save" class="btn btn-primary" />
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             }
         </div>
-        @*<div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <input type="button" value="Save" class="btn btn-primary" id="btnChangeProfile" />
-            </div>*@
+        <div class="modal-footer">
+            <input type="button" value="Save" class="btn btn-primary" id="btnChangeProfile" onclick="UpdateProfile()" />
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
     </div>
 </div>
 
-@*<script>
-    $('#btnChangeProfile').click(function () {
+<script>
+    function UpdateProfile() {
         var data = {};
-        data.userId = $("#UserId").val();
-        data.email = $("#Email").val();
-        data.firstName = $("#FirstName").val();
-        data.lastName = $("#LastName").val();
-        data.isActive = $("#IsActive").val();
-        var role = $('input[name="groupRole"]:checked').val();*@
+        data.FirstName = $("#FirstName").val();
+        data.LastName = $("#LastName").val();
 
-@*//var result = new Array();
-    //$('#tbl_RoleInPermission .row-data').each(function () {
-    //    var itemData = {};
-    //    itemData.roleId = $(this).find('.lstRoles').attr('id');
-    //    itemData.moduleId = $(this).find('.lstModule').attr('id');
-    //    itemData.pAdd = $(this).find('.lstPAdd').is(':checked');
-    //    itemData.pEdit = $(this).find('.lstPEdit').is(':checked');
-    //    itemData.pDelete = $(this).find('.lstPDel').is(':checked');
-    //    itemData.pView = $(this).find('.lstPView').is(':checked');
-
-    //    result.push(itemData);
-    //});*@
-
-@*$.ajax({
-                url: 'http://localhost:8790/User/EditProfile?userView={0}&groupRole={1}',data,role,
-                method: 'POST',
-                //dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(data),
-                success: function () {
-                    alert("Save successful!");
-                }
-            });
+        $.ajax({
+            url: 'http://localhost:8790/User/EditProfile',
+            method: 'POST',
+            //dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(data),
+            success: function (data) {
+                alert(data);
+                window.location = "http://localhost:8790/User";
+            }
         });
-    </script>*@
+    };
+</script>

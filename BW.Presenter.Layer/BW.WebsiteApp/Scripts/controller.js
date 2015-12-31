@@ -46,3 +46,7 @@ var permission = angular.module('roleInPermission', []);
 permission.controller('permissionCtrl', function ($scope) {
     $scope.RoleID = [];
 });
+
+
+//////////////////////////////////////validateUpdatePass/////////////////////
+var updatePass = angular.module('validateUpdatePass', []);

@@ -65,11 +65,12 @@
                     @if (isEditManageRole)
                     {
                         @Html.ActionLink("Edit", "Edit", new { roleId = item.RoleId })
+                        <span>|</span>
                     }
-                    | @Html.ActionLink("Details", "Details", new { roleId = item.RoleId }) |
+                    @Html.ActionLink("Details", "Details", new { roleId = item.RoleId })
                     @if (isDeleteManageRole)
                     {
-
+                        <span>|</span>
                         @Html.ActionLink("Delete", "Delete", new { roleId = item.RoleId })
                     }
                 </td>
