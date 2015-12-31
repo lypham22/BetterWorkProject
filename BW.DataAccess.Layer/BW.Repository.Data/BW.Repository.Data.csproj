@@ -137,6 +137,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="db_20151231.sql" />
     <Content Include="Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model.edmx</DependentUpon>

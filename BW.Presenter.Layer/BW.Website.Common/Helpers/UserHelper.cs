@@ -16,7 +16,7 @@ namespace BW.Website.Common.Helpers
         {
             List<UserView> userDTO = new List<UserView>();
             var response = new ResponeMessage<List<UserView>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<UserView>() };
-            HttpResponseMessage reponse = ApiServiceUtilities.GetReponse("api/UserApi/getalluser/");
+            HttpResponseMessage reponse = ApiServiceUtilities.GetResponse("api/UserApi/getalluser/");
             if (reponse.IsSuccessStatusCode)
             {
                 var users = reponse.Content.ReadAsAsync<ResponeMessage<List<UserDTO>>>().Result;
@@ -196,7 +196,7 @@ namespace BW.Website.Common.Helpers
 
         public static bool CheckOldPassword(string Email, string OldPassword)
         {
-            HttpResponseMessage response = ApiServiceUtilities.GetReponse(string.Format("api/UserApi/login/?email={0}&password={1}", Email, OldPassword));
+            HttpResponseMessage response = ApiServiceUtilities.GetResponse(string.Format("api/UserApi/login/?email={0}&password={1}", Email, OldPassword));
             var result = new ResponeMessage<AuthenticationInfoDTO> { Code = ErrorCodeEnum.SUCCESS, Data = new AuthenticationInfoDTO() };
             if (response.IsSuccessStatusCode)
             {

@@ -18,7 +18,7 @@ namespace BW.Website.Common.Helpers
             if (!string.IsNullOrEmpty(roleIdEnc))
             {
                 int roleId = int.Parse(roleIdEnc);
-                HttpResponseMessage reponse = ApiServiceUtilities.GetReponse("api/RoleInPermissionApi/GetRoleInPermissionByRoleId/" + roleId);
+                HttpResponseMessage reponse = ApiServiceUtilities.GetResponse("api/RoleInPermissionApi/GetRoleInPermissionByRoleId/" + roleId);
                 if (reponse.IsSuccessStatusCode)
                 {
                     var roleInPerms = reponse.Content.ReadAsAsync<ResponeMessage<List<RoleInPermissonDTO>>>().Result;
