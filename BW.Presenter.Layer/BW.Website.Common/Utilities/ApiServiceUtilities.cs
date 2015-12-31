@@ -11,6 +11,9 @@ using System.Configuration;
 using System.Security.Cryptography;
 using System.Web.Http;
 using System.Web;
+using System.IO;
+using System.Text;
+
 
 
 namespace BW.Website.Common.Utilities
@@ -59,9 +62,9 @@ namespace BW.Website.Common.Utilities
             client.DefaultRequestHeaders.Add("ApiKey", ComputeHash());
             HttpResponseMessage reponse = new HttpResponseMessage(HttpStatusCode.ServiceUnavailable);
             try
-            {                
+            {
                 reponse = client.PostAsJsonAsync(path, value).Result;
-                return reponse;                
+                return reponse;
             }
             catch (AggregateException e)
             {
@@ -69,7 +72,7 @@ namespace BW.Website.Common.Utilities
             }
         }
 
-        public static string ComputeHash( )
+        public static string ComputeHash()
         {
             string hashedPassword = ConfigurationManager.AppSettings["password"];
             string username = ConfigurationManager.AppSettings["username"];
@@ -176,8 +179,8 @@ namespace BW.Website.Common.Utilities
             //Get your key from config file to open the lock!
             //string key = (string)settingsReader.GetValue("password",
             //                                             typeof(String));
-            string key =  HttpContext.Current.Session.SessionID.ToString();
-            
+            string key = HttpContext.Current.Session.SessionID.ToString();
+
             if (useHashing)
             {
                 //if hashing was used get the hash code with regards to your key
@@ -218,5 +221,6 @@ namespace BW.Website.Common.Utilities
             //    return Convert.ToBase64String(resultArray, 0, resultArray.Length);
             //}
         }
+
     }
 }

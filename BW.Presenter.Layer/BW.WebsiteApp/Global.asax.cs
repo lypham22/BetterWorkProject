@@ -16,6 +16,8 @@ namespace BW.WebsiteApp
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            var log4NetPath = Server.MapPath("~/log4net.config");
+            log4net.Config.XmlConfigurator.ConfigureAndWatch(new System.IO.FileInfo(log4NetPath));
         }
     }
 }
