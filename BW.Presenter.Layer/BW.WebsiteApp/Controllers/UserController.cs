@@ -11,7 +11,7 @@ using BW.Data.Contract.DTOs;
 using BW.Website.Common.Utilities;
 using BW.Common.Consts;
 using PagedList;
-
+using BW.Website.Resource;
 
 
 
@@ -73,6 +73,12 @@ namespace BW.WebsiteApp.Controllers
         [AuthorizedUser(PermissionCodes.AddManageUser)]
         public ActionResult Create(UserCreateView userCreateView, string[] groupRole)
         {
+            //Validate with javascript is disabled
+            //if (UserHelper.CheckUnitEmail(userCreateView.Email).Data)
+            //{
+            //    ModelState.AddModelError("Email", GlobalResource.validEmailIsExit);
+            //}
+
             if (ModelState.IsValid)
             {
                 var result = UserHelper.InsertUser(userCreateView, groupRole);

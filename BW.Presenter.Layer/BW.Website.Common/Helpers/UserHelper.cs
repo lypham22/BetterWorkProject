@@ -213,9 +213,13 @@ namespace BW.Website.Common.Helpers
         }
         public static ResponeMessageBaseType<bool> CheckUnitEmail(string email)
         {
-            var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = true };
+            var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = false };
 
-            ApiServiceUtilities.PostJson("api/UserApi/CheckUnitEmail?email=", email);
+            var result = ApiServiceUtilities.GetResponse("api/UserApi/CheckUnitEmail?email=" + email);
+            if (result.IsSuccessStatusCode)
+            {
+                response = result.Content.ReadAsAsync<ResponeMessageBaseType<bool>>().Result;
+            }
             return response;
         }
 
