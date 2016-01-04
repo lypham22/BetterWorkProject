@@ -1,56 +1,61 @@
 ﻿@model BW.Data.Contract.DTOs.UserView
 @using BW.Website.Common.Utilities;
+@using BW.Website.Common.Helpers;
+@using BW.Common.Consts;
 @{
     ViewBag.Title = "Details";
+    var isViewManageUser = AuthorizationHelper.HasPermissionFor(PermissionCodes.ViewManageUser);
 }
+@if (isViewManageUser)
+{
+    <h2>Details</h2>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.Label("Full Name")
+            </dt>
 
-<h2>Details</h2>
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.Label("Full Name")
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.FirstName)
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CreatedDate)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.IsActive)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.RoleName)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.RoleName)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.RoleName)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.RoleName)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { UserId = ApiServiceUtilities.Encrypt(Model.UserId.ToString()) }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { UserId = ApiServiceUtilities.Encrypt(Model.UserId.ToString()) }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

@@ -15,7 +15,7 @@ namespace BW.Website.Common.Helpers
         {
             var response = new ResponeMessage<List<RoleInPermissonView>> { Code = ErrorCodeEnum.SUCCESS, Data = new List<RoleInPermissonView>() };
             List<RoleInPermissonView> roleInPermView = new List<RoleInPermissonView>();
-            if (!string.IsNullOrEmpty(roleIdEnc))
+            if (!string.IsNullOrEmpty(roleIdEnc) && roleIdEnc != "undefined")
             {
                 int roleId = int.Parse(roleIdEnc);
                 HttpResponseMessage reponse = ApiServiceUtilities.GetResponse("api/RoleInPermissionApi/GetRoleInPermissionByRoleId/" + roleId);

@@ -1,55 +1,59 @@
 ﻿@model BW.Data.Contract.DTOs.RoleView
-
+@using BW.Website.Common.Helpers;
+@using BW.Common.Consts;
 @{
     ViewBag.Title = "Delete";
+    var isDeleteManageRole = AuthorizationHelper.HasPermissionFor(PermissionCodes.DeleteManageRole);
 }
+@if (isDeleteManageRole)
+{
+    <h2>Delete</h2>
 
-<h2>Delete</h2>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.Label("Role Name")
+            </dt>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.Label("Role Name")
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.RoleName)
+            </dd>
+            <dt>
+                @Html.Label("Role Description")
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.RoleName)
-        </dd>
-        <dt>
-            @Html.Label("Role Description")
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.RoleDescription)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.RoleDescription)
-        </dd>
+            <dt>
+                @Html.Label("Created Date")
+            </dt>
 
-        <dt>
-            @Html.Label("Created Date")
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CreatedDate)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
+            <dt>
+                @Html.Label("Is Active")
+            </dt>
 
-        <dt>
-            @Html.Label("Is Active")
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.IsActive)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
+        </dl>
 
-    </dl>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }
-</div>
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+}

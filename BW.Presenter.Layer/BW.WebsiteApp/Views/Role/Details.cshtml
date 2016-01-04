@@ -1,54 +1,59 @@
 ﻿@model BW.Data.Contract.DTOs.RoleView
 @using BW.Website.Common.Utilities;
+@using BW.Website.Common.Helpers;
+@using BW.Common.Consts;
 @{
     ViewBag.Title = "Details";
+    var isViewManageRole = AuthorizationHelper.HasPermissionFor(PermissionCodes.ViewManageRole);
 }
+@if (isViewManageRole)
+{
+    <h2>Details</h2>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.Label("Role Name")
+            </dt>
 
-<h2>Details</h2>
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.Label("Role Name")
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.RoleName)
+            </dd>
+            <dt>
+                @Html.Label("Role Description")
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.RoleName)
-        </dd>
-        <dt>
-            @Html.Label("Role Description")
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.RoleDescription)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.RoleDescription)
-        </dd>
+            <dt>
+                @Html.Label("Created Date")
+            </dt>
 
-        <dt>
-            @Html.Label("Created Date")
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CreatedDate)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
+            <dt>
+                @Html.Label("Is Active")
+            </dt>
 
-        <dt>
-            @Html.Label("Is Active")
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.IsActive)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
+            <dt>
+                @Html.Label("Module name")
+            </dt>
 
-        <dt>
-            @Html.Label("Module name")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ModuleName)
-        </dd>
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { roleId = ApiServiceUtilities.Encrypt(Model.RoleId.ToString()) }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+            <dd>
+                @Html.DisplayFor(model => model.ModuleName)
+            </dd>
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { roleId = ApiServiceUtilities.Encrypt(Model.RoleId.ToString()) }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

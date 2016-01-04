@@ -8,8 +8,8 @@
     var isViewRoleInPermission = AuthorizationHelper.HasPermissionFor(PermissionCodes.ViewRoleInPermission);
 }
 
-@*@if (isViewRoleInPermission)
-{*@
+@if (isViewRoleInPermission)
+{
     <h2>Role In Permission</h2>
     <div>
         <select class="ddlRoles">
@@ -21,7 +21,7 @@
     </div>
     <br />
 
-@*}*@
+}
 <div id="myPartialContainer"></div>
 
 @*@Scripts.Render("~/bundles/jquery")
