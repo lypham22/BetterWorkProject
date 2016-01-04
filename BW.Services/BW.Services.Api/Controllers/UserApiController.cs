@@ -11,7 +11,7 @@ using BW.Data.Contract.DTOs;
 
 namespace BW.Services.Api.Controllers
 {
-    //[Authenticate]
+    [Authenticate]
     public class UserApiController : ApiController
     {
         private readonly IUserRepository userRepository;

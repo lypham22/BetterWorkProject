@@ -170,7 +170,7 @@ namespace BW.WebsiteApp.Controllers
         [AuthorizedUser(PermissionCodes.DeleteManageUser)]
         public ActionResult DeleteConfirmed(string userId)
         {
-            UserHelper.DeleteUser(ApiServiceUtilities.Encrypt(userId));
+            UserHelper.DeleteUser(userId);
             return RedirectToAction("Index");
         }
 
@@ -202,9 +202,9 @@ namespace BW.WebsiteApp.Controllers
             }
 
         }
-        //public JsonResult IsEmailExits(string email)
-        //{
-        //    return Json(!UserHelper.CheckUnitEmail(email).Data, JsonRequestBehavior.AllowGet);
-        //}
+        public JsonResult IsEmailExits(string email)
+        {
+            return Json(!UserHelper.CheckUnitEmail(email).Data, JsonRequestBehavior.AllowGet);
+        }
     }
 }

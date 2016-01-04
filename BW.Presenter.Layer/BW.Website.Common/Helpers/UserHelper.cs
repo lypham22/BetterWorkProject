@@ -24,7 +24,7 @@ namespace BW.Website.Common.Helpers
                 {
                     userDTO.Add(new UserView
                     {
-                        UserId = s.UserId,
+                        UserId = s.UserId.ToString(),
                         FirstName = s.FirstName,
                         LastName = s.LastName,
                         Email = s.Email,
@@ -52,7 +52,7 @@ namespace BW.Website.Common.Helpers
                     try
                     {
                         var user = reponse.Content.ReadAsAsync<ResponeMessage<UserDTO>>().Result;
-                        userView.UserId = user.Data.UserId;
+                        userView.UserId = user.Data.UserId.ToString();
                         userView.FirstName = user.Data.FirstName;
                         userView.LastName = user.Data.LastName;
                         userView.Email = user.Data.Email;
@@ -77,7 +77,7 @@ namespace BW.Website.Common.Helpers
             {
                 // Convert UserInfo to User.
                 UserCreateDTO user = new UserCreateDTO();
-                user.UserId = userView.UserId;
+                user.UserId = int.Parse(ApiServiceUtilities.Decrypt(userView.UserId.ToString()));
                 user.FirstName = userView.FirstName;
                 user.LastName = userView.LastName;
                 user.IsActive = userView.IsActive;

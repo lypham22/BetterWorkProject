@@ -66,7 +66,7 @@ namespace BW.Website.Common.Helpers
                 {
                     roleDTO.Add(new RoleView
                     {
-                        RoleId = s.RoleId,
+                        RoleId = s.RoleId.ToString(),
                         RoleName = s.RoleName,
                         RoleDescription = s.RoleDescription,
                         IsActive = s.IsActive,
@@ -86,12 +86,12 @@ namespace BW.Website.Common.Helpers
             RoleView roleView = new RoleView();
             if (!string.IsNullOrEmpty(roleIdEnc))
             {
-                int roleId = int.Parse(roleIdEnc);
+                int roleId = int.Parse(ApiServiceUtilities.Decrypt(roleIdEnc));
                 HttpResponseMessage reponse = ApiServiceUtilities.GetResponse("api/RoleApi/GetRoleById/" + roleId);
                 if (reponse.IsSuccessStatusCode)
                 {
                     var role = reponse.Content.ReadAsAsync<ResponeMessage<RoleDTO>>().Result;
-                    roleView.RoleId = role.Data.RoleId;
+                    roleView.RoleId = role.Data.RoleId.ToString();
                     roleView.RoleName = role.Data.RoleName;
                     roleView.RoleDescription = role.Data.RoleDescription;
                     roleView.IsActive = role.Data.IsActive;
@@ -121,16 +121,16 @@ namespace BW.Website.Common.Helpers
                 return response;
             }
         }
-        public static ResponeMessageBaseType<bool> UpdateRole(RoleCreateView roleCreateView)
+        public static ResponeMessageBaseType<bool> UpdateRole(RoleView roleView)
         {
             var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = true };
-            if (roleCreateView != null)
+            if (roleView != null)
             {
                 RoleCreateDTO role = new RoleCreateDTO();
-                role.RoleId = roleCreateView.RoleId;
-                role.RoleName = roleCreateView.RoleName;
-                role.RoleDescription = roleCreateView.RoleDescription;
-                role.IsActive = roleCreateView.IsActive;
+                role.RoleId = int.Parse(ApiServiceUtilities.Decrypt(roleView.RoleId.ToString()));
+                role.RoleName = roleView.RoleName;
+                role.RoleDescription = roleView.RoleDescription;
+                role.IsActive = roleView.IsActive;
                 ApiServiceUtilities.PostJson("api/RoleApi/UpdateRole/", role);
                 return response;
             }
@@ -140,11 +140,11 @@ namespace BW.Website.Common.Helpers
             }
         }
 
-        public static ResponeMessageBaseType<bool> DeleteRole(int roleId)
+        public static ResponeMessageBaseType<bool> DeleteRole(string roleId)
         {
             var response = new ResponeMessageBaseType<bool> { Code = ErrorCodeEnum.SUCCESS, Data = true };
             RoleDTO role = new RoleDTO();
-            role.RoleId = roleId;
+            role.RoleId = int.Parse(ApiServiceUtilities.Decrypt(roleId));
             ApiServiceUtilities.PostJson("api/RoleApi/RemoveRole/", role);
             return response;
         }

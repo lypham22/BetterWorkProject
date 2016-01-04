@@ -79,7 +79,7 @@ namespace BW.WebsiteApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthorizedUser(PermissionCodes.AllowAnonymous)]
-        public ActionResult Edit(RoleCreateView roleView)
+        public ActionResult Edit(RoleView roleView)
         {
             if (ModelState.IsValid)
             {
@@ -113,7 +113,7 @@ namespace BW.WebsiteApp.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [AuthorizedUser(PermissionCodes.AllowAnonymous)]
-        public ActionResult DeleteConfirmed(int roleId)
+        public ActionResult DeleteConfirmed(string roleId)
         {
             RoleHelper.DeleteRole(roleId);
             return RedirectToAction("Index");

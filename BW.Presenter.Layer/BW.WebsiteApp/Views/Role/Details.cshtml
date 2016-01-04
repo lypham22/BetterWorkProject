@@ -1,4 +1,5 @@
 ﻿@model BW.Data.Contract.DTOs.RoleView
+@using BW.Website.Common.Utilities;
 @{
     ViewBag.Title = "Details";
 }
@@ -48,6 +49,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { roleId = Model.RoleId }) |
+    @Html.ActionLink("Edit", "Edit", new { roleId = ApiServiceUtilities.Encrypt(Model.RoleId.ToString()) }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

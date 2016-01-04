@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using BW.Website.Resource;
+using System.Web.Mvc;
 
 namespace BW.Data.Contract.DTOs
 {
+    [MetadataType(typeof(UserCreateView))]  
     public class UserCreateView
     {
         public int UserId { get; set; }
@@ -17,6 +19,7 @@ namespace BW.Data.Contract.DTOs
 
         [Required(ErrorMessageResourceType = typeof(GlobalResource), ErrorMessageResourceName = "validEmailRequire")]
         [EmailAddress(ErrorMessageResourceType = typeof(GlobalResource), ErrorMessageResourceName = "validEmailRegex")]
+        [Remote("IsEmailExits", "User", ErrorMessageResourceType = typeof(GlobalResource), ErrorMessageResourceName = "validEmailIsExit")]
         public string Email { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(GlobalResource), ErrorMessageResourceName = "validPassRequire")]
@@ -25,7 +28,7 @@ namespace BW.Data.Contract.DTOs
         public string Password { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(GlobalResource), ErrorMessageResourceName = "validConfirmPassRequire")]
-        [Compare("Password", ErrorMessageResourceType = typeof(GlobalResource), ErrorMessageResourceName = "validComaprePass")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessageResourceType = typeof(GlobalResource), ErrorMessageResourceName = "validComaprePass")]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
 

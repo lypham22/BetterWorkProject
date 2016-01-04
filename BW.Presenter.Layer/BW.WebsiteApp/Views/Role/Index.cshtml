@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<BW.Data.Contract.DTOs.RoleView>
 @using BW.Website.Common.Helpers;
 @using BW.Common.Consts;
+@using BW.Website.Common.Utilities;
 
 @{
     ViewBag.Title = "Index";
@@ -64,14 +65,14 @@
                 <td>
                     @if (isEditManageRole)
                     {
-                        @Html.ActionLink("Edit", "Edit", new { roleId = item.RoleId })
+                        @Html.ActionLink("Edit", "Edit", new { roleId = ApiServiceUtilities.Encrypt(item.RoleId.ToString()) })
                         <span>|</span>
                     }
-                    @Html.ActionLink("Details", "Details", new { roleId = item.RoleId })
+                    @Html.ActionLink("Details", "Details", new { roleId = ApiServiceUtilities.Encrypt(item.RoleId.ToString()) })
                     @if (isDeleteManageRole)
                     {
                         <span>|</span>
-                        @Html.ActionLink("Delete", "Delete", new { roleId = item.RoleId })
+                        @Html.ActionLink("Delete", "Delete", new { roleId = ApiServiceUtilities.Encrypt(item.RoleId.ToString()) })
                     }
                 </td>
             </tr>
