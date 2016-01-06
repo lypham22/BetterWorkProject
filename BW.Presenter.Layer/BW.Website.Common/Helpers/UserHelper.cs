@@ -202,7 +202,7 @@ namespace BW.Website.Common.Helpers
             {
                 result = response.Content.ReadAsAsync<ResponeMessage<AuthenticationInfoDTO>>().Result;
 
-                if (result.Data.UserId != 0)
+                if (result.Data != null)
                 {
                     return true;
                 }
